@@ -6,7 +6,27 @@
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+    <Grid >
+        <Grid.DataContext>
+            <Binding Source=""></Binding>
+        </Grid.DataContext>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <ScrollViewer>
+                <Canvas Name="elements">
+                    <Canvas.LayoutTransform>
+                        <ScaleTransform ScaleX="{Binding ElementName=ZoomSlider, Path=Value}" 
+                                ScaleY="{Binding ElementName=ZoomSlider, Path=Value}"/>
+                    </Canvas.LayoutTransform>
+                </Canvas>
+
+            </ScrollViewer>
+           
+        </Grid>
+
+        <Slider Grid.Row="1"  Name="ZoomSlider" Minimum="0.1" Maximum="10" Value="1"/>
     </Grid>
 </Window>
