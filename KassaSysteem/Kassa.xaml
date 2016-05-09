@@ -5,80 +5,80 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
-        Title="Kassa" Height="700" Width="800">
+        Title="Kassa" Height="800" Width="900">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="500"></RowDefinition>
+            <RowDefinition Height="550"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="500"></ColumnDefinition>
+            <ColumnDefinition Width="550"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Row="0" Grid.Column="0">
             <WrapPanel>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock>Cola €2</TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock>Water <LineBreak/>€1.5</TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock>Bier €2</TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock>Fruitsap <LineBreak/> €2</TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock>Dag- <LineBreak/>schotel <LineBreak/> €11</TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock>Steak <LineBreak/> €14</TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock></TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock></TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock>Champ <LineBreak/> saus €1</TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock>Friet €1</TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock>Mayo €1</TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock>Peper <LineBreak/> saus €1</TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock></TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock></TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock></TextBlock>
                 </Button>
-                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                <Button Background="Gray" Margin="10" Width="100" Height="100">
                     <TextBlock.FontSize>25</TextBlock.FontSize>
                     <TextBlock></TextBlock>
                 </Button>
@@ -92,18 +92,12 @@
             
         </ListBox>
 
-        <Button Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-250,-70,0,0">
-            +1
-        </Button>
-        <Button Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-100,-70,0,0">
-            -1
-        </Button>
-        <Button Grid.Row="1" Grid.Column="1" Width="100" Height="40" Margin="150,-70,0,0">
-            X
-        </Button>
-        <Button Grid.Row="1" Grid.Column="1" Width="275" Height="80" Margin="-25,60,0,0">
-            Betalen
-        </Button>
+        <Label Grid.Row="1" Grid.Column="1" FontSize="25">Totaal:</Label>
+
+        <Button Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-250,-50,0,0">+1</Button>
+        <Button Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-100,-50,0,0">-1</Button>
+        <Button Grid.Row="1" Grid.Column="1" Width="100" Height="40" Margin="150,-50,0,0">X</Button>
+        <Button Grid.Row="1" Grid.Column="1" Width="275" Height="80" Margin="-25,80,0,0">Betalen</Button>
     </Grid>
     
 </Window>
