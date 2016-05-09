@@ -5,8 +5,105 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
-        Title="Kassa" Height="300" Width="300">
-    <DataGrid>
-        <Rectangle></Rectangle>
-    </DataGrid>
+        Title="Kassa" Height="700" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="500"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="500"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Row="0" Grid.Column="0">
+            <WrapPanel>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock>Cola €2</TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock>Water <LineBreak/>€1.5</TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock>Bier €2</TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock>Fruitsap <LineBreak/> €2</TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock>Dag- <LineBreak/>schotel <LineBreak/> €11</TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock>Steak <LineBreak/> €14</TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock></TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock></TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock>Champ <LineBreak/> saus €1</TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock>Friet €1</TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock>Mayo €1</TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock>Peper <LineBreak/> saus €1</TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock></TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock></TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock></TextBlock>
+                </Button>
+                <Button Background="Gray" Margin="5" Width="100" Height="100">
+                    <TextBlock.FontSize>25</TextBlock.FontSize>
+                    <TextBlock></TextBlock>
+                </Button>
+            </WrapPanel>
+        </ScrollViewer>
+        <Button Grid.Row="1" Grid.Column="0" Height="50" Width="70" Margin="-350,0,0,00">
+            Terug
+        </Button>
+
+        <ListBox Grid.Row="0" Grid.Column="1">
+            
+        </ListBox>
+
+        <Button Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-250,-70,0,0">
+            +1
+        </Button>
+        <Button Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-100,-70,0,0">
+            -1
+        </Button>
+        <Button Grid.Row="1" Grid.Column="1" Width="100" Height="40" Margin="150,-70,0,0">
+            X
+        </Button>
+        <Button Grid.Row="1" Grid.Column="1" Width="275" Height="80" Margin="-25,60,0,0">
+            Betalen
+        </Button>
+    </Grid>
+    
 </Window>
