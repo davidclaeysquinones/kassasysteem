@@ -8,6 +8,12 @@ namespace Kassa.DAO
 {
     public class ArticleDAO
     {
-        
+        public IEnumerable<Article> All()
+        {
+            using (var db = new KassaEntities())
+            {
+                
+            }
+        }
     }
 }
