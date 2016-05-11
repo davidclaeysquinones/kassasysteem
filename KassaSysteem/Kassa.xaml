@@ -31,7 +31,7 @@
                     <ColumnDefinition Width="120"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
             
-            <Button x:Name="btnTest" MouseDoubleClick="Button_MouseDoubleClick" Grid.Row="0" Grid.Column="0" Background="Gray" Margin="10" Width="100" Height="100">
+            <Button Grid.Row="0" Grid.Column="0" Background="Gray" Margin="10" Width="100" Height="100">
                 <TextBlock.FontSize>25</TextBlock.FontSize>
                 <TextBlock>Cola €2</TextBlock>
             </Button>
