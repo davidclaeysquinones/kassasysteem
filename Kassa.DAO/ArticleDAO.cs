@@ -10,11 +10,11 @@ namespace Kassa.DAO
 {
     public class ArticleDAO
     {
-        public IEnumerable<Article> All()
+        public int getAantal()
         {
             using (var db = new kassaEntities())
             {
-                
+                return db.Article.Count();
             }
         }
     }

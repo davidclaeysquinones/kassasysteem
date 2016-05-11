@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Kassa.Service;
 
 namespace KassaSysteem
 {
@@ -19,9 +20,17 @@ namespace KassaSysteem
     /// </summary>
     public partial class Kassa : Window
     {
+        private ArticleService articleService;
         public Kassa()
         {
             InitializeComponent();
+            vulGrid();
+        }
+
+        public void vulGrid()
+        {
+            articleService = new ArticleService();
+            int aantal = articleService.getAantal();
         }
     }
 }
