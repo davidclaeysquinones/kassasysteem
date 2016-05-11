@@ -111,16 +111,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Kassa.DAO\Kassa.DAO.csproj">
-      <Project>{feb13341-96b2-45af-a8d7-b09c02af9257}</Project>
-      <Name>Kassa.DAO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Kassa.Service\Kassa.Service.csproj">
-      <Project>{1c0fed69-37a4-40c9-b016-2d3af4076c80}</Project>
-      <Name>Kassa.Service</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
