@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Kassa.DAO;
+using Kassa.Model;
 
 namespace Kassa.Service
 {
@@ -18,6 +19,11 @@ namespace Kassa.Service
         public int getAantal()
         {
             return articleDAO.getAantal();
+        }
+
+        public IEnumerable<Article> All()
+        {
+            return articleDAO.All();
         }
     }
 }

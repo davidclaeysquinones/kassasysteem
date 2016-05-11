@@ -17,5 +17,12 @@ namespace Kassa.DAO
                 return db.Article.Count();
             }
         }
+        public IEnumerable<Article> All()
+        {
+            using (var db = new kassaEntities())
+            {
+                return db.Article.ToList();
+            }
+        }
     }
 }
