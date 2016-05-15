@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Kassa.Model;
 using Kassa.Service;
 
 namespace KassaSysteem
@@ -30,7 +31,33 @@ namespace KassaSysteem
         public void vulGrid()
         {
             articleService = new ArticleService();
-            int aantal = articleService.getAantal();
+            int atlArtikelen = articleService.getAantal();
+            
+
+            IEnumerable<Article> articles = articleService.All();
+
+            foreach (var item in articles)
+            {
+                Button b = new Button();
+                b.Background = Brushes.Gray;
+                b.Margin = new Thickness(10);
+                b.Width = 100;
+                b.Height = 100;
+                b.Content = item.Name;
+                b.Click += new RoutedEventHandler(this.ButtonBase_OnClick);
+                b.Tag = item;
+                Grid.Children.Add(b);
+
+
+            }
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            Button b = (Button) sender;
+            Article article = (Article) b.Tag;
+
+            dataGrid.Items.Add(article);
         }
     }
 }

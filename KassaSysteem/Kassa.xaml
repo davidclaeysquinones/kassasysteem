@@ -6,7 +6,22 @@
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
         Title="Kassa" Height="700" Width="900">
+    <Window.Resources>
+        <Style x:Key="Artikelstyle" >
+            <Setter Property="Button.Background" Value="Gray"/>
+            <Setter Property="Button.Width" Value="100"/>
+            <Setter Property="Button.Height" Value="100"/>
+            <Setter Property="Button.Margin" Value="10"/>
+            <Setter Property="TextBlock.FontSize" Value="25"/>
+        </Style>
+        <DataTemplate x:Key="ArtikelTemplate">
 
+            <Button Click="ButtonBase_OnClick" Style="{StaticResource Artikelstyle}">
+
+            </Button>
+
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="450"></RowDefinition>
@@ -16,86 +31,8 @@
             <ColumnDefinition Width="550"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="120"></RowDefinition>
-                    <RowDefinition Height="120"></RowDefinition>
-                    <RowDefinition Height="120"></RowDefinition>
-                    <RowDefinition Height="120"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"></ColumnDefinition>
-                    <ColumnDefinition Width="120"></ColumnDefinition>
-                    <ColumnDefinition Width="120"></ColumnDefinition>
-                    <ColumnDefinition Width="120"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-            
-            <Button Grid.Row="0" Grid.Column="0" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock>Cola €2</TextBlock>
-            </Button>
-            <Button Grid.Row="0" Grid.Column="1" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock>Water <LineBreak/>€1.5</TextBlock>
-            </Button>
-            <Button Grid.Row="0" Grid.Column="2" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock>Bier €2</TextBlock>
-            </Button>
-            <Button Grid.Row="0" Grid.Column="3" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock>Fruitsap <LineBreak/> €2</TextBlock>
-            </Button>
-            <Button Grid.Row="1" Grid.Column="0" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock>Dag- <LineBreak/>schotel <LineBreak/> €11</TextBlock>
-            </Button>
-            <Button Grid.Row="1" Grid.Column="1" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock>Steak <LineBreak/> €14</TextBlock>
-            </Button>
-            <Button Grid.Row="1" Grid.Column="2" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock></TextBlock>
-            </Button>
-            <Button Grid.Row="1" Grid.Column="3" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock></TextBlock>
-            </Button>
-            <Button Grid.Row="2" Grid.Column="0" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock>Champ <LineBreak/> saus €1</TextBlock>
-            </Button>
-            <Button Grid.Row="2" Grid.Column="1" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock>Friet €1</TextBlock>
-            </Button>
-            <Button Grid.Row="2" Grid.Column="2" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock>Mayo €1</TextBlock>
-            </Button>
-            <Button Grid.Row="2" Grid.Column="3" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock>Peper <LineBreak/> saus €1</TextBlock>
-            </Button>
-            <Button Grid.Row="3" Grid.Column="0" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock></TextBlock>
-            </Button>
-            <Button Grid.Row="3" Grid.Column="1" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock></TextBlock>
-            </Button>
-            <Button Grid.Row="3" Grid.Column="2" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock></TextBlock>
-            </Button>
-            <Button Grid.Row="3" Grid.Column="3" Background="Gray" Margin="10" Width="100" Height="100">
-                <TextBlock.FontSize>25</TextBlock.FontSize>
-                <TextBlock></TextBlock>
-            </Button>
-            </Grid>
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Name="StackPanel">
+          
         </StackPanel>
         <Button Grid.Row="1" Grid.Column="0" Height="50" Width="70" Margin="-350,0,0,00">
             Terug
@@ -104,10 +41,10 @@
         <DataGrid x:Name="dataGrid" Grid.Row="0" Grid.Column="1" CanUserReorderColumns="True" CanUserResizeColumns="True" 
           CanUserResizeRows="False" CanUserSortColumns="True">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Naam" Width="125"></DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Aantal" Width="75"></DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Prijs" Width="75"></DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Totaal" Width="*"></DataGridTemplateColumn>
+                <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding Name}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Aantal" Width="75" ></DataGridTextColumn>
+                <DataGridTextColumn  Header="Prijs" Width="75" Binding="{Binding Price}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Totaal" Width="*" ></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -118,5 +55,5 @@
         <Button Grid.Row="1" Grid.Column="1" Width="100" Height="40" Margin="150,-50,0,0">X</Button>
         <Button Grid.Row="1" Grid.Column="1" Width="275" Height="80" Margin="-25,80,0,0">Betalen</Button>
     </Grid>
-    
+
 </Window>
