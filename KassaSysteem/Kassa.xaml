@@ -63,9 +63,9 @@
 
         <Label Grid.Row="1" Grid.Column="1" FontSize="25">Totaal:</Label>
 
-        <Button Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-250,-50,0,0" IsEnabled="False">+1</Button>
-        <Button Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-100,-50,0,0" IsEnabled="False">-1</Button>
-        <Button Grid.Row="1" Grid.Column="1" Width="100" Height="40" Margin="150,-50,0,0">X</Button>
+        <Button Name="btnPlus" Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-250,-50,0,0">+1</Button>
+        <Button Name="btnMin" Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-100,-50,0,0">-1</Button>
+        <Button Name="btnDelete" Grid.Row="1" Grid.Column="1" Width="100" Height="40" Margin="150,-50,0,0" Click="btnDelete_Click">X</Button>
         <Button Grid.Row="1" Grid.Column="1" Width="275" Height="80" Margin="-25,80,0,0">Betalen</Button>
     </Grid>
 

@@ -27,6 +27,8 @@ namespace KassaSysteem
         {
             InitializeComponent();
             vulGrid();
+            btnMin.IsEnabled = false;
+            btnPlus.IsEnabled = false;
         }
 
         public void vulGrid()
@@ -51,7 +53,7 @@ namespace KassaSysteem
                 b.Margin = new Thickness(10);
                 b.Width = 100;
                 b.Height = 100;
-                b.Content = item.Name;
+                b.Content = item.Name +"\n €"+ item.Price;
                 b.Click += new RoutedEventHandler(this.ButtonBase_OnClick);
                 b.Tag = item;
                 Grid.SetRow(b, row);
@@ -67,28 +69,39 @@ namespace KassaSysteem
             Button b = (Button)sender;
             Article article = (Article)b.Tag;
 
-            for (int i = 0; i < dataGrid.Items.Count; i++)
-            {
-                if(article == dataGrid.Items.Comparer)
-                {
-                    int row = dataGrid.SelectedIndex;
-                    int column = 1;
-                    dataGrid.CurrentCell = new DataGridCellInfo(dataGrid.Items[row], dataGrid.Columns[column]);
-                    string tekst = dataGrid.CurrentCell.ToString();
-                    int aantal = Convert.ToInt16(tekst);
-                    aantal++;
-                    string nieuweText = aantal.ToString();
+            //for (int i = 0; i < dataGrid.Items.Count; i++)
+            //{
+            //    if (article == dataGrid.Items.Comparer)
+            //    {
+            //        int row = dataGrid.SelectedIndex;
+            //        int column = 1;
+            //        dataGrid.CurrentCell = new DataGridCellInfo(dataGrid.Items[row], dataGrid.Columns[column]);
+            //        string tekst = dataGrid.CurrentCell.ToString();
+            //        int aantal = Convert.ToInt16(tekst);
+            //        aantal++;
+            //        string nieuweText = aantal.ToString();
+            //        dataGrid.SetValue(ContentProperty, nieuweText);
 
-
-                }
-                else
-                {
-                    dataGrid.Items.Add(article);
-                }
-            }   
+            //    }
+            //    else
+            //    {
+            //        dataGrid.Items.Add(article);
+            //    }
+            //}
+            dataGrid.Items.Add(article);
+            btnPlus.IsEnabled = true;
+            btnMin.IsEnabled = true;
         }
 
-
-
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGrid.SelectedIndex >= 0)
+            {
+                for (int i = 0; i <= dataGrid.SelectedItems.Count; i++)
+                {
+                    dataGrid.Items.Remove(dataGrid.SelectedItems[i]);
+                }
+            }
+        }
     }
 }
