@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,12 +33,19 @@ namespace KassaSysteem
         {
             articleService = new ArticleService();
             int atlArtikelen = articleService.getAantal();
-            
+
 
             IEnumerable<Article> articles = articleService.All();
-
+            int row = 0;
+            int column = -1;
             foreach (var item in articles)
             {
+                if (column == 3)
+                {
+                    row++;
+                    column = -1;
+                }
+                column++;
                 Button b = new Button();
                 b.Background = Brushes.Gray;
                 b.Margin = new Thickness(10);
@@ -46,7 +54,9 @@ namespace KassaSysteem
                 b.Content = item.Name;
                 b.Click += new RoutedEventHandler(this.ButtonBase_OnClick);
                 b.Tag = item;
-                Grid.Children.Add(b);
+                Grid.SetRow(b, row);
+                Grid.SetColumn(b, column);
+                mainGrid.Children.Add(b);
 
 
             }
@@ -54,10 +64,31 @@ namespace KassaSysteem
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            Button b = (Button) sender;
-            Article article = (Article) b.Tag;
+            Button b = (Button)sender;
+            Article article = (Article)b.Tag;
 
-            dataGrid.Items.Add(article);
+            for (int i = 0; i < dataGrid.Items.Count; i++)
+            {
+                if(article == dataGrid.Items.Comparer)
+                {
+                    int row = dataGrid.SelectedIndex;
+                    int column = 1;
+                    dataGrid.CurrentCell = new DataGridCellInfo(dataGrid.Items[row], dataGrid.Columns[column]);
+                    string tekst = dataGrid.CurrentCell.ToString();
+                    int aantal = Convert.ToInt16(tekst);
+                    aantal++;
+                    string nieuweText = aantal.ToString();
+
+
+                }
+                else
+                {
+                    dataGrid.Items.Add(article);
+                }
+            }   
         }
+
+
+
     }
 }
