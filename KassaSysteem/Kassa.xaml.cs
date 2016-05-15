@@ -67,32 +67,45 @@ namespace KassaSysteem
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
-            Article article = (Article)b.Tag;
             OrderLine orderline = new OrderLine();
-            orderline.ArticleName = article.Name;
-            orderline.Amount = 1;
-            orderline.Price = article.Price;
+            Article article = (Article)b.Tag;
+            if (!dataGrid.Items.Contains(b))
+            {
+                orderline.ArticleName = article.Name;
+                orderline.Amount = 1;
+                orderline.Price = article.Price;
+            }
+            
 
-            //for (int i = 0; i < dataGrid.Items.Count; i++)
-            //{
-            //    if (article == dataGrid.Items.Comparer)
-            //    {
-            //        int row = dataGrid.SelectedIndex;
-            //        int column = 1;
-            //        dataGrid.CurrentCell = new DataGridCellInfo(dataGrid.Items[row], dataGrid.Columns[column]);
-            //        string tekst = dataGrid.CurrentCell.ToString();
-            //        int aantal = Convert.ToInt16(tekst);
-            //        aantal++;
-            //        string nieuweText = aantal.ToString();
-            //        dataGrid.SetValue(ContentProperty, nieuweText);
+            if (dataGrid.Items.Count != 0)
+            {
+                Boolean aangepast = false;
+                for (int i = 0; i < dataGrid.Items.Count; i++)
+                {
+                    OrderLine ol = (OrderLine) dataGrid.Items.GetItemAt(i);
+                    if (ol.ArticleName.Equals(orderline.ArticleName))
+                    {
+                        OrderLine oude = (OrderLine)dataGrid.Items.GetItemAt(i);
+                        OrderLine nieuwe = new OrderLine();
+                        nieuwe.ArticleName = oude.ArticleName;
+                        nieuwe.Amount = oude.Amount+1;
+                        nieuwe.Price = oude.Price;
+                        dataGrid.Items.RemoveAt(i);
+                        dataGrid.Items.Add(nieuwe);
+                        i = dataGrid.Items.Count;
+                        aangepast = true;
+                    }
+                }
+                if (aangepast == false)
+                {
+                    dataGrid.Items.Add(orderline);
+                }
+            }
+            else if (dataGrid.Items.Count == 0)
+            {
+                dataGrid.Items.Add(orderline);
+            }
 
-            //    }
-            //    else
-            //    {
-            //        dataGrid.Items.Add(article);
-            //    }
-            //}
-            dataGrid.Items.Add(orderline);
             btnPlus.IsEnabled = true;
             btnMin.IsEnabled = true;
         }
