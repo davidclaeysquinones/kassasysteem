@@ -68,6 +68,10 @@ namespace KassaSysteem
         {
             Button b = (Button)sender;
             Article article = (Article)b.Tag;
+            OrderLine orderline = new OrderLine();
+            orderline.ArticleName = article.Name;
+            orderline.Amount = 1;
+            orderline.Price = article.Price;
 
             //for (int i = 0; i < dataGrid.Items.Count; i++)
             //{
@@ -88,7 +92,7 @@ namespace KassaSysteem
             //        dataGrid.Items.Add(article);
             //    }
             //}
-            dataGrid.Items.Add(article);
+            dataGrid.Items.Add(orderline);
             btnPlus.IsEnabled = true;
             btnMin.IsEnabled = true;
         }

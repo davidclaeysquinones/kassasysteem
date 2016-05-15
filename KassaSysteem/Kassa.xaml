@@ -54,8 +54,8 @@
         <DataGrid x:Name="dataGrid" Grid.Row="0" Grid.Column="1" CanUserReorderColumns="True" CanUserResizeColumns="True" 
           CanUserResizeRows="False" CanUserSortColumns="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn  Header="Aantal" Width="75" ></DataGridTextColumn>
+                <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding ArticleName}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Aantal" Width="75" Binding="{Binding Amount}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Prijs" Width="75" Binding="{Binding Price}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Totaal" Width="*" ></DataGridTextColumn>
             </DataGrid.Columns>
