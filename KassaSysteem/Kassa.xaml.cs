@@ -78,11 +78,18 @@ namespace KassaSysteem
             Button b = (Button)sender;
             OrderLine orderline = new OrderLine();
             Article article = (Article)b.Tag;
+            Order order = new Order();
+            if (dataGrid.Items.Count == -1)
+            {
+                order.Status = 0;
+                order.CreatedDate = DateTime.Now;
+            }
             if (!dataGrid.Items.Contains(b))
             {
                 orderline.ArticleName = article.Name;
                 orderline.Amount = 1;
                 orderline.Price = article.Price;
+                orderline.OrderId = order.Id;
             }
             
 
