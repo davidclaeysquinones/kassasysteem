@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -36,12 +37,20 @@ namespace KassaSysteem
             articleService = new ArticleService();
             int atlArtikelen = articleService.getAantal();
 
+            int aantalRijen = atlArtikelen / 4;
+            for (int i = 0; i<=aantalRijen+1; i++)
+            {
+                RowDefinition rd = new RowDefinition();
+                rd.Height = new GridLength(1.0, GridUnitType.Star);
+                mainGrid.RowDefinitions.Add(rd);
+            }
 
             IEnumerable<Article> articles = articleService.All();
             int row = 0;
             int column = -1;
             foreach (var item in articles)
             {
+                
                 if (column == 3)
                 {
                     row++;
@@ -88,7 +97,7 @@ namespace KassaSysteem
                         OrderLine oude = (OrderLine)dataGrid.Items.GetItemAt(i);
                         OrderLine nieuwe = new OrderLine();
                         nieuwe.ArticleName = oude.ArticleName;
-                        nieuwe.Amount = oude.Amount+1;
+                        nieuwe.Amount = oude.Amount + 1;
                         nieuwe.Price = oude.Price;
                         dataGrid.Items.RemoveAt(i);
                         dataGrid.Items.Add(nieuwe);
@@ -118,6 +127,42 @@ namespace KassaSysteem
                 {
                     dataGrid.Items.Remove(dataGrid.SelectedItems[i]);
                 }
+            }
+        }
+
+        private void btnPlus_Click(object sender, RoutedEventArgs e)
+        {
+            if(dataGrid.SelectedIndex != -1)
+            {
+                OrderLine oude = (OrderLine)dataGrid.SelectedItem;
+                OrderLine nieuwe = new OrderLine();
+                nieuwe.ArticleName = oude.ArticleName;
+                nieuwe.Amount = oude.Amount + 1;
+                nieuwe.Price = oude.Price;
+                dataGrid.Items.Remove(oude);
+                dataGrid.Items.Add(nieuwe);
+                int index = dataGrid.SelectedIndex;
+            }
+        }
+
+        private void btnMin_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGrid.SelectedIndex != -1)
+            {
+                OrderLine oude = (OrderLine)dataGrid.SelectedItem;
+                OrderLine nieuwe = new OrderLine();
+                nieuwe.ArticleName = oude.ArticleName;
+                if(oude.Amount > 2)
+                {
+                    nieuwe.Amount = oude.Amount - 1;
+                }
+                else
+                {
+                    nieuwe.Amount = 1;
+                }
+                nieuwe.Price = oude.Price;
+                dataGrid.Items.Remove(oude);
+                dataGrid.Items.Add(nieuwe);
             }
         }
     }
