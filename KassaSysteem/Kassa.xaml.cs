@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,8 +25,12 @@ namespace KassaSysteem
     public partial class Kassa : Window
     {
         private ArticleService articleService;
-        public Kassa()
+        private OrderService orderService;
+        private Tafel tafel;
+        private Order orderTijdelijk;
+        public Kassa(Tafel tafel)
         {
+            this.tafel = tafel;
             InitializeComponent();
             vulGrid();
             btnMin.IsEnabled = false;
@@ -78,18 +83,20 @@ namespace KassaSysteem
             Button b = (Button)sender;
             OrderLine orderline = new OrderLine();
             Article article = (Article)b.Tag;
-            Order order = new Order();
+            orderTijdelijk = new Order();
             if (dataGrid.Items.Count == -1)
             {
-                order.Status = 0;
-                order.CreatedDate = DateTime.Now;
+                orderTijdelijk.Status = 0;
+                orderTijdelijk.CreatedDate = DateTime.Now;
+                orderTijdelijk.TafelId = tafel.Id;
+                orderTijdelijk.TafelName = tafel.Name;
             }
             if (!dataGrid.Items.Contains(b))
             {
                 orderline.ArticleName = article.Name;
                 orderline.Amount = 1;
                 orderline.Price = article.Price;
-                orderline.OrderId = order.Id;
+                orderline.OrderId = orderTijdelijk.Id;
             }
             
 
@@ -171,6 +178,23 @@ namespace KassaSysteem
                 dataGrid.Items.Remove(oude);
                 dataGrid.Items.Add(nieuwe);
             }
+        }
+
+        private void btnBetalen_Click(object sender, RoutedEventArgs e)
+        {
+            orderService = new OrderService();
+
+            Order order = new Order();
+            order.TafelId = tafel.Id;
+            order.TafelName = tafel.Name;
+            order.CreatedDate = orderTijdelijk.CreatedDate;
+            order.Status = 1;
+            if(order != null)
+            {
+                orderService.Add(order);
+            }
+            
+
         }
     }
 }
