@@ -243,13 +243,23 @@ namespace KassaSysteem
         private void ButtonBack_OnClick(object sender, RoutedEventArgs e)
         {
             int id = 0;
+
+            if(orderlines != null)
+            {
+                for (int i = 0; i <= dataGrid.Items.Count; i++)
+                {
+                    OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
+                    orderlineService.Remove(ol);
+                    dataGrid.Items.Remove(dataGrid.SelectedItems[i]);
+                }
+            }
             
-            if(orderlines == null)
+            if (orderlines == null)
             {
                 Order order = new Order();
                 order.TafelId = tafel.Id;
                 order.TafelName = tafel.Name;
-                order.CreatedDate = orderTijdelijk.CreatedDate;
+                order.CreatedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                 order.Status = 0;
                 if (order != null)
                 {
@@ -297,7 +307,8 @@ namespace KassaSysteem
 
                 dataGrid.Items.Add(ol);
             }
-            
+            btnPlus.IsEnabled = true;
+            btnMin.IsEnabled = true;
         }
 
 
@@ -305,3 +316,13 @@ namespace KassaSysteem
 
     }
 }
+
+
+
+
+
+
+//TO DO:
+//tijdens back knop, indien lijst null is, niets doen, indien lijst veranderd => updaten
+//keuze: niets doen, updaten, indien nieuwe elementen => deze toevoegen
+

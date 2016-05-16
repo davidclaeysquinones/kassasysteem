@@ -23,5 +23,9 @@ namespace Kassa.Service
         {
             return orderlineDAO.GetOpenLinesTable(tableId);
         }
+        public void Remove(OrderLine orderline)
+        {
+            orderlineDAO.Remove(orderline);
+        }
     }
 }
