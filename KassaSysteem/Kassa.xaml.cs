@@ -232,7 +232,8 @@ namespace KassaSysteem
 
         }
 
-        private void btnTerug_Click(object sender, RoutedEventArgs e)
+
+        private void ButtonBack_OnClick(object sender, RoutedEventArgs e)
         {
             Startscherm startscherm = new Startscherm(); //Create object of Page2
             startscherm.Show(); //Show page2

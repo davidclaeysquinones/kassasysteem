@@ -13,10 +13,22 @@ namespace Kassa.DAO
         public void Add(OrderLine orderline)
         {
             using (var db = new kassaEntities())
-    {
+            {
+
                 db.Entry(orderline).State = EntityState.Added;
                 db.SaveChanges();
             }
+
+        }
+
+        public IEnumerable<OrderLine> GetOpenLinesTable(int tableId) 
+        {
+            using (var db = new kassaEntities())
+            {
+
+                return db.OrderLine.Where(o => o.Order.Status == 0 && o.Order.TafelId == tableId).ToList();
+            }
+
         }
     }
 }
