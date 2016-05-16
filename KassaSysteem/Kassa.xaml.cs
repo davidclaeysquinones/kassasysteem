@@ -26,6 +26,7 @@ namespace KassaSysteem
     {
         private ArticleService articleService;
         private OrderService orderService;
+        private OrderLineService orderlineService;
         private Tafel tafel;
         private Order orderTijdelijk;
         public Kassa(Tafel tafel)
@@ -93,7 +94,9 @@ namespace KassaSysteem
             }
             if (!dataGrid.Items.Contains(b))
             {
+                orderline.OrderId = orderTijdelijk.Id;
                 orderline.ArticleName = article.Name;
+                orderline.ArticleId = article.Id;
                 orderline.Amount = 1;
                 orderline.Price = article.Price;
                 orderline.OrderId = orderTijdelijk.Id;
@@ -110,9 +113,16 @@ namespace KassaSysteem
                     {
                         OrderLine oude = (OrderLine)dataGrid.Items.GetItemAt(i);
                         OrderLine nieuwe = new OrderLine();
+                        nieuwe.OrderId = oude.OrderId;
+                        Console.WriteLine("artikelid");
+                        Console.WriteLine(oude.ArticleId);
+                        Console.WriteLine("orderid:");
+                        Console.WriteLine(ol.OrderId);
+                        nieuwe.ArticleId = oude.ArticleId;
                         nieuwe.ArticleName = oude.ArticleName;
                         nieuwe.Amount = oude.Amount + 1;
                         nieuwe.Price = oude.Price;
+                        nieuwe.CreatedDate = oude.CreatedDate;
                         dataGrid.Items.RemoveAt(i);
                         dataGrid.Items.Add(nieuwe);
                         i = dataGrid.Items.Count;
@@ -150,9 +160,12 @@ namespace KassaSysteem
             {
                 OrderLine oude = (OrderLine)dataGrid.SelectedItem;
                 OrderLine nieuwe = new OrderLine();
+                nieuwe.OrderId = oude.OrderId;
+                nieuwe.ArticleId = oude.ArticleId;
                 nieuwe.ArticleName = oude.ArticleName;
                 nieuwe.Amount = oude.Amount + 1;
                 nieuwe.Price = oude.Price;
+                nieuwe.CreatedDate = oude.CreatedDate;
                 dataGrid.Items.Remove(oude);
                 dataGrid.Items.Add(nieuwe);
                 int index = dataGrid.SelectedIndex;
@@ -165,6 +178,8 @@ namespace KassaSysteem
             {
                 OrderLine oude = (OrderLine)dataGrid.SelectedItem;
                 OrderLine nieuwe = new OrderLine();
+                nieuwe.OrderId = oude.OrderId;
+                nieuwe.ArticleId = oude.ArticleId;
                 nieuwe.ArticleName = oude.ArticleName;
                 if(oude.Amount > 2)
                 {
@@ -175,6 +190,7 @@ namespace KassaSysteem
                     nieuwe.Amount = 1;
                 }
                 nieuwe.Price = oude.Price;
+                nieuwe.CreatedDate = oude.CreatedDate;
                 dataGrid.Items.Remove(oude);
                 dataGrid.Items.Add(nieuwe);
             }
@@ -182,7 +198,9 @@ namespace KassaSysteem
 
         private void btnBetalen_Click(object sender, RoutedEventArgs e)
         {
+            int id=0;
             orderService = new OrderService();
+            orderlineService = new OrderLineService();
 
             Order order = new Order();
             order.TafelId = tafel.Id;
@@ -191,10 +209,34 @@ namespace KassaSysteem
             order.Status = 1;
             if(order != null)
             {
-                orderService.Add(order);
+                id = orderService.Add(order);
+                Console.WriteLine("het orderid");
+                Console.WriteLine(id);
+            }
+            for(int i=0; i<dataGrid.Items.Count;i++)
+            {
+                OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
+                OrderLine nieuw = new OrderLine();
+                nieuw.OrderId = id;
+                nieuw.ArticleId = ol.ArticleId;
+                Console.WriteLine("het articleid");
+                Console.WriteLine(ol.ArticleId);
+                nieuw.ArticleName = ol.ArticleName;
+                nieuw.Amount = ol.Amount;
+                nieuw.Price = ol.Price;
+                nieuw.CreatedDate = ol.CreatedDate;
+
+                orderlineService.Add(nieuw);
             }
             
 
+        }
+
+        private void btnTerug_Click(object sender, RoutedEventArgs e)
+        {
+            Startscherm startscherm = new Startscherm(); //Create object of Page2
+            startscherm.Show(); //Show page2
+            this.Close(); //this will close Page1
         }
     }
 }

@@ -49,9 +49,7 @@
                 </Grid>
             </StackPanel>
         </ScrollViewer>
-        <Button Grid.Row="1" Grid.Column="0" Height="50" Width="70" Margin="-350,0,0,00">
-            Terug
-        </Button>
+        <Button Name="btnTerug" Grid.Row="1" Grid.Column="0" Height="50" Width="70" Margin="-350,0,0,00" Click="btnTerug_Click">Terug</Button>
 
         <DataGrid x:Name="dataGrid" Grid.Row="0" Grid.Column="1" CanUserReorderColumns="True" CanUserResizeColumns="True" 
           CanUserResizeRows="False" CanUserSortColumns="True">
@@ -59,6 +57,7 @@
                 <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding ArticleName}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Aantal" Width="75" Binding="{Binding Amount}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Prijs" Width="75" Binding="{Binding Price}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="test" Binding="{Binding ArticleId}" Visibility="Hidden"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Totaal" Width="*" ></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>

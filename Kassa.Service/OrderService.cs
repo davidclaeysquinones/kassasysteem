@@ -15,9 +15,9 @@ namespace Kassa.Service
         {
             orderDAO = new OrderDAO();
         }
-        public void Add(Order order)
+        public int Add(Order order)
         {
-            orderDAO.Add(order);
+            return orderDAO.Add(order);
         }
     }
 }
