@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="AdminTafels" Height="300" Width="300">
     <Grid>
-        <Canvas  Name="Tables">
+        <Canvas AllowDrop="True"  Name="Tables">
 
         </Canvas>
     </Grid>

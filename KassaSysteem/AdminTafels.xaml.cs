@@ -42,7 +42,7 @@ namespace KassaSysteem
                 b.Width = item.Width;
                 b.Height = item.Height;
                 b.Background = new SolidColorBrush(Colors.Red);
-                
+                b.AllowDrop = true;
                 b.Content = item.Name;
                 b.Tag = item;
                 Canvas.SetLeft(b, item.PositionX);
@@ -51,9 +51,8 @@ namespace KassaSysteem
             }
         }
 
-        private void PositionChanged(Object e)
-        {
-            
-        }
+
+
+
     }
 }

@@ -26,7 +26,7 @@ namespace Kassa.DAO
             using (var db = new kassaEntities())
             {
 
-                return db.OrderLine.Where(o => o.Order.Status == 0 && o.Order.TafelId == tableId).ToList();
+                return db.OrderLine.Where(o => o.Order.Status == 0 && o.Order.TafelId == tableId).Include( o=> o.Order).ToList();
             }
 
         }
