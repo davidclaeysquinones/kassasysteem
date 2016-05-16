@@ -10,12 +10,24 @@ namespace Kassa.DAO
 {
     public class OrderDAO
     {
-        public void Add(Order order)
+        private int id;
+
+        public int Add(Order order)
         {
             using (var db = new kassaEntities())
             {
                 db.Entry(order).State = EntityState.Added;
                 db.SaveChanges();
+
+                return id = order.Id;
+            }
+        }
+
+        public Order getOrder(int id)
+        {
+            using (var db = new kassaEntities())
+            {
+                return db.Order.Find(id);
             }
         }
     }
