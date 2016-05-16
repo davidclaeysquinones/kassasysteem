@@ -1,32 +1,24 @@
-﻿<Window x:Class="KassaSysteem.MainWindow"
+﻿<Window x:Class="KassaSysteem.Startscherm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid >
-        <Grid.DataContext>
-            <Binding Source=""></Binding>
-        </Grid.DataContext>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <ScrollViewer>
-                <Canvas Name="elements">
-                    <Canvas.LayoutTransform>
-                        <ScaleTransform ScaleX="{Binding ElementName=ZoomSlider, Path=Value}" 
-                                ScaleY="{Binding ElementName=ZoomSlider, Path=Value}"/>
-                    </Canvas.LayoutTransform>
-                </Canvas>
+        Title="Startscherm" Height="700" Width="900">
+    <Canvas Name="canvas" >
+        <!--<Rectangle Width="100" Height="100" Canvas.Left="50" Canvas.Top="50" Fill="Red"></Rectangle>
+        <Rectangle Width="100" Height="100" Canvas.Left="250" Canvas.Top="50" Fill="Red"></Rectangle>
+        <Rectangle Width="100" Height="100" Canvas.Left="450" Canvas.Top="50" Fill="Red"></Rectangle>
+        <Rectangle Width="100" Height="100" Canvas.Left="650" Canvas.Top="50" Fill="Red"></Rectangle>
+        <Rectangle Width="100" Height="100" Canvas.Left="175" Canvas.Top="250" Fill="Red"></Rectangle>
+        <Rectangle Width="100" Height="100" Canvas.Left="375" Canvas.Top="250" Fill="Red"></Rectangle>-->
 
-            </ScrollViewer>
-           
-        </Grid>
-
-        <Slider Grid.Row="1"  Name="ZoomSlider" Minimum="0.1" Maximum="10" Value="1"/>
-    </Grid>
+        <Rectangle Width="600" Height="100" Canvas.Bottom="50" Canvas.Left="75" Fill="Lavender">
+            
+        </Rectangle>
+        <StackPanel Width="900" Height="25" Canvas.Bottom="10">
+            <Slider Maximum="100" Height="25" TickPlacement="BottomRight" TickFrequency="5"></Slider>
+        </StackPanel>
+    </Canvas>
 </Window>

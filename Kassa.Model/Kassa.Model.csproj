@@ -76,7 +76,7 @@
       <DependentUpon>KassaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Table.cs">
+    <Compile Include="Tafel.cs">
       <DependentUpon>KassaEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -84,17 +84,18 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="KassaEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>KassaEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="KassaEntities.edmx.diagram">
       <DependentUpon>KassaEntities.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="KassaEntities.Context.tt">
@@ -107,9 +108,6 @@
       <DependentUpon>KassaEntities.edmx</DependentUpon>
       <LastGenOutput>KassaEntities.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

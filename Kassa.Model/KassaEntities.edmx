@@ -20,8 +20,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TableId" Type="int" Nullable="false" />
-          <Property Name="TableName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TafelId" Type="int" Nullable="false" />
+          <Property Name="TafelName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
@@ -37,7 +37,7 @@
           <Property Name="Amount" Type="int" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="Table">
+        <EntityType Name="Tafel">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -64,7 +64,7 @@
           <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderLine" EntityType="Self.OrderLine" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tafel" EntityType="Self.Tafel" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FKOrderLine150902" Association="Self.FKOrderLine150902">
             <End Role="Order" EntitySet="Order" />
             <End Role="OrderLine" EntitySet="OrderLine" />
@@ -90,8 +90,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TableId" Type="Int32" Nullable="false" />
-          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TafelId" Type="Int32" Nullable="false" />
+          <Property Name="TafelName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Status" Type="Int32" Nullable="false" />
           <NavigationProperty Name="OrderLine" Relationship="Self.FKOrderLine150902" FromRole="Order" ToRole="OrderLine" />
@@ -109,7 +109,7 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Order" Relationship="Self.FKOrderLine150902" FromRole="OrderLine" ToRole="Order" />
         </EntityType>
-        <EntityType Name="Table">
+        <EntityType Name="Tafel">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -136,7 +136,7 @@
           <EntitySet Name="Article" EntityType="Self.Article" />
           <EntitySet Name="Order" EntityType="Self.Order" />
           <EntitySet Name="OrderLine" EntityType="Self.OrderLine" />
-          <EntitySet Name="Table" EntityType="Self.Table" />
+          <EntitySet Name="Tafel" EntityType="Self.Tafel" />
           <AssociationSet Name="FKOrderLine150902" Association="Self.FKOrderLine150902">
             <End Role="Order" EntitySet="Order" />
             <End Role="OrderLine" EntitySet="OrderLine" />
@@ -163,8 +163,8 @@
             <EntityTypeMapping TypeName="kassaModel.Order">
               <MappingFragment StoreEntitySet="Order">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TableId" ColumnName="TableId" />
-                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="TafelId" ColumnName="TafelId" />
+                <ScalarProperty Name="TafelName" ColumnName="TafelName" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
@@ -183,9 +183,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Table">
-            <EntityTypeMapping TypeName="kassaModel.Table">
-              <MappingFragment StoreEntitySet="Table">
+          <EntitySetMapping Name="Tafel">
+            <EntityTypeMapping TypeName="kassaModel.Tafel">
+              <MappingFragment StoreEntitySet="Tafel">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="PositionX" ColumnName="PositionX" />

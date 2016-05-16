@@ -64,25 +64,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Kassa.xaml">
+    <Compile Include="Startscherm.xaml.cs">
+      <DependentUpon>Startscherm.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Detailscherm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StartScherm.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Kassa.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Detailscherm.xaml.cs">
+      <DependentUpon>Detailscherm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Kassa.xaml.cs">
       <DependentUpon>Kassa.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StartScherm.xaml.cs">
-      <DependentUpon>StartScherm.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="Startscherm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

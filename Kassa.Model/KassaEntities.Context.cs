@@ -28,6 +28,6 @@ namespace Kassa.Model
         public virtual DbSet<Article> Article { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderLine> OrderLine { get; set; }
-        public virtual DbSet<Table> Table { get; set; }
+        public virtual DbSet<Tafel> Tafel { get; set; }
     }
 }

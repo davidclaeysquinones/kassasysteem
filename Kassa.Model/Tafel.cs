@@ -12,7 +12,7 @@ namespace Kassa.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Table
+    public partial class Tafel
     {
         public int Id { get; set; }
         public string Name { get; set; }

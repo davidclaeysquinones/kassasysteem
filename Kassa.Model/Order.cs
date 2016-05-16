@@ -21,8 +21,8 @@ namespace Kassa.Model
         }
     
         public int Id { get; set; }
-        public int TableId { get; set; }
-        public string TableName { get; set; }
+        public int TafelId { get; set; }
+        public string TafelName { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public int Status { get; set; }
     
