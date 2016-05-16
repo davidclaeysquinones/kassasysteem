@@ -19,5 +19,9 @@ namespace Kassa.Service
         {
             orderlineDAO.Add(orderline);
         }
+        public IEnumerable<OrderLine> GetOpenLinesTable(int tableId)
+        {
+            return orderlineDAO.GetOpenLinesTable(tableId);
+        }
     }
 }
