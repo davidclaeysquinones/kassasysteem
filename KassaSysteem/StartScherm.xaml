@@ -6,19 +6,17 @@
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
         Title="Startscherm" Height="700" Width="900">
-    <Canvas Name="canvas" >
-        <!--<Rectangle Width="100" Height="100" Canvas.Left="50" Canvas.Top="50" Fill="Red"></Rectangle>
-        <Rectangle Width="100" Height="100" Canvas.Left="250" Canvas.Top="50" Fill="Red"></Rectangle>
-        <Rectangle Width="100" Height="100" Canvas.Left="450" Canvas.Top="50" Fill="Red"></Rectangle>
-        <Rectangle Width="100" Height="100" Canvas.Left="650" Canvas.Top="50" Fill="Red"></Rectangle>
-        <Rectangle Width="100" Height="100" Canvas.Left="175" Canvas.Top="250" Fill="Red"></Rectangle>
-        <Rectangle Width="100" Height="100" Canvas.Left="375" Canvas.Top="250" Fill="Red"></Rectangle>-->
 
+    <Canvas Name="canvas" >
+        
         <Rectangle Width="600" Height="100" Canvas.Bottom="50" Canvas.Left="75" Fill="Lavender">
-            
+
         </Rectangle>
         <StackPanel Width="900" Height="25" Canvas.Bottom="10">
-            <Slider Maximum="100" Height="25" TickPlacement="BottomRight" TickFrequency="5"></Slider>
+            <Slider Maximum="100" Height="25" TickPlacement="BottomRight" TickFrequency="5" Name="Slider"></Slider>
         </StackPanel>
-    </Canvas>
+        <Button Click="GoToAdmin">Admin</Button>
+        
+        </Canvas>
+
 </Window>

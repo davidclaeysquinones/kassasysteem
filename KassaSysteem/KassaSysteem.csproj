@@ -64,9 +64,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdminScherm.xaml.cs">
+      <DependentUpon>AdminScherm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AdminTafels.xaml.cs">
+      <DependentUpon>AdminTafels.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Startscherm.xaml.cs">
       <DependentUpon>Startscherm.xaml</DependentUpon>
     </Compile>
+    <Page Include="AdminScherm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdminTafels.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Detailscherm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -8,5 +8,6 @@ namespace Kassa.DAO
 {
     class OrderLineDAO
     {
+
     }
 }

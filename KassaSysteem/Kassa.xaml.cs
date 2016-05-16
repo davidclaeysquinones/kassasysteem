@@ -87,7 +87,7 @@ namespace KassaSysteem
             if (dataGrid.Items.Count == -1)
             {
                 orderTijdelijk.Status = 0;
-                orderTijdelijk.CreatedDate = DateTime.Now;
+                orderTijdelijk.CreatedDate = new DateTime(DateTime.Now.Month,DateTime.Now.Day,DateTime.Now.Year,DateTime.Now.Hour,DateTime.Now.Minute,DateTime.Now.Second);
                 orderTijdelijk.TafelId = tafel.Id;
                 orderTijdelijk.TafelName = tafel.Name;
             }
@@ -195,6 +195,13 @@ namespace KassaSysteem
             }
             
 
+        }
+
+        private void ButtonBack_OnClick(object sender, RoutedEventArgs e)
+        {
+            Startscherm start = new Startscherm();
+            start.Show(); //Show page2
+            this.Close(); //this will close Page1
         }
     }
 }

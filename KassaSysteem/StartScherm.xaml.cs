@@ -130,5 +130,12 @@ namespace KassaSysteem
             kassa.Show(); //Show page2
             this.Close(); //this will close Page1
         }
+
+        private void GoToAdmin(object sender, RoutedEventArgs e)
+        {
+            AdminScherm admin = new AdminScherm();
+            admin.Show();
+            this.Close();
+        }
     }
 }
