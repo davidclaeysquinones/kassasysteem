@@ -27,5 +27,9 @@ namespace Kassa.Service
         {
             orderlineDAO.Remove(orderline);
         }
+        public void Update(OrderLine orderline)
+        {
+            orderlineDAO.Update(orderline);
+        }
     }
 }

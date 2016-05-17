@@ -37,5 +37,13 @@ namespace Kassa.DAO
                 db.SaveChanges();
             }
         }
+        public void Update(OrderLine orderline)
+        {
+            using (var db = new kassaEntities())
+            {
+                db.Entry(orderline).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
     }
 }

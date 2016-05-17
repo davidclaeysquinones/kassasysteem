@@ -19,5 +19,9 @@ namespace Kassa.Service
         {
             return orderDAO.Add(order);
         }
+        public int OrderExists(int tafelId)
+        {
+            return orderDAO.OrderExists(tafelId);
+        }
     }
 }
