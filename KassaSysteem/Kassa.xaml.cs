@@ -29,18 +29,25 @@ namespace KassaSysteem
         private OrderLineService orderlineService;
         private Tafel tafel;
         private Order orderTijdelijk;
+        private IEnumerable<OrderLine> orderlines;
         public Kassa(Tafel tafel)
         {
+            articleService = new ArticleService();
+            orderService = new OrderService();
+            orderlineService = new OrderLineService();
             this.tafel = tafel;
             InitializeComponent();
             vulGrid();
             btnMin.IsEnabled = false;
             btnPlus.IsEnabled = false;
+            IEnumerable<OrderLine> orderlines = orderlineService.GetOpenLinesTable(tafel.Id);
+            vulDataGridMetCorrecteOrderLines(orderlines);
+            
         }
 
         public void vulGrid()
         {
-            articleService = new ArticleService();
+            
             int atlArtikelen = articleService.getAantal();
 
             int aantalRijen = atlArtikelen / 4;
@@ -198,36 +205,36 @@ namespace KassaSysteem
 
         private void btnBetalen_Click(object sender, RoutedEventArgs e)
         {
-            int id=0;
-            orderService = new OrderService();
-            orderlineService = new OrderLineService();
+            //int id=0;
+            //orderService = new OrderService();
+            //orderlineService = new OrderLineService();
 
-            Order order = new Order();
-            order.TafelId = tafel.Id;
-            order.TafelName = tafel.Name;
-            order.CreatedDate = orderTijdelijk.CreatedDate;
-            order.Status = 1;
-            if(order != null)
-            {
-                id = orderService.Add(order);
-                Console.WriteLine("het orderid");
-                Console.WriteLine(id);
-            }
-            for(int i=0; i<dataGrid.Items.Count;i++)
-            {
-                OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
-                OrderLine nieuw = new OrderLine();
-                nieuw.OrderId = id;
-                nieuw.ArticleId = ol.ArticleId;
-                Console.WriteLine("het articleid");
-                Console.WriteLine(ol.ArticleId);
-                nieuw.ArticleName = ol.ArticleName;
-                nieuw.Amount = ol.Amount;
-                nieuw.Price = ol.Price;
-                nieuw.CreatedDate = ol.CreatedDate;
+            //Order order = new Order();
+            //order.TafelId = tafel.Id;
+            //order.TafelName = tafel.Name;
+            //order.CreatedDate = orderTijdelijk.CreatedDate;
+            //order.Status = 1;
+            //if(order != null)
+            //{
+            //    id = orderService.Add(order);
+            //    Console.WriteLine("het orderid");
+            //    Console.WriteLine(id);
+            //}
+            //for(int i=0; i<dataGrid.Items.Count;i++)
+            //{
+            //    OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
+            //    OrderLine nieuw = new OrderLine();
+            //    nieuw.OrderId = id;
+            //    nieuw.ArticleId = ol.ArticleId;
+            //    Console.WriteLine("het articleid");
+            //    Console.WriteLine(ol.ArticleId);
+            //    nieuw.ArticleName = ol.ArticleName;
+            //    nieuw.Amount = ol.Amount;
+            //    nieuw.Price = ol.Price;
+            //    nieuw.CreatedDate = ol.CreatedDate;
 
-                orderlineService.Add(nieuw);
-            }
+            //    orderlineService.Add(nieuw);
+            //}
             
 
         }
@@ -235,9 +242,87 @@ namespace KassaSysteem
 
         private void ButtonBack_OnClick(object sender, RoutedEventArgs e)
         {
+            int id = 0;
+
+            if(orderlines != null)
+            {
+                for (int i = 0; i <= dataGrid.Items.Count; i++)
+                {
+                    OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
+                    orderlineService.Remove(ol);
+                    dataGrid.Items.Remove(dataGrid.SelectedItems[i]);
+                }
+            }
+            
+            if (orderlines == null)
+            {
+                Order order = new Order();
+                order.TafelId = tafel.Id;
+                order.TafelName = tafel.Name;
+                order.CreatedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                order.Status = 0;
+                if (order != null)
+                {
+                    id = orderService.Add(order);
+                    Console.WriteLine("het orderid");
+                    Console.WriteLine(id);
+                }
+                for (int i = 0; i < dataGrid.Items.Count; i++)
+                {
+                    OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
+                    OrderLine nieuw = new OrderLine();
+                    nieuw.OrderId = id;
+                    nieuw.ArticleId = ol.ArticleId;
+                    Console.WriteLine("het articleid");
+                    Console.WriteLine(ol.ArticleId);
+                    nieuw.ArticleName = ol.ArticleName;
+                    nieuw.Amount = ol.Amount;
+                    nieuw.Price = ol.Price;
+                    nieuw.CreatedDate = ol.CreatedDate;
+
+                    orderlineService.Add(nieuw);
+                }
+            }
+
             Startscherm startscherm = new Startscherm(); //Create object of Page2
             startscherm.Show(); //Show page2
             this.Close(); //this will close Page1
         }
+
+        private void vulDataGridMetCorrecteOrderLines(IEnumerable<OrderLine> orderlines)
+        {
+            int aantal = orderlines.Count();
+
+            
+            for (int i = 0; i < aantal; i++)
+            {
+                OrderLine oude = orderlines.ElementAt(i);
+                OrderLine ol = new OrderLine();
+                ol.OrderId = oude.OrderId;
+                ol.ArticleId = oude.ArticleId;
+                ol.ArticleName = oude.ArticleName;
+                ol.Amount = oude.Amount;
+                ol.Price = oude.Price;
+                ol.CreatedDate = oude.CreatedDate;
+
+                dataGrid.Items.Add(ol);
+            }
+            btnPlus.IsEnabled = true;
+            btnMin.IsEnabled = true;
+        }
+
+
+
+
     }
 }
+
+
+
+
+
+
+//TO DO:
+//tijdens back knop, indien lijst null is, niets doen, indien lijst veranderd => updaten
+//keuze: niets doen, updaten, indien nieuwe elementen => deze toevoegen
+

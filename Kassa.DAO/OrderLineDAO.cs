@@ -28,7 +28,14 @@ namespace Kassa.DAO
 
                 return db.OrderLine.Where(o => o.Order.Status == 0 && o.Order.TafelId == tableId).Include( o=> o.Order).ToList();
             }
-
+        }
+        public void Remove(OrderLine orderline)
+        {
+            using (var db = new kassaEntities())
+            {
+                db.Entry(orderline).State = EntityState.Deleted;
+                db.SaveChanges();
+            }
         }
     }
 }
