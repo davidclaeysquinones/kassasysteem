@@ -25,5 +25,15 @@ namespace Kassa.Service
         {
             return tafelDAO.All();
         }
+
+        public void Update(Tafel tafel)
+        {
+            tafelDAO.Update(tafel);
+        }
+
+        public void Delete(Tafel tafel)
+        {
+            tafelDAO.Delete(tafel);
+        }
     }
 }

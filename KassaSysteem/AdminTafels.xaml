@@ -5,10 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
-        Title="AdminTafels" Height="300" Width="300">
+        Title="AdminTafels" Height="700" Width="900">
+    
     <Grid>
-        <Canvas AllowDrop="True"  Name="Tables">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="30"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Canvas AllowDrop="True" Grid.Row="0"   MaxHeight="500" MaxWidth="900"  Name="Tables" Grid.Column="0">
 
         </Canvas>
+        <Button Click="SaveChanges" Grid.Column="1" Grid.Row="0">Save</Button>
+        <Grid Grid.Row="1" ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+                <Label >X - position :</Label>
+                <TextBox Name="xposition" TextChanged="X_position_OnTextChanged" Width="100" ></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+                <Label Grid.Row="1" Grid.Column="0">X - position :</Label>
+                <TextBox Name="yposition" TextChanged="Y_position_OnTextChanged" Width="100"></TextBox>
+            </StackPanel>
+            <Button Grid.Row="0" Grid.Column="2" Click="addTable">New Table</Button>
+            <Button Grid.Row="1" Grid.Column="2" Click="deleteTable">Delete</Button>
+            <Grid Grid.Column="1" Name="NewTable" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*" >
+                    </ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <Label>Artikelnaam</Label>
+                    <TextBox Name="artikelNaam" Width="199" TextChanged="ArtikelNaam_OnTextChanged"></TextBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
