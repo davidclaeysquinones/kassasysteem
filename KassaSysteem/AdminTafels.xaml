@@ -33,11 +33,11 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
                 <Label >X - position :</Label>
-                <TextBox Name="xposition" TextChanged="X_position_OnTextChanged" Width="100" ></TextBox>
+                <TextBox Name="xposition" TextChanged="X_position_OnTextChanged" MaxLength="5" Width="100" ></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
-                <Label Grid.Row="1" Grid.Column="0">X - position :</Label>
-                <TextBox Name="yposition" TextChanged="Y_position_OnTextChanged" Width="100"></TextBox>
+                <Label Grid.Row="1" Grid.Column="0">Y - position :</Label>
+                <TextBox Name="yposition" TextChanged="Y_position_OnTextChanged"  MaxLength="5" Width="100"></TextBox>
             </StackPanel>
             <Button Grid.Row="0" Grid.Column="2" Click="addTable">New Table</Button>
             <Button Grid.Row="1" Grid.Column="2" Click="deleteTable">Delete</Button>
@@ -49,7 +49,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Column="1">
                     <Label>Artikelnaam</Label>
-                    <TextBox Name="artikelNaam" Width="199" TextChanged="ArtikelNaam_OnTextChanged"></TextBox>
+                    <TextBox Name="artikelNaam" Width="199" TextChanged="ArtikelNaam_OnTextChanged" MaxLength="30"></TextBox>
                 </StackPanel>
             </Grid>
         </Grid>

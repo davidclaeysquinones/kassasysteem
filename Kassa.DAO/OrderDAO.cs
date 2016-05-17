@@ -30,5 +30,14 @@ namespace Kassa.DAO
                 return db.Order.Find(id);
             }
         }
+
+        public Boolean OrderExists(int tafelId)
+        {
+            using (var db = new kassaEntities())
+            {
+                Order order = db.Order.FirstOrDefault(o => o.TafelId == tafelId && o.Status == 0);
+                return order != null;
+            }
+        }
     }
 }

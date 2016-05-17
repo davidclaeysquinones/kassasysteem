@@ -80,15 +80,24 @@ namespace KassaSysteem
             Button b = (Button) sender;
             Tafel item = (Tafel)b.Tag;
             huidig = b;
+            huidig.Background= new SolidColorBrush(Colors.Blue);
             xposition.Text = item.PositionX.ToString();
             yposition.Text = item.PositionY.ToString();
             artikelNaam.Text = item.Name;
+            foreach (Button itemB in Tables.Children)
+            {
+                if (itemB != huidig)
+                {
+                    itemB.Background = new SolidColorBrush(Colors.Red);
+                }
+            }
+            Console.WriteLine("Click");
         }
 
         private void X_position_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
-            if (!(Regex.IsMatch(t.Text, @"\D+?")))
+            if (!(Regex.IsMatch(t.Text, @"\D+?")) && !t.Text.Equals(""))
             {
                 if (huidig != null)
                 {
@@ -96,6 +105,7 @@ namespace KassaSysteem
                     int x = Convert.ToInt32(t.Text);
                     if (x <= Tables.MaxWidth)
                     {
+                        Console.WriteLine(MaxWidth);
                         tafel.PositionX = x;
                         huidig.Tag = tafel;
                         Tables.Children.Remove(huidig);
@@ -111,19 +121,29 @@ namespace KassaSysteem
                 }
                 else
                 {
-                    xposition.Text = "";
+
+                        xposition.Text = "";
+
+                   
                 }
             }
             else
             {
                 if (huidig != null)
                 {
-                    Tafel tafel = (Tafel) huidig.Tag;
-                    xposition.Text = tafel.PositionX.ToString();
+
+                    if (!t.Text.Equals(""))
+                    {
+                        Tafel tafel = (Tafel)huidig.Tag;
+                        xposition.Text = tafel.PositionX.ToString();
+                    }
                 }
                 else
                 {
-                    xposition.Text = "";
+
+                        xposition.Text = "";
+
+                    
                 }
             }
            
@@ -132,7 +152,7 @@ namespace KassaSysteem
         private void Y_position_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
-            if (!(Regex.IsMatch(t.Text, @"\D+?")))
+            if (!(Regex.IsMatch(t.Text, @"\D+?")) && !t.Text.Equals(""))
             {
                 if (huidig != null)
                 {
@@ -149,7 +169,9 @@ namespace KassaSysteem
                     }
                     else
                     {
-                        yposition.Text = "";
+                       
+                            yposition.Text = "";
+
                     }
                     
 
@@ -164,14 +186,19 @@ namespace KassaSysteem
                 if (huidig != null)
                 {
 
+                    if (!t.Text.Equals(""))
+                    {
+                        Tafel tafel = (Tafel)huidig.Tag;
+                        yposition.Text = tafel.PositionY.ToString();
+                    }
 
-                    Tafel tafel = (Tafel)huidig.Tag;
-                    yposition.Text = tafel.PositionY.ToString();
                 }
                 else
                 {
                     yposition.Text = "";
                 }
+
+                  
             }
         }
 
@@ -212,7 +239,16 @@ namespace KassaSysteem
 
         private void addTable(object sender, RoutedEventArgs e)
         {
-           
+            Console.WriteLine("add table");
+           huidig = new Button();
+            Tafel tafel = new Tafel();
+            tafel.Name = "New table";
+            tafel.PositionX = 0;
+            tafel.PositionY = 0;
+            huidig.Tag = tafel;
+            Tables.Children.Add(huidig);
+            Canvas.SetLeft(huidig, tafel.PositionX);
+            Canvas.SetTop(huidig, tafel.PositionY);
         }
 
         private void ArtikelNaam_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -224,17 +260,19 @@ namespace KassaSysteem
                         Tafel tafel = (Tafel)huidig.Tag;
                         tafel.Name = t.Text;                    
                         huidig.Tag = tafel;
+                        huidig.Content = tafel.Name;
                         Tables.Children.Remove(huidig);
                         Tables.Children.Add(huidig);
                         Canvas.SetLeft(huidig, tafel.PositionX);
                         Canvas.SetTop(huidig, tafel.PositionY);
+                        artikelNaam.Text = t.Text;
 
 
 
                 }
                 else
                 {
-                    yposition.Text = "";
+                    artikelNaam.Text = "";
                 }
             
        
