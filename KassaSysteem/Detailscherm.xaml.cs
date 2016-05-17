@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Kassa.Model;
+using Kassa.Service;
 
 namespace KassaSysteem
 {
@@ -19,9 +21,43 @@ namespace KassaSysteem
     /// </summary>
     public partial class Detailscherm : Window
     {
-        public Detailscherm()
+        private Order order;
+        private OrderService orderService;
+        private OrderLineService orderlineService;
+        private IEnumerable<OrderLine> orderlines;
+        public Detailscherm(Order order)
         {
+            this.order = order;
+            orderService = new OrderService();
+            orderlineService = new OrderLineService();
             InitializeComponent();
+            vulGrid();
+        }
+
+        public void vulGrid()
+        {
+            Console.WriteLine(order.TafelName);
+            lblTafelnaam.Content = "Tafel: " + order.TafelName;
+            orderlines = orderlineService.GetAllOrderlinesFromOrder(order.Id);
+
+            foreach (var item in orderlines)
+            {
+                dataGrid.Items.Add(item);
+            }
+
+            //for (int i = 0; i < aantal; i++)
+            //{
+            //    OrderLine oude = orderlines.ElementAt(i);
+            //    OrderLine ol = new OrderLine();
+            //    ol.OrderId = oude.OrderId;
+            //    ol.ArticleId = oude.ArticleId;
+            //    ol.ArticleName = oude.ArticleName;
+            //    ol.Amount = oude.Amount;
+            //    ol.Price = oude.Price;
+            //    ol.CreatedDate = oude.CreatedDate;
+
+            //    lvLijst.Items.Add(ol);
+            //}
         }
     }
 }
