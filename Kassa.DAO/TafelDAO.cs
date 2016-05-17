@@ -50,5 +50,16 @@ namespace Kassa.DAO
                 db.SaveChanges();
             }
         }
+
+        public void Add(Tafel tafel)
+        {
+            using (var db = new kassaEntities())
+            {
+                db.Tafel.Attach(tafel);
+                var entry = db.Entry(tafel);
+                entry.State = EntityState.Added;
+                db.SaveChanges();
+            }
+        }
     }
 }

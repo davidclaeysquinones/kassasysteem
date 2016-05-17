@@ -35,5 +35,10 @@ namespace Kassa.Service
         {
             tafelDAO.Delete(tafel);
         }
+
+        public void Add(Tafel tafel)
+        {
+            tafelDAO.Add(tafel);
+        }
     }
 }
