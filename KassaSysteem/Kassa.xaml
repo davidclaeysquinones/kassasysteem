@@ -59,7 +59,7 @@
                 <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding ArticleName}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Aantal" Width="75" Binding="{Binding Amount}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Prijs" Width="75" Binding="{Binding Price}"></DataGridTextColumn>
-                <DataGridTextColumn  Header="Totaal" Width="*" Binding="{Binding Price * Binding Amount}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Totaal" Width="*" Binding="{Binding Total}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 

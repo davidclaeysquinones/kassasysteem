@@ -18,5 +18,8 @@
                 <DataGridTextColumn  Header="Totaal" Width="*" Binding="{Binding Price * Binding Amount}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
+
+        <Button Name="btnAfronden" Width="150" Height="50" Margin="400,0,0,0" Click="btnAfronden_Click">Afronden</Button>
+        
     </Grid>
 </Window>
