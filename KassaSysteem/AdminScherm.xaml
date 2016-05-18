@@ -15,8 +15,9 @@
     <Grid>
             <StackPanel>
             <Button Click="Click_Tafels">Tafels</Button>
-            <Button >Artikelen</Button>
+            <Button Click="Click_Artikelen">Artikelen</Button>
             <Button >Orders</Button>
+            <Button Click="Click_Back">Back</Button>
         </StackPanel>
            
      

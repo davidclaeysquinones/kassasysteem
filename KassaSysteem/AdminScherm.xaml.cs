@@ -30,5 +30,19 @@ namespace KassaSysteem
             tafels.Show(); //Show page2
             this.Close(); //this will close Page1
         }
+
+        private void Click_Back(object sender, RoutedEventArgs e)
+        {
+            Startscherm startscherm = new Startscherm();
+            startscherm.Show();
+            this.Close(); //this will close Page1
+        }
+
+        private void Click_Artikelen(object sender, RoutedEventArgs e)
+        {
+            AdminArtikelen adminArtikelen = new AdminArtikelen();
+            adminArtikelen.Show();
+            this.Close();
+        }
     }
 }

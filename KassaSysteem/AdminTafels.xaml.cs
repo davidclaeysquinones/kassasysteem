@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -93,6 +94,23 @@ namespace KassaSysteem
         {
             Console.WriteLine("mouse enter");
             pressed = true;
+
+            Button b = (Button)sender;
+            Tafel item = (Tafel)b.Tag;
+            huidig = b;
+            huidig.Background = new SolidColorBrush(Colors.Blue);
+            xposition.Text = item.PositionX.ToString();
+            yposition.Text = item.PositionY.ToString();
+            Height.Text = item.Height.ToString();
+            Width.Text = item.Width.ToString();
+            artikelNaam.Text = item.Name;
+            foreach (Button itemB in Tables.Children)
+            {
+                if (itemB != huidig)
+                {
+                    itemB.Background = new SolidColorBrush(Colors.Red);
+                }
+            }
         }
 
         private void mouseUp(Object sender, MouseEventArgs args)
@@ -129,11 +147,29 @@ namespace KassaSysteem
                         tafel.PositionX = (int)xmove;
                         Canvas.SetLeft(b, tafel.PositionX);
                     }
+                    else
+                    {
+                        if (xmove >= 0)
+                        {
+                            tafel.PositionX = maxWidth;
+                            Canvas.SetLeft(b, tafel.PositionX);
+                        }
+
+                    }
 
                     if (ymove >= 0 && ymove <= maxHeight)
                     {
                         tafel.PositionY = (int)ymove;
                         Canvas.SetTop(b, tafel.PositionY);
+                    }
+                    else
+                    {
+                        if (ymove >= 0)
+                        {
+                            tafel.PositionY = maxHeight;
+                            Canvas.SetTop(b, tafel.PositionY);
+                        }
+                       
                     }
 
                     Tables.Children.Add(b);
@@ -147,8 +183,7 @@ namespace KassaSysteem
 
         private void setTable(Object sender, RoutedEventArgs e)
         {
-            //if (!pressed)
-            //{
+          
                 Button b = (Button)sender;
                 Tafel item = (Tafel)b.Tag;
                 huidig = b;
@@ -166,7 +201,8 @@ namespace KassaSysteem
                     }
                 }
                 Console.WriteLine("Click");
-        //}
+           
+                
     }
 
         private void X_position_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -417,7 +453,8 @@ namespace KassaSysteem
                 {
                     Tafel tafel = (Tafel)huidig.Tag;
                     int width = Convert.ToInt32(Width.Text);
-                    if (width <= maxWidth)
+                    double x =Canvas.GetLeft(huidig);
+                    if ((width+x) <= maxWidth)
                     {
                         Console.WriteLine(MaxWidth);
                         tafel.Width = width;
@@ -483,7 +520,83 @@ namespace KassaSysteem
 
         private void Height_OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            TextBox t = (TextBox)sender;
+            if (!(Regex.IsMatch(t.Text, @"\D+?")) && !t.Text.Equals(""))
+            {
+                if (huidig != null)
+                {
+                    Tafel tafel = (Tafel)huidig.Tag;
+                    int height = Convert.ToInt32(Height.Text);
+                    double y = Canvas.GetTop(huidig);
+                    if ((height+y) <= maxHeight)
+                    {
+                        Console.WriteLine(maxHeight);
+                        tafel.Height = height;
+                        huidig.Tag = tafel;
+                        huidig.Height = height;
+                        Tables.Children.Remove(huidig);
+                        Tables.Children.Add(huidig);
+                        Canvas.SetLeft(huidig, tafel.PositionX);
+                        Canvas.SetTop(huidig, tafel.PositionY);
+                        if (!add.Contains(tafel))
+                        {
+                            if (update.Contains(tafel))
+                            {
+                                update.Remove(tafel);
+                                update.Add(tafel);
+                            }
+                            else
+                            {
+                                update.Add(tafel);
+                            }
+                        }
+                        else
+                        {
+                            add.Remove(tafel);
+                            add.Add(tafel);
+                        }
 
+                    }
+                    else
+                    {
+                        Height.Text = "";
+                    }
+
+                }
+                else
+                {
+
+                    Height.Text = "";
+
+
+                }
+            }
+            else
+            {
+                if (huidig != null)
+                {
+
+                    if (!t.Text.Equals(""))
+                    {
+                        Tafel tafel = (Tafel)huidig.Tag;
+                        Height.Text = tafel.Height.ToString();
+                    }
+                }
+                else
+                {
+
+                    Height.Text = "";
+
+
+                }
+            }
+        }
+
+        private void back_onclick(object sender, RoutedEventArgs e)
+        {
+            AdminScherm adminScherm = new AdminScherm();
+            adminScherm.Show(); //Show page2
+            this.Close(); //this will close Page1
         }
     }
 }

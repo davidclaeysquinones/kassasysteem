@@ -25,5 +25,20 @@ namespace Kassa.Service
         {
             return articleDAO.All();
         }
+
+        public void Update(Article article)
+        {
+            articleDAO.Update(article);
+        }
+
+        public void Delete(Article article)
+        {
+            articleDAO.Delete(article);
+        }
+
+        public void Add(Article article)
+        {
+            articleDAO.Add(article);
+        }
     }
 }

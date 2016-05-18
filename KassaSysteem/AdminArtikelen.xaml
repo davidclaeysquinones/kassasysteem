@@ -1,0 +1,46 @@
+﻿<Window x:Class="KassaSysteem.AdminArtikelen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KassaSysteem"
+        mc:Ignorable="d"
+        Title="AdminArtikelen" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" MinHeight="50">
+            <DataGrid Name="Artikelen" SelectionMode="Single"  BeginningEdit="Artikelen_OnBeginningEdit" SelectedCellsChanged="selection_changed">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Naam" Width="*" Binding="{Binding Name}"></DataGridTextColumn>
+                    <DataGridTextColumn  Header="Prijs" Width="*" Binding="{Binding Price}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical" Grid.Column="1" >
+                <Button>New</Button>
+                <Button Click="Delete_Article">Delete</Button>
+                <Button Click="Save_Changes">Save</Button>
+                <Button Click="back">Back</Button>
+            </StackPanel>
+            <StackPanel Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <Label>Name</Label>
+                    <TextBox Name="Name" Width="150" TextChanged="Name_Changed" MaxLength="30"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="42">Price</Label>
+                    <TextBox Width="150" Name="Price" TextChanged="Price_Changed" MaxLength="5"></TextBox>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        
+    </Grid>
+</Window>
