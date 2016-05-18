@@ -186,6 +186,7 @@ namespace KassaSysteem
 
             btnPlus.IsEnabled = true;
             btnMin.IsEnabled = true;
+            veranderTotaalBedrag();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -197,6 +198,7 @@ namespace KassaSysteem
                 OrderLine nieuw = vanViewNaarOrderline(tijdelijk);
                 verwijderenOrderlines.Add(nieuw);
             }
+            veranderTotaalBedrag();
         }
 
         private void btnPlus_Click(object sender, RoutedEventArgs e)
@@ -220,6 +222,7 @@ namespace KassaSysteem
                     updatenOrderlines.Add(nieuwe);
                 }
             }
+            veranderTotaalBedrag();
         }
 
         private void btnMin_Click(object sender, RoutedEventArgs e)
@@ -249,6 +252,7 @@ namespace KassaSysteem
                 }
               
             }
+            veranderTotaalBedrag();
         }
 
         private void btnBetalen_Click(object sender, RoutedEventArgs e)
@@ -535,6 +539,17 @@ namespace KassaSysteem
             huidigeView.Total = huidigeOrderline.Amount * huidigeOrderline.Price;
 
             return huidigeOrderline;
+        }
+
+        private void veranderTotaalBedrag()
+        {
+            float prijs = 0;
+            for(int i = 0; i<dataGrid.Items.Count; i++)
+            {
+                OrderlineViewModel line = (OrderlineViewModel)dataGrid.Items.GetItemAt(i);
+                prijs += line.Total;
+            }
+            lblTotaal.Content = "Totaalprijs: €" +prijs;
         }
 
 

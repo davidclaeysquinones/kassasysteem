@@ -63,7 +63,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Grid.Row="1" Grid.Column="1" FontSize="25">Totaal:</Label>
+        <Label Name="lblTotaal" Grid.Row="1" Grid.Column="1" FontSize="25">Totaal:</Label>
 
         <Button Name="btnPlus" Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-250,-50,0,0" Click="btnPlus_Click">+1</Button>
         <Button Name="btnMin" Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-100,-50,0,0" Click="btnMin_Click">-1</Button>

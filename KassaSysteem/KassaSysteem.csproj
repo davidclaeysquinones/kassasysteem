@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdminOrders.xaml.cs">
+      <DependentUpon>AdminOrders.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminScherm.xaml.cs">
       <DependentUpon>AdminScherm.xaml</DependentUpon>
     </Compile>
@@ -74,6 +77,10 @@
       <DependentUpon>Startscherm.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\OrderlineViewModel.cs" />
+    <Page Include="AdminOrders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminScherm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
