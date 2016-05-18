@@ -19,5 +19,21 @@ namespace Kassa.Service
         {
             return orderDAO.Add(order);
         }
+        public int OrderExists(int tafelId)
+        {
+            return orderDAO.OrderExists(tafelId);
+        }
+        public Order getOrderObject(int orderId)
+        {
+            return orderDAO.getOrderObject(orderId);
+        }
+        public void Remove(Order order)
+        {
+            orderDAO.Remove(order);
+        }
+        public void Update(Order order)
+        {
+            orderDAO.Update(order);
+        }
     }
 }

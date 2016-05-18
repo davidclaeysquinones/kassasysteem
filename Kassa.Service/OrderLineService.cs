@@ -23,9 +23,21 @@ namespace Kassa.Service
         {
             return orderlineDAO.GetOpenLinesTable(tableId);
         }
+        public IEnumerable<OrderLine> GetAllOrderlinesFromOrder(int orderId)
+        {
+            return orderlineDAO.GetAllOrderlinesFromOrder(orderId);
+        }
         public void Remove(OrderLine orderline)
         {
             orderlineDAO.Remove(orderline);
+        }
+        public void Update(OrderLine orderline)
+        {
+            orderlineDAO.Update(orderline);
+        }
+        public int GetId(int orderId, int artikelId)
+        {
+            return orderlineDAO.GetId(orderId, artikelId);
         }
     }
 }

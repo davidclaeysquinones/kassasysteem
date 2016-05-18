@@ -29,19 +29,25 @@ namespace KassaSysteem
         private OrderLineService orderlineService;
         private Tafel tafel;
         private Order orderTijdelijk;
-        private IEnumerable<OrderLine> orderlines;
+        private IEnumerable<OrderLine> oudeOrderlines;
+        private List<OrderLine> toevoegenOrderlines;
+        private List<OrderLine> verwijderenOrderlines;
+        private List<OrderLine> updatenOrderlines;
         public Kassa(Tafel tafel)
         {
+            this.tafel = tafel;
+            toevoegenOrderlines = new List<OrderLine>();
+            verwijderenOrderlines = new List<OrderLine>();
+            updatenOrderlines = new List<OrderLine>();
             articleService = new ArticleService();
             orderService = new OrderService();
             orderlineService = new OrderLineService();
-            this.tafel = tafel;
             InitializeComponent();
             vulGrid();
             btnMin.IsEnabled = false;
             btnPlus.IsEnabled = false;
-            IEnumerable<OrderLine> orderlines = orderlineService.GetOpenLinesTable(tafel.Id);
-            vulDataGridMetCorrecteOrderLines(orderlines);
+            oudeOrderlines = orderlineService.GetOpenLinesTable(tafel.Id);
+            vulDataGridMetCorrecteOrderLines(oudeOrderlines);
             
         }
 
@@ -92,10 +98,10 @@ namespace KassaSysteem
             OrderLine orderline = new OrderLine();
             Article article = (Article)b.Tag;
             orderTijdelijk = new Order();
-            if (dataGrid.Items.Count == -1)
+            if (dataGrid.Items.Count == 0)
             {
                 orderTijdelijk.Status = 0;
-                orderTijdelijk.CreatedDate = new DateTime(DateTime.Now.Month,DateTime.Now.Day,DateTime.Now.Year,DateTime.Now.Hour,DateTime.Now.Minute,DateTime.Now.Second);
+                orderTijdelijk.CreatedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                 orderTijdelijk.TafelId = tafel.Id;
                 orderTijdelijk.TafelName = tafel.Name;
             }
@@ -106,16 +112,15 @@ namespace KassaSysteem
                 orderline.ArticleId = article.Id;
                 orderline.Amount = 1;
                 orderline.Price = article.Price;
-                orderline.OrderId = orderTijdelijk.Id;
             }
-            
+
 
             if (dataGrid.Items.Count != 0)
             {
                 Boolean aangepast = false;
                 for (int i = 0; i < dataGrid.Items.Count; i++)
                 {
-                    OrderLine ol = (OrderLine) dataGrid.Items.GetItemAt(i);
+                    OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
                     if (ol.ArticleName.Equals(orderline.ArticleName))
                     {
                         OrderLine oude = (OrderLine)dataGrid.Items.GetItemAt(i);
@@ -134,16 +139,36 @@ namespace KassaSysteem
                         dataGrid.Items.Add(nieuwe);
                         i = dataGrid.Items.Count;
                         aangepast = true;
+                        if (!toevoegenOrderlines.Contains(nieuwe))
+                        {
+                            if(updatenOrderlines.Contains(nieuwe))
+                            {
+                                updatenOrderlines.Remove(nieuwe);
+                                updatenOrderlines.Add(nieuwe);
+                            }
+                            else
+                            {
+                                updatenOrderlines.Add(nieuwe);
+                            }
+                            
+                        }
+                        else
+                        {
+                            toevoegenOrderlines.Remove(nieuwe);
+                            toevoegenOrderlines.Add(nieuwe);
+                        }
                     }
                 }
                 if (aangepast == false)
                 {
                     dataGrid.Items.Add(orderline);
+                    toevoegenOrderlines.Add(orderline);
                 }
             }
             else if (dataGrid.Items.Count == 0)
             {
                 dataGrid.Items.Add(orderline);
+                toevoegenOrderlines.Add(orderline);
             }
 
             btnPlus.IsEnabled = true;
@@ -154,10 +179,9 @@ namespace KassaSysteem
         {
             if (dataGrid.SelectedIndex >= 0)
             {
-                for (int i = 0; i <= dataGrid.SelectedItems.Count; i++)
-                {
-                    dataGrid.Items.Remove(dataGrid.SelectedItems[i]);
-                }
+                OrderLine tijdelijk = (OrderLine)dataGrid.SelectedItem;
+                dataGrid.Items.Remove(dataGrid.SelectedItem);
+                verwijderenOrderlines.Add(tijdelijk);
             }
         }
 
@@ -176,6 +200,15 @@ namespace KassaSysteem
                 dataGrid.Items.Remove(oude);
                 dataGrid.Items.Add(nieuwe);
                 int index = dataGrid.SelectedIndex;
+                if (!toevoegenOrderlines.Contains(nieuwe))
+                {
+                    updatenOrderlines.Add(nieuwe);
+                }
+                else
+                {
+                    toevoegenOrderlines.Remove(nieuwe);
+                    updatenOrderlines.Add(nieuwe);
+                }
             }
         }
 
@@ -200,89 +233,235 @@ namespace KassaSysteem
                 nieuwe.CreatedDate = oude.CreatedDate;
                 dataGrid.Items.Remove(oude);
                 dataGrid.Items.Add(nieuwe);
+                if(!toevoegenOrderlines.Contains(nieuwe))
+                {
+                    updatenOrderlines.Add(nieuwe);
+                }
+                else
+                {
+                    toevoegenOrderlines.Remove(nieuwe);
+                    updatenOrderlines.Add(nieuwe);
+                }
+              
             }
         }
 
         private void btnBetalen_Click(object sender, RoutedEventArgs e)
         {
-            //int id=0;
-            //orderService = new OrderService();
-            //orderlineService = new OrderLineService();
+            int orderId = 0;
 
-            //Order order = new Order();
-            //order.TafelId = tafel.Id;
-            //order.TafelName = tafel.Name;
-            //order.CreatedDate = orderTijdelijk.CreatedDate;
-            //order.Status = 1;
-            //if(order != null)
-            //{
-            //    id = orderService.Add(order);
-            //    Console.WriteLine("het orderid");
-            //    Console.WriteLine(id);
-            //}
-            //for(int i=0; i<dataGrid.Items.Count;i++)
-            //{
-            //    OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
-            //    OrderLine nieuw = new OrderLine();
-            //    nieuw.OrderId = id;
-            //    nieuw.ArticleId = ol.ArticleId;
-            //    Console.WriteLine("het articleid");
-            //    Console.WriteLine(ol.ArticleId);
-            //    nieuw.ArticleName = ol.ArticleName;
-            //    nieuw.Amount = ol.Amount;
-            //    nieuw.Price = ol.Price;
-            //    nieuw.CreatedDate = ol.CreatedDate;
+            if (orderService.OrderExists(tafel.Id) == -1)
+            {
+                Console.WriteLine("STATUS");
+                orderTijdelijk.Status = 1;
+                orderId = orderService.Add(orderTijdelijk);
+            }
+            else
+            {
+                orderId = orderService.OrderExists(tafel.Id);
+                Order order = orderService.getOrderObject(orderId);
+                order.Status = 1;
+                orderService.Update(order);
+            }
 
-            //    orderlineService.Add(nieuw);
-            //}
+            if (toevoegenOrderlines.Count != 0)
+            {
+                foreach (var item in toevoegenOrderlines)
+                {
+                    item.OrderId = orderId;
+                    orderlineService.Add(item);
+                }
+            }
+            if (updatenOrderlines != null)
+            {
+                foreach (var item in updatenOrderlines)
+                {
+                    item.OrderId = orderId;
+                    item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
+                    Console.WriteLine("UPDATE");
+                    Console.WriteLine(item.Id);
+                    orderlineService.Update(item);
+                }
+            }
+            if (verwijderenOrderlines != null)
+            {
+                foreach (var item in verwijderenOrderlines)
+                {
+                    item.OrderId = orderId;
+                    item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
+                    Console.WriteLine("REMOVE");
+                    Console.WriteLine(item.Id);
+                    orderlineService.Remove(item);
+                }
+            }
+
             
+            for(int i = 0; i < dataGrid.Items.Count; i++)
+            {
+                dataGrid.Items.RemoveAt(i);
+            }
 
+
+
+            Detailscherm detailscherm = new Detailscherm(orderTijdelijk); //Create object of Page2
+            detailscherm.Show(); //Show page2
+            this.Close(); //this will close Page1
         }
 
 
         private void ButtonBack_OnClick(object sender, RoutedEventArgs e)
         {
-            int id = 0;
+            int orderId = 0;
 
-            if(orderlines != null)
+            if (orderService.OrderExists(tafel.Id) == -1)
             {
-                for (int i = 0; i <= dataGrid.Items.Count; i++)
-                {
-                    OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
-                    orderlineService.Remove(ol);
-                    dataGrid.Items.Remove(dataGrid.SelectedItems[i]);
-                }
+                Console.WriteLine("HHHHHHHHHHHHHHHHHHH");
+                orderTijdelijk.TafelId = tafel.Id;
+                Console.WriteLine(orderTijdelijk.TafelId);
+                orderTijdelijk.TafelName = tafel.Name;
+                Console.WriteLine(orderTijdelijk.TafelName);
+                orderTijdelijk.CreatedDate = orderTijdelijk.CreatedDate;
+                Console.WriteLine(orderTijdelijk.CreatedDate);
+                orderTijdelijk.Status = orderTijdelijk.Status;
+                Console.WriteLine(orderTijdelijk.Status);
+
+                orderId = orderService.Add(orderTijdelijk);
+            }
+            else
+            {
+                orderId = orderService.OrderExists(tafel.Id);
             }
             
-            if (orderlines == null)
-            {
-                Order order = new Order();
-                order.TafelId = tafel.Id;
-                order.TafelName = tafel.Name;
-                order.CreatedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                order.Status = 0;
-                if (order != null)
-                {
-                    id = orderService.Add(order);
-                    Console.WriteLine("het orderid");
-                    Console.WriteLine(id);
-                }
-                for (int i = 0; i < dataGrid.Items.Count; i++)
-                {
-                    OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
-                    OrderLine nieuw = new OrderLine();
-                    nieuw.OrderId = id;
-                    nieuw.ArticleId = ol.ArticleId;
-                    Console.WriteLine("het articleid");
-                    Console.WriteLine(ol.ArticleId);
-                    nieuw.ArticleName = ol.ArticleName;
-                    nieuw.Amount = ol.Amount;
-                    nieuw.Price = ol.Price;
-                    nieuw.CreatedDate = ol.CreatedDate;
 
-                    orderlineService.Add(nieuw);
+            if(toevoegenOrderlines.Count != 0)
+            {
+                foreach (var item in toevoegenOrderlines)
+                {
+                    item.OrderId = orderId;
+                    orderlineService.Add(item);
                 }
             }
+            if(updatenOrderlines != null)
+            {
+                foreach (var item in updatenOrderlines)
+                {
+                    item.OrderId = orderId;
+                    item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
+                    Console.WriteLine("UPDATE");
+                    Console.WriteLine(item.Id);
+                    orderlineService.Update(item);
+                }
+            }
+            if(verwijderenOrderlines != null)
+            {
+                foreach (var item in verwijderenOrderlines)
+                {
+                    item.OrderId = orderId;
+                    item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
+                    Console.WriteLine("REMOVE");
+                    Console.WriteLine(item.Id);
+                    orderlineService.Remove(item);
+                }
+            }
+
+            if(dataGrid.Items.Count == 0)
+            {
+                Order order = orderService.getOrderObject(orderId);
+                orderService.Remove(order);
+            }
+
+            //if (dataGrid.Items.Count != 0)
+            //{
+            //    for (int i = 0; i < toevoegenOrderlines.Count; i++)
+            //    {
+            //        OrderLine huidig = toevoegenOrderlines[i];
+            //        huidig.OrderId = id;
+            //        huidig.ArticleId = huidig.ArticleId;
+            //        huidig.ArticleName = huidig.ArticleName;
+            //        huidig.Amount = huidig.Amount;
+            //        huidig.Price = huidig.Price;
+            //        huidig.CreatedDate = huidig.CreatedDate;
+            //        orderlineService.Add(huidig);
+            //    }
+
+            //    for (int i = 0; i < updatenOrderlines.Count; i++)
+            //    {
+            //        OrderLine huidig = updatenOrderlines[i];
+            //        huidig.OrderId = id;
+            //        huidig.ArticleId = huidig.ArticleId;
+            //        huidig.ArticleName = huidig.ArticleName;
+            //        huidig.Amount = huidig.Amount;
+            //        huidig.Price = huidig.Price;
+            //        huidig.CreatedDate = huidig.CreatedDate;
+            //        orderlineService.Update(huidig);
+            //    }
+
+            //    for (int i = 0; i < verwijderenOrderlines.Count; i++)
+            //    {
+            //        OrderLine huidig = verwijderenOrderlines[i];
+            //        huidig.OrderId = id;
+            //        huidig.ArticleId = huidig.ArticleId;
+            //        huidig.ArticleName = huidig.ArticleName;
+            //        huidig.Amount = huidig.Amount;
+            //        huidig.Price = huidig.Price;
+            //        huidig.CreatedDate = huidig.CreatedDate;
+            //        if (!toevoegenOrderlines.Contains(huidig))
+            //        {
+            //            orderlineService.Remove(huidig);
+            //        }
+            //        else
+            //        {
+            //            toevoegenOrderlines.Remove(huidig);
+            //            orderlineService.Remove(huidig);
+            //        }
+            //    }
+            //}
+
+            //if (dataGrid.Items.Count != 0)
+            //{
+            //    for (int i = 0; i < dataGrid.Items.Count; i++)
+            //    {
+            //        Console.Write("orderlines verwijderen");
+            //        OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
+            //        Console.Write(ol.ArticleId);
+            //        Console.Write(ol.ArticleName);
+            //        Console.Write(ol.Amount);
+            //        Console.Write(ol.Price);
+            //        Console.Write(ol.OrderId);
+            //        //orderlineService.Remove(ol);
+            //        //dataGrid.Items.Remove(dataGrid.CurrentItem);
+            //    }
+            //}
+
+            //if (oudeOrderlines == null)
+            //{
+            //    Order order = new Order();
+            //    order.TafelId = tafel.Id;
+            //    order.TafelName = tafel.Name;
+            //    order.CreatedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+            //    order.Status = 0;
+            //    if (order != null)
+            //    {
+            //        id = orderService.Add(order);
+            //        Console.WriteLine("het orderid");
+            //        Console.WriteLine(id);
+            //    }
+            //    for (int i = 0; i < dataGrid.Items.Count; i++)
+            //    {
+            //        OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
+            //        OrderLine nieuw = new OrderLine();
+            //        nieuw.OrderId = id;
+            //        nieuw.ArticleId = ol.ArticleId;
+            //        Console.WriteLine("het articleid");
+            //        Console.WriteLine(ol.ArticleId);
+            //        nieuw.ArticleName = ol.ArticleName;
+            //        nieuw.Amount = ol.Amount;
+            //        nieuw.Price = ol.Price;
+            //        nieuw.CreatedDate = ol.CreatedDate;
+
+            //        orderlineService.Add(nieuw);
+            //    }
+            //}
 
             Startscherm startscherm = new Startscherm(); //Create object of Page2
             startscherm.Show(); //Show page2
@@ -293,20 +472,24 @@ namespace KassaSysteem
         {
             int aantal = orderlines.Count();
 
-            
-            for (int i = 0; i < aantal; i++)
+            foreach (var item in orderlines)
             {
-                OrderLine oude = orderlines.ElementAt(i);
-                OrderLine ol = new OrderLine();
-                ol.OrderId = oude.OrderId;
-                ol.ArticleId = oude.ArticleId;
-                ol.ArticleName = oude.ArticleName;
-                ol.Amount = oude.Amount;
-                ol.Price = oude.Price;
-                ol.CreatedDate = oude.CreatedDate;
-
-                dataGrid.Items.Add(ol);
+                dataGrid.Items.Add(item);
             }
+
+            //for (int i = 0; i < aantal; i++)
+            //{
+            //    OrderLine oude = orderlines.ElementAt(i);
+            //    OrderLine ol = new OrderLine();
+            //    ol.OrderId = oude.OrderId;
+            //    ol.ArticleId = oude.ArticleId;
+            //    ol.ArticleName = oude.ArticleName;
+            //    ol.Amount = oude.Amount;
+            //    ol.Price = oude.Price;
+            //    ol.CreatedDate = oude.CreatedDate;
+
+            //    dataGrid.Items.Add(ol);
+            //}
             btnPlus.IsEnabled = true;
             btnMin.IsEnabled = true;
         }
@@ -323,6 +506,5 @@ namespace KassaSysteem
 
 
 //TO DO:
-//tijdens back knop, indien lijst null is, niets doen, indien lijst veranderd => updaten
-//keuze: niets doen, updaten, indien nieuwe elementen => deze toevoegen
+//order is op één of andere manier leeg als je een paar keer terug gaat tijdens het order
 

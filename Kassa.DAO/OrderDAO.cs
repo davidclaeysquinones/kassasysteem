@@ -31,12 +31,45 @@ namespace Kassa.DAO
             }
         }
 
-        public Boolean OrderExists(int tafelId)
+        public int OrderExists(int tafelId)
         {
             using (var db = new kassaEntities())
             {
                 Order order = db.Order.FirstOrDefault(o => o.TafelId == tafelId && o.Status == 0);
-                return order != null;
+                if(order == null)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return order.Id;
+                }
+            }
+        }
+
+        public Order getOrderObject(int orderId)
+        {
+            using (var db = new kassaEntities())
+            {
+                return db.Order.Find(orderId);
+            }
+        }
+
+        public void Remove(Order order)
+        {
+            using (var db = new kassaEntities())
+            {
+                db.Entry(order).State = EntityState.Deleted;
+                db.SaveChanges();
+            }
+        }
+
+        public void Update(Order order)
+        {
+            using (var db = new kassaEntities())
+            {
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
             }
         }
     }
