@@ -155,6 +155,8 @@ namespace KassaSysteem
                 huidig.Background = new SolidColorBrush(Colors.Blue);
                 xposition.Text = item.PositionX.ToString();
                 yposition.Text = item.PositionY.ToString();
+                Height.Text = item.Height.ToString();
+                Width.Text = item.Width.ToString();
                 artikelNaam.Text = item.Name;
                 foreach (Button itemB in Tables.Children)
                 {
@@ -403,6 +405,85 @@ namespace KassaSysteem
                 }
             
        
+        }
+
+        private void Width_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            TextBox t = (TextBox)sender;
+            if (!(Regex.IsMatch(t.Text, @"\D+?")) && !t.Text.Equals(""))
+            {
+                if (huidig != null)
+                {
+                    Tafel tafel = (Tafel)huidig.Tag;
+                    int width = Convert.ToInt32(Width.Text);
+                    if (width <= maxWidth)
+                    {
+                        Console.WriteLine(MaxWidth);
+                        tafel.Width = width;
+                        huidig.Tag = tafel;
+                        huidig.Width = width;
+                        Tables.Children.Remove(huidig);
+                        Tables.Children.Add(huidig);
+                        Canvas.SetLeft(huidig, tafel.PositionX);
+                        Canvas.SetTop(huidig, tafel.PositionY);
+                        if (!add.Contains(tafel))
+                        {
+                            if (update.Contains(tafel))
+                            {
+                                update.Remove(tafel);
+                                update.Add(tafel);
+                            }
+                            else
+                            {
+                                update.Add(tafel);
+                            }
+                        }
+                        else
+                        {
+                            add.Remove(tafel);
+                            add.Add(tafel);
+                        }
+
+                    }
+                    else
+                    {
+                        Width.Text = "";
+                    }
+
+                }
+                else
+                {
+
+                    Width.Text = "";
+
+
+                }
+            }
+            else
+            {
+                if (huidig != null)
+                {
+
+                    if (!t.Text.Equals(""))
+                    {
+                        Tafel tafel = (Tafel)huidig.Tag;
+                        Width.Text = tafel.Width.ToString();
+                    }
+                }
+                else
+                {
+
+                    Width.Text = "";
+
+
+                }
+            }
+        }
+
+        private void Height_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

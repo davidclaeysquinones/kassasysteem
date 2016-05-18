@@ -46,14 +46,20 @@
             <Grid Grid.Column="2" Name="NewTable" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*" >
-                    </ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
                     <Label>Tafelnaam</Label>
-                    <TextBox Name="artikelNaam" Width="199" TextChanged="ArtikelNaam_OnTextChanged" MaxLength="30"></TextBox>
+                    <TextBox Name="artikelNaam" Width="200" TextChanged="ArtikelNaam_OnTextChanged" MaxLength="30"></TextBox>
                 </StackPanel>
             </Grid>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                <Label Width="45.5">Width </Label>
+                <TextBox Width="100" TextChanged="Width_OnTextChanged" Name="Width"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                <Label>Height</Label>
+                <TextBox Width="100" Name="Height" TextChanged="Height_OnTextChanged"></TextBox>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>
