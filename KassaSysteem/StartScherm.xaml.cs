@@ -34,14 +34,6 @@ namespace KassaSysteem
             tafelService = new TafelService();
             int atlTafels = tafelService.getAantal();
 
-            //int marginLeftEerste = 25;
-            //int marginTopEerste = 25;
-            //int marginLeftTweede = 125;
-            //int marinTopTweede = 250;
-            //int teller = 0;
-            //Boolean eersteRij = true;
-            //Boolean tweedeRij = false;
-
             IEnumerable<Tafel> tafels = tafelService.All();
 
             foreach (var item in tafels)
@@ -57,69 +49,6 @@ namespace KassaSysteem
                 Canvas.SetTop(b, item.PositionY);
                 canvas.Children.Add(b);
             }
-            
-
-
-            //foreach (var item in tafels)
-            //{
-            //    if(atlTafels <= 8)
-            //    {
-            //        teller += 1;
-            //        Button b = new Button();
-            //        b.Width = 125;
-            //        b.Height = 125;
-            //        b.Background = new SolidColorBrush(Colors.Red);
-            //        b.Click += new RoutedEventHandler(this.ButtonBase_OnClick);
-            //        b.Content = item.Name;
-            //        b.Tag = item;
-            //        Canvas.SetLeft(b, marginLeftEerste);
-            //        Canvas.SetTop(b, marginTopEerste);
-            //        canvas.Children.Add(b);
-            //        if(teller > 3 && eersteRij == true)
-            //        {
-            //            tweedeRij = true;
-            //            eersteRij = false;
-            //            marginLeftEerste += 200;
-            //            marginTopEerste = 300;
-            //            marginLeftEerste = -100;
-            //        }
-            //        if (tweedeRij == true )
-            //        {
-            //            marginLeftEerste += 200;
-            //        }
-            //        else
-            //        {
-            //            marginLeftEerste += 200;
-            //        }
-
-            //    }
-            //}
-
-            //for(int i=0; i<4; i++)
-            //{
-            //    Button b = new Button();
-            //    b.Width = 125;
-            //    b.Height = 125;
-            //    b.Background = new SolidColorBrush(Colors.Red);
-            //    b.Click += new RoutedEventHandler(this.ButtonBase_OnClick);
-            //    Canvas.SetLeft(b, marginLeftEerste);
-            //    Canvas.SetTop(b, marginTopEerste);
-            //    canvas.Children.Add(b);
-            //    marginLeftEerste += 200;
-            //}
-
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    Button b = new Button();
-            //    b.Width = 125;
-            //    b.Height = 125;
-            //    b.Background = new SolidColorBrush(Colors.Red);
-            //    b.Click += new RoutedEventHandler(this.ButtonBase_OnClick);
-            //    Canvas.SetLeft(b, marginLeftTweede);
-            //    Canvas.SetTop(b, marinTopTweede);
-            //    canvas.Children.Add(b);
-            //    marginLeftTweede += 200;
-            //}
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -136,6 +65,18 @@ namespace KassaSysteem
             AdminScherm admin = new AdminScherm();
             admin.Show();
             this.Close();
+        }
+
+        private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var element = sender as UIElement;
+            var position = e.GetPosition(element);
+            var transform = element.RenderTransform as MatrixTransform;
+            var matrix = transform.Matrix;
+            var scale = e.Delta >= 0 ? 1.1 : (1.0 / 1.1); // choose appropriate scaling factor
+
+            matrix.ScaleAtPrepend(scale, scale, position.X, position.Y);
+            transform.Matrix = matrix;
         }
     }
 }

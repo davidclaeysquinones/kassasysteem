@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Kassa.Model;
 using Kassa.Service;
+using KassaSysteem.ViewModel;
 
 namespace KassaSysteem
 {
@@ -25,6 +26,7 @@ namespace KassaSysteem
         private OrderService orderService;
         private OrderLineService orderlineService;
         private IEnumerable<OrderLine> orderlines;
+        private Kassa kassa;
         public Detailscherm(Order order)
         {
             this.order = order;
@@ -37,27 +39,41 @@ namespace KassaSysteem
         public void vulGrid()
         {
             Console.WriteLine(order.TafelName);
-            lblTafelnaam.Content = "Tafel: " + order.TafelName;
+            lblTafelnaam.Content = order.TafelName;
             orderlines = orderlineService.GetAllOrderlinesFromOrder(order.Id);
 
-            foreach (var item in orderlines)
+            List<OrderlineViewModel> nieuweViews = vanOrderlineNaarView(orderlines);
+
+            foreach (var item in nieuweViews)
             {
                 dataGrid.Items.Add(item);
             }
+        }
 
-            //for (int i = 0; i < aantal; i++)
-            //{
-            //    OrderLine oude = orderlines.ElementAt(i);
-            //    OrderLine ol = new OrderLine();
-            //    ol.OrderId = oude.OrderId;
-            //    ol.ArticleId = oude.ArticleId;
-            //    ol.ArticleName = oude.ArticleName;
-            //    ol.Amount = oude.Amount;
-            //    ol.Price = oude.Price;
-            //    ol.CreatedDate = oude.CreatedDate;
+        private List<OrderlineViewModel> vanOrderlineNaarView(IEnumerable<OrderLine> orderlines)
+        {
+            List<OrderlineViewModel> nieuweViews = new List<OrderlineViewModel>();
 
-            //    lvLijst.Items.Add(ol);
-            //}
+            foreach (var item in orderlines)
+            {
+                OrderlineViewModel nieuweView = new OrderlineViewModel();
+                nieuweView.OrderId = item.OrderId;
+                nieuweView.ArticleId = item.ArticleId;
+                nieuweView.ArticleName = item.ArticleName;
+                nieuweView.Amount = item.Amount;
+                nieuweView.Price = item.Price;
+                nieuweView.CreatedDate = item.CreatedDate;
+                nieuweView.Total = item.Amount * item.Price;
+                nieuweViews.Add(nieuweView);
+            }
+            return nieuweViews;
+        }
+
+        private void btnAfronden_Click(object sender, RoutedEventArgs e)
+        {
+            Startscherm startscherm = new Startscherm();
+            startscherm.Show();
+            this.Close();
         }
     }
 }

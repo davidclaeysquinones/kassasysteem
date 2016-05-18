@@ -59,11 +59,11 @@
                 <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding ArticleName}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Aantal" Width="75" Binding="{Binding Amount}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Prijs" Width="75" Binding="{Binding Price}"></DataGridTextColumn>
-                <DataGridTextColumn  Header="Totaal" Width="*" Binding="{Binding Price * Binding Amount}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Totaal" Width="*" Binding="{Binding Total}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Grid.Row="1" Grid.Column="1" FontSize="25">Totaal:</Label>
+        <Label Name="lblTotaal" Grid.Row="1" Grid.Column="1" FontSize="25">Totaal:</Label>
 
         <Button Name="btnPlus" Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-250,-50,0,0" Click="btnPlus_Click">+1</Button>
         <Button Name="btnMin" Grid.Row="1" Grid.Column="1" Width="50" Height="40" Margin="-100,-50,0,0" Click="btnMin_Click">-1</Button>

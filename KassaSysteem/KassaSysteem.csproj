@@ -67,6 +67,9 @@
     <Compile Include="AdminArtikelen.xaml.cs">
       <DependentUpon>AdminArtikelen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AdminOrders.xaml.cs">
+      <DependentUpon>AdminOrders.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdminScherm.xaml.cs">
       <DependentUpon>AdminScherm.xaml</DependentUpon>
     </Compile>
@@ -76,6 +79,11 @@
     <Compile Include="Startscherm.xaml.cs">
       <DependentUpon>Startscherm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\OrderlineViewModel.cs" />
+    <Page Include="AdminOrders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminArtikelen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -148,6 +156,9 @@
       <Project>{1c0fed69-37a4-40c9-b016-2d3af4076c80}</Project>
       <Name>Kassa.Service</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Foto1.jpeg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

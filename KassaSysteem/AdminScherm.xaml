@@ -5,13 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
-        Title="AdminScherm" Height="300" Width="300">
+        Title="AdminScherm" Height="720" Width="1200">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="15"></Setter>
         </Style>
     </Window.Resources>
     <StackPanel>
+        <StackPanel.Background>
+            <LinearGradientBrush>
+                <GradientStop Offset="-0" Color="Gray"/>
+                <GradientStop Offset="-0.05" Color="LightGray"/>
+                <GradientStop Offset="-0.1" Color="Gray"/>
+                <GradientStop Offset="-0.15" Color="LightGray"/>
+                <GradientStop Offset="-0.20" Color="Gray"/>
+                <GradientStop Offset="0.25" Color="LightGray"/>
+            </LinearGradientBrush>
+        </StackPanel.Background>
+    <Grid Height="200">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Height="100" Width="100" Click="Click_Tafels">Tafels
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="-0" Color="Gray"/>
+                        <GradientStop Offset="-0.05" Color="LightGray"/>
+                        <GradientStop Offset="-0.1" Color="Gray"/>
+                        <GradientStop Offset="-0.15" Color="LightGray"/>
+                        <GradientStop Offset="-0.20" Color="Gray"/>
+                        <GradientStop Offset="0.25" Color="LightGray"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Grid.Column="1" Height="100" Width="100">Artikelen
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="-0" Color="Gray"/>
+                        <GradientStop Offset="-0.05" Color="LightGray"/>
+                        <GradientStop Offset="-0.1" Color="Gray"/>
+                        <GradientStop Offset="-0.15" Color="LightGray"/>
+                        <GradientStop Offset="-0.20" Color="Gray"/>
+                        <GradientStop Offset="0.25" Color="LightGray"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Grid.Column="2" Height="100" Width="100" Click="Button_Click">Orders
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="-0" Color="Gray"/>
+                        <GradientStop Offset="-0.05" Color="LightGray"/>
+                        <GradientStop Offset="-0.1" Color="Gray"/>
+                        <GradientStop Offset="-0.15" Color="LightGray"/>
+                        <GradientStop Offset="-0.20" Color="Gray"/>
+                        <GradientStop Offset="0.25" Color="LightGray"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <TextBlock Grid.Column="1" Grid.ColumnSpan="2" FontSize="25">Welkom, hier kunt u uw beheer doen!</TextBlock>
+        </Grid>
+        <StackPanel Height="520" Width="1200">
+            <Image Height="480" Source="C:\Users\Gebruiker\Documents\GitHub\Kassa\KassaSysteem\Images\Foto1.jpeg"></Image>
     <Grid>
             <StackPanel>
             <Button Click="Click_Tafels">Tafels</Button>
@@ -19,9 +78,5 @@
             <Button >Orders</Button>
             <Button Click="Click_Back">Back</Button>
         </StackPanel>
-           
-     
-        
-    </Grid>
     </StackPanel>
 </Window>
