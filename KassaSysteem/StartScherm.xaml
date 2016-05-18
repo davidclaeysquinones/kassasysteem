@@ -5,17 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
-        Title="Startscherm" Height="700" Width="900">
+        Title="Startscherm" Height="720" Width="1200" MaxHeight="720" MinHeight="720" MaxWidth="1200" MinWidth="1200">
 
-    <Canvas Name="canvas" >
+    <Canvas>
+        <Canvas Name="canvas" Width="1200" Height="500" MouseWheel="Canvas_MouseWheel">
+            <Canvas.RenderTransform>
+                <MatrixTransform/>
+            </Canvas.RenderTransform>
+        </Canvas>
         
-        <Rectangle Width="600" Height="100" Canvas.Bottom="50" Canvas.Left="75" Fill="Lavender">
-
+        <Rectangle Width="600" Height="100" Canvas.Bottom="50" Canvas.Left="75" Fill="Gray" Stroke="Black" StrokeThickness="1">
+            
         </Rectangle>
-        <StackPanel Width="900" Height="25" Canvas.Bottom="10">
+        <StackPanel Width="1200" Height="25" Canvas.Bottom="10">
             <Slider Maximum="100" Height="25" TickPlacement="BottomRight" TickFrequency="5" Name="Slider"></Slider>
         </StackPanel>
-        <Button Click="GoToAdmin">Admin</Button>
+        <Button Click="GoToAdmin" Width="50" Height="50" Canvas.Left="625" Canvas.Top="581" 
+                Background="RosyBrown" BorderBrush="Black" BorderThickness="1">
+            Admin
+        </Button>
         
         </Canvas>
 
