@@ -54,7 +54,7 @@
         </Button>
 
         <DataGrid x:Name="dataGrid" Grid.Row="0" Grid.Column="1" CanUserReorderColumns="True" CanUserResizeColumns="True" 
-          CanUserResizeRows="False" CanUserSortColumns="True">
+          CanUserResizeRows="False" CanUserSortColumns="True" BeginningEdit="DataGrid_OnBeginningEdit">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding ArticleName}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Aantal" Width="75" Binding="{Binding Amount}"></DataGridTextColumn>

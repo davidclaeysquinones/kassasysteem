@@ -80,6 +80,11 @@ namespace KassaSysteem
                 if (selectedIndex != -1)
                 {
                     ArtikelViewModel artikelViewModel = (ArtikelViewModel) articles.GetItemAt(selectedIndex);
+                    
+                    if (!Price.IsFocused && !Name.IsFocused)
+                    {
+                        Keyboard.Focus(Name);
+                    }
                     Name.Text = artikelViewModel.Name;
                     Price.Text = artikelViewModel.Price.ToString();
                 }
@@ -326,21 +331,23 @@ namespace KassaSysteem
                     
                     Artikelen.Items.Remove(artikelViewModel);
                     Artikelen.Items.Remove(vorig);
-                    Artikelen.Items.Insert(selectedIndex-1,artikelViewModel);
-                    Artikelen.Items.Insert(selectedIndex,vorig);
-                    Artikelen.SelectedIndex = selectedIndex - 1;
+                 
+
+
 
                     if (!add.Contains(artikelViewModel))
                     {
                         update.Remove(artikelViewModel);
                         artikelViewModel.Position -= 1;
                         update.Add(artikelViewModel);
+                        Artikelen.Items.Insert(selectedIndex - 1, artikelViewModel);
                     }
                     else
                     {
                         add.Remove(artikelViewModel);
                         artikelViewModel.Position -= 1;
                         add.Add(artikelViewModel);
+                        Artikelen.Items.Insert(selectedIndex - 1, artikelViewModel);
                     }
 
                     if (!add.Contains(vorig))
@@ -348,13 +355,17 @@ namespace KassaSysteem
                         update.Remove(vorig);
                         vorig.Position += 1;
                         update.Add(vorig);
+                        Artikelen.Items.Insert(selectedIndex, vorig);
                     }
                     else
                     {
                         add.Remove(vorig);
                         vorig.Position += 1;
                         add.Add(vorig);
+                        Artikelen.Items.Insert(selectedIndex, vorig);
                     }
+
+                    Artikelen.SelectedIndex = selectedIndex - 1;
                 }
             }
         }
@@ -372,22 +383,26 @@ namespace KassaSysteem
                     ArtikelViewModel volgend = (ArtikelViewModel)Artikelen.Items.GetItemAt(selectedIndex + 1);
                   
                     Artikelen.Items.Remove(artikelViewModel);
-                    Artikelen.Items.Insert(selectedIndex + 1, artikelViewModel);
+            
                     Artikelen.Items.Remove(volgend);
-                    Artikelen.Items.Insert(selectedIndex, volgend);
-                    Artikelen.SelectedIndex = selectedIndex + 1;
+                   
+
 
                     if (!add.Contains(artikelViewModel))
                     {
+                        Console.WriteLine("update");
                         update.Remove(artikelViewModel);
                         artikelViewModel.Position += 1;
                         update.Add(artikelViewModel);
+                        Artikelen.Items.Insert(selectedIndex + 1, artikelViewModel);
                     }
                     else
                     {
+                        Console.WriteLine("add");
                         add.Remove(artikelViewModel);
                         artikelViewModel.Position += 1;
                         add.Add(artikelViewModel);
+                        Artikelen.Items.Insert(selectedIndex + 1, artikelViewModel);
                     }
 
                     if (!add.Contains(volgend))
@@ -395,13 +410,17 @@ namespace KassaSysteem
                         update.Remove(volgend);
                         volgend.Position -= 1;
                         update.Add(volgend);
+                        Artikelen.Items.Insert(selectedIndex, volgend);
                     }
                     else
                     {
                         add.Remove(volgend);
                         volgend.Position -= 1;
                         add.Add(volgend);
+                        Artikelen.Items.Insert(selectedIndex, volgend);
                     }
+
+                    Artikelen.SelectedIndex = selectedIndex + 1;
                 }
             }
         }
@@ -425,12 +444,12 @@ namespace KassaSysteem
                     }
                 }
 
-                if (key == Key.Down)
+                if (key == Key.Up)
                 {
                     Console.WriteLine("on key up");
                     if (selectedIndex >0)
                     {
-                        Artikelen.SelectedIndex += 1;
+                        Artikelen.SelectedIndex -= 1;
                     }
                 }
                

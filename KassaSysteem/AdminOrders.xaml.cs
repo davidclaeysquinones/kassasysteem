@@ -38,7 +38,11 @@ namespace KassaSysteem
         {
             foreach (var item in alleOrders)
             {
-                dataGrid.Items.Add(item);
+                if (!dataGrid.Items.Contains(item))
+                {
+                    dataGrid.Items.Add(item);
+                }
+               
             }
             btnTerug.Visibility = Visibility.Collapsed;
             dataGridLines.Visibility = Visibility.Collapsed;

@@ -56,8 +56,8 @@ namespace KassaSysteem
         {
             
             int atlArtikelen = articleService.getAantal();
-
-            int aantalRijen = atlArtikelen / 4;
+            int maxWidth = 4;
+            int aantalRijen = atlArtikelen / maxWidth;
             for (int i = 0; i<=aantalRijen+1; i++)
             {
                 RowDefinition rd = new RowDefinition();
@@ -66,17 +66,17 @@ namespace KassaSysteem
             }
 
             IEnumerable<Article> articles = articleService.All();
-            int row = 0;
-            int column = -1;
+            //int row = 0;
+            //int column = -1;
             foreach (var item in articles)
             {
                 
-                if (column == 3)
-                {
-                    row++;
-                    column = -1;
-                }
-                column++;
+                //if (column == 3)
+                //{
+                //    row++;
+                //    column = -1;
+                //}
+                //column++;
                 Button b = new Button();
                 b.Background = Brushes.Gray;
                 b.Margin = new Thickness(10);
@@ -85,8 +85,26 @@ namespace KassaSysteem
                 b.Content = item.Name +"\n €"+ item.Price;
                 b.Click += new RoutedEventHandler(this.ButtonBase_OnClick);
                 b.Tag = item;
-                Grid.SetRow(b, row);
-                Grid.SetColumn(b, column);
+                if (item.MenuIndexY != null && item.MenuIndexX!=null)
+                {
+                    Grid.SetRow(b, (int)item.MenuIndexY);
+                    Grid.SetColumn(b, (int)item.MenuIndexX);
+                }
+                else
+                {
+                    var y = mainGrid.RowDefinitions.Count;
+                    var x = mainGrid.ColumnDefinitions.Count;
+
+                    if (x == maxWidth)
+                    {
+                        y++;
+                        x = 0;
+                    }
+                    Grid.SetRow(b, y);
+                    Grid.SetColumn(b, x);
+                }
+
+
                 mainGrid.Children.Add(b);
             }
         }
@@ -95,7 +113,7 @@ namespace KassaSysteem
         {
             Button b = (Button)sender;
             OrderLine nieuweOrderline = new OrderLine();
-            //OrderlineViewModel nieuweView = new OrderlineViewModel();
+
             Article article = (Article)b.Tag;
             if (dataGrid.Items.Count == 0)
             {
@@ -116,13 +134,7 @@ namespace KassaSysteem
                 nieuweOrderline.CreatedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                 nieuweOrderline.Total = nieuweOrderline.Amount * nieuweOrderline.Price;
 
-                //nieuweView.OrderId = nieuweOrderline.OrderId;
-                //nieuweView.ArticleId = nieuweOrderline.ArticleId;
-                //nieuweView.ArticleName = nieuweOrderline.ArticleName;
-                //nieuweView.Amount = nieuweOrderline.Amount;
-                //nieuweView.Price = nieuweOrderline.Price;
-                //nieuweView.CreatedDate = nieuweOrderline.CreatedDate;
-                //nieuweView.Total = nieuweOrderline.Amount * nieuweOrderline.Price;
+
             }
 
 
@@ -131,24 +143,14 @@ namespace KassaSysteem
                 Boolean aangepast = false;
                 for (int i = 0; i < dataGrid.Items.Count; i++)
                 {
-                    //OrderlineViewModel oudeView = (OrderlineViewModel)dataGrid.Items.GetItemAt(i);
+
                     OrderLine oudeOrderline = (OrderLine)dataGrid.Items.GetItemAt(i);
                     if (oudeOrderline.ArticleName.Equals(nieuweOrderline.ArticleName))
                     {
                         OrderLine huidigeLine = (OrderLine)dataGrid.Items.GetItemAt(i);
                         huidigeLine.Amount = huidigeLine.Amount + 1;
                         huidigeLine.Total = huidigeLine.Amount * huidigeLine.Price;
-                        //OrderlineViewModel huidigeView = (OrderlineViewModel)dataGrid.Items.GetItemAt(i);
-                        //huidigeView.Amount = huidigeView.Amount + 1;
-                        //OrderLine huidigeOrderline = vanViewNaarOrderline(huidigeView);
-                        //huidigeOrderline.OrderId = huidigeView.OrderId;
-                        //huidigeOrderline.ArticleId = huidigeView.ArticleId;
-                        //huidigeOrderline.ArticleName = huidigeView.ArticleName;
-                        //huidigeView.Amount = huidigeView.Amount + 1;
-                        //huidigeOrderline.Amount = huidigeView.Amount;
-                        //huidigeOrderline.Price = huidigeView.Price;
-                        //huidigeOrderline.CreatedDate = huidigeView.CreatedDate;
-                        //huidigeView.Total = huidigeOrderline.Amount * huidigeOrderline.Price;
+
 
                         dataGrid.Items.RemoveAt(i);
                         dataGrid.Items.Add(huidigeLine);
@@ -386,98 +388,7 @@ namespace KassaSysteem
                 orderService.Remove(order);
             }
 
-            //if (dataGrid.Items.Count != 0)
-            //{
-            //    for (int i = 0; i < toevoegenOrderlines.Count; i++)
-            //    {
-            //        OrderLine huidig = toevoegenOrderlines[i];
-            //        huidig.OrderId = id;
-            //        huidig.ArticleId = huidig.ArticleId;
-            //        huidig.ArticleName = huidig.ArticleName;
-            //        huidig.Amount = huidig.Amount;
-            //        huidig.Price = huidig.Price;
-            //        huidig.CreatedDate = huidig.CreatedDate;
-            //        orderlineService.Add(huidig);
-            //    }
-
-            //    for (int i = 0; i < updatenOrderlines.Count; i++)
-            //    {
-            //        OrderLine huidig = updatenOrderlines[i];
-            //        huidig.OrderId = id;
-            //        huidig.ArticleId = huidig.ArticleId;
-            //        huidig.ArticleName = huidig.ArticleName;
-            //        huidig.Amount = huidig.Amount;
-            //        huidig.Price = huidig.Price;
-            //        huidig.CreatedDate = huidig.CreatedDate;
-            //        orderlineService.Update(huidig);
-            //    }
-
-            //    for (int i = 0; i < verwijderenOrderlines.Count; i++)
-            //    {
-            //        OrderLine huidig = verwijderenOrderlines[i];
-            //        huidig.OrderId = id;
-            //        huidig.ArticleId = huidig.ArticleId;
-            //        huidig.ArticleName = huidig.ArticleName;
-            //        huidig.Amount = huidig.Amount;
-            //        huidig.Price = huidig.Price;
-            //        huidig.CreatedDate = huidig.CreatedDate;
-            //        if (!toevoegenOrderlines.Contains(huidig))
-            //        {
-            //            orderlineService.Remove(huidig);
-            //        }
-            //        else
-            //        {
-            //            toevoegenOrderlines.Remove(huidig);
-            //            orderlineService.Remove(huidig);
-            //        }
-            //    }
-            //}
-
-            //if (dataGrid.Items.Count != 0)
-            //{
-            //    for (int i = 0; i < dataGrid.Items.Count; i++)
-            //    {
-            //        Console.Write("orderlines verwijderen");
-            //        OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
-            //        Console.Write(ol.ArticleId);
-            //        Console.Write(ol.ArticleName);
-            //        Console.Write(ol.Amount);
-            //        Console.Write(ol.Price);
-            //        Console.Write(ol.OrderId);
-            //        //orderlineService.Remove(ol);
-            //        //dataGrid.Items.Remove(dataGrid.CurrentItem);
-            //    }
-            //}
-
-            //if (oudeOrderlines == null)
-            //{
-            //    Order order = new Order();
-            //    order.TafelId = tafel.Id;
-            //    order.TafelName = tafel.Name;
-            //    order.CreatedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-            //    order.Status = 0;
-            //    if (order != null)
-            //    {
-            //        id = orderService.Add(order);
-            //        Console.WriteLine("het orderid");
-            //        Console.WriteLine(id);
-            //    }
-            //    for (int i = 0; i < dataGrid.Items.Count; i++)
-            //    {
-            //        OrderLine ol = (OrderLine)dataGrid.Items.GetItemAt(i);
-            //        OrderLine nieuw = new OrderLine();
-            //        nieuw.OrderId = id;
-            //        nieuw.ArticleId = ol.ArticleId;
-            //        Console.WriteLine("het articleid");
-            //        Console.WriteLine(ol.ArticleId);
-            //        nieuw.ArticleName = ol.ArticleName;
-            //        nieuw.Amount = ol.Amount;
-            //        nieuw.Price = ol.Price;
-            //        nieuw.CreatedDate = ol.CreatedDate;
-
-            //        orderlineService.Add(nieuw);
-            //    }
-            //}
+     
 
             Startscherm startscherm = new Startscherm(); //Create object of Page2
             startscherm.Show(); //Show page2
@@ -486,22 +397,7 @@ namespace KassaSysteem
 
         private void vulDataGridMetCorrecteOrderLines(IEnumerable<OrderLine> orderlines)
         {
-            //int aantal = orderlines.Count();
-
-            //List<OrderlineViewModel> nieuweViews = vanOrderlineNaarView(orderlines);
-
-            //foreach (var item in orderlines)
-            //{
-            //    OrderlineViewModel nieuweView = new OrderlineViewModel();
-            //    nieuweView.OrderId = item.OrderId;
-            //    nieuweView.ArticleId = item.ArticleId;
-            //    nieuweView.ArticleName = item.ArticleName;
-            //    nieuweView.Amount = item.Amount;
-            //    nieuweView.Price = item.Price;
-            //    nieuweView.CreatedDate = item.CreatedDate;
-            //    nieuweView.Total = item.Amount * item.Price;
-            //    nieuweViews.Add(nieuweView);
-            //}
+ 
 
             foreach (var item in orderlines)
             {
@@ -513,38 +409,7 @@ namespace KassaSysteem
             veranderTotaalBedrag();
         }
 
-        //private List<OrderlineViewModel> vanOrderlineNaarView(IEnumerable<OrderLine> orderlines)
-        //{
-        //    List<OrderlineViewModel> nieuweViews = new List<OrderlineViewModel>();
-
-        //    foreach (var item in orderlines)
-        //    {
-        //        OrderlineViewModel nieuweView = new OrderlineViewModel();
-        //        nieuweView.OrderId = item.OrderId;
-        //        nieuweView.ArticleId = item.ArticleId;
-        //        nieuweView.ArticleName = item.ArticleName;
-        //        nieuweView.Amount = item.Amount;
-        //        nieuweView.Price = item.Price;
-        //        nieuweView.CreatedDate = item.CreatedDate;
-        //        nieuweView.Total = item.Amount * item.Price;
-        //        nieuweViews.Add(nieuweView);
-        //    }
-        //    return nieuweViews;
-        //}
-
-        //private OrderLine vanViewNaarOrderline(OrderlineViewModel huidigeView)
-        //{
-        //    OrderLine huidigeOrderline = new OrderLine();
-        //    huidigeOrderline.OrderId = huidigeView.OrderId;
-        //    huidigeOrderline.ArticleId = huidigeView.ArticleId;
-        //    huidigeOrderline.ArticleName = huidigeView.ArticleName;
-        //    huidigeOrderline.Amount = huidigeView.Amount;
-        //    huidigeOrderline.Price = huidigeView.Price;
-        //    huidigeOrderline.CreatedDate = huidigeView.CreatedDate;
-        //    huidigeView.Total = huidigeOrderline.Amount * huidigeOrderline.Price;
-
-        //    return huidigeOrderline;
-        //}
+    
 
         private void veranderTotaalBedrag()
         {
@@ -554,7 +419,11 @@ namespace KassaSysteem
                 for (int i = 0; i < dataGrid.Items.Count; i++)
                 {
                     OrderLine line = (OrderLine)dataGrid.Items.GetItemAt(i);
-                    prijs += (float)line.Total;
+                    if (line.Total != null)
+                    {
+                        prijs += (float)line.Total;
+                    }
+     
                 }
                 if(orderTijdelijk != null)
                 {
@@ -566,8 +435,10 @@ namespace KassaSysteem
         }
 
 
-
-
+        private void DataGrid_OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            e.Cancel = true;
+        }
     }
 }
 
