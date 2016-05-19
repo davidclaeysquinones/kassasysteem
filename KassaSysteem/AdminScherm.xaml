@@ -55,7 +55,7 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Button Grid.Column="2" Height="100" Width="100" Click="Button_Click">Orders
+            <Button Grid.Column="2" Height="100" Width="100" Click="Click_Orders">Orders
                 <Button.Background>
                     <LinearGradientBrush>
                         <GradientStop Offset="-0" Color="Gray"/>

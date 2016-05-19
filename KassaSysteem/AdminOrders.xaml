@@ -7,6 +7,48 @@
         mc:Ignorable="d"
         Title="AdminOrders" Height="720" Width="1200">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="25" Margin="50,25,0,0">
+            Overzicht van alle orders:
+        </Label>
+
+        <DataGrid Name="dataGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="5" CanUserResizeColumns="True" 
+                  CanUserResizeRows="False" CanUserSortColumns="True" BeginningEdit="dataGrid_BeginningEdit"
+                  MouseDoubleClick="dataGrid_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Visibility="Collapsed" Binding="{Binding Id}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Tafel" Width="125" Binding="{Binding TafelName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Datum" Width="150" Binding="{Binding CreatedDate}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Status" Width="*" Binding="{Binding Status}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid Name="dataGridLines" Grid.Row="2" Grid.Column="4" Grid.RowSpan="4" Grid.ColumnSpan="2"
+                  CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding ArticleName}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Aantal" Width="75" Binding="{Binding Amount}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Prijs" Width="75" Binding="{Binding Price}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Totaal" Width="*" Binding="{Binding Total}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Name="lblTotaalBedrag" Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="2" Margin="50,25,0,0" FontSize="15" ></Label>
     </Grid>
 </Window>

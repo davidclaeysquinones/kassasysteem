@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -52,32 +55,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Article.cs">
-      <DependentUpon>KassaEntities.tt</DependentUpon>
+      <DependentUpon>kassaEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="KassaEntities.Context.cs">
+    <Compile Include="kassaEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KassaEntities.Context.tt</DependentUpon>
+      <DependentUpon>kassaEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="KassaEntities.cs">
+    <Compile Include="kassaEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KassaEntities.tt</DependentUpon>
+      <DependentUpon>kassaEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="KassaEntities.Designer.cs">
+    <Compile Include="kassaEntities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KassaEntities.edmx</DependentUpon>
+      <DependentUpon>kassaEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="Order.cs">
-      <DependentUpon>KassaEntities.tt</DependentUpon>
+      <DependentUpon>kassaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="OrderLine.cs">
-      <DependentUpon>KassaEntities.tt</DependentUpon>
+      <DependentUpon>kassaEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tafel.cs">
-      <DependentUpon>KassaEntities.tt</DependentUpon>
+      <DependentUpon>kassaEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -85,12 +88,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="KassaEntities.edmx">
+    <EntityDeploy Include="kassaEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>KassaEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>kassaEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="KassaEntities.edmx.diagram">
-      <DependentUpon>KassaEntities.edmx</DependentUpon>
+    <None Include="kassaEntities.edmx.diagram">
+      <DependentUpon>kassaEntities.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -98,18 +101,23 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="KassaEntities.Context.tt">
+    <Content Include="kassaEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KassaEntities.edmx</DependentUpon>
-      <LastGenOutput>KassaEntities.Context.cs</LastGenOutput>
+      <DependentUpon>kassaEntities.edmx</DependentUpon>
+      <LastGenOutput>kassaEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="KassaEntities.tt">
+    <Content Include="kassaEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KassaEntities.edmx</DependentUpon>
-      <LastGenOutput>KassaEntities.cs</LastGenOutput>
+      <DependentUpon>kassaEntities.edmx</DependentUpon>
+      <LastGenOutput>kassaEntities.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' == ''" />
+  <PropertyGroup>
+    <SsdtUnitTestVersion>2.0</SsdtUnitTestVersion>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -25,6 +25,7 @@ namespace Kassa.Model
         public string TafelName { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public int Status { get; set; }
+        public Nullable<float> Total { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderLine> OrderLine { get; set; }

@@ -22,8 +22,9 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TafelId" Type="int" Nullable="false" />
           <Property Name="TafelName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Total" Type="real" />
         </EntityType>
         <EntityType Name="OrderLine">
           <Key>
@@ -35,7 +36,8 @@
           <Property Name="ArticleName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="real" Nullable="false" />
           <Property Name="Amount" Type="int" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Total" Type="real" />
         </EntityType>
         <EntityType Name="Tafel">
           <Key>
@@ -92,8 +94,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TafelId" Type="Int32" Nullable="false" />
           <Property Name="TafelName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Total" Type="Single" />
           <NavigationProperty Name="OrderLine" Relationship="Self.FKOrderLine150902" FromRole="Order" ToRole="OrderLine" />
         </EntityType>
         <EntityType Name="OrderLine">
@@ -106,7 +109,8 @@
           <Property Name="ArticleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Price" Type="Single" Nullable="false" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Total" Type="Single" />
           <NavigationProperty Name="Order" Relationship="Self.FKOrderLine150902" FromRole="OrderLine" ToRole="Order" />
         </EntityType>
         <EntityType Name="Tafel">
@@ -167,6 +171,7 @@
                 <ScalarProperty Name="TafelName" ColumnName="TafelName" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -180,6 +185,7 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

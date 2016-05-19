@@ -35,5 +35,9 @@ namespace Kassa.Service
         {
             orderDAO.Update(order);
         }
+        public IEnumerable<Order> GetAllOrders()
+        {
+            return orderDAO.GetAllOrders();
+        }
     }
 }

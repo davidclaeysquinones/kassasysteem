@@ -45,9 +45,11 @@ namespace KassaSysteem
             this.Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Click_Orders(object sender, RoutedEventArgs e)
         {
-
+            AdminOrders adminorders = new AdminOrders();
+            adminorders.Show();
+            this.Close();
         }
     }
 }

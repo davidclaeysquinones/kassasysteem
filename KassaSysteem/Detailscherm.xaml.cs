@@ -34,39 +34,20 @@ namespace KassaSysteem
             orderlineService = new OrderLineService();
             InitializeComponent();
             vulGrid();
+            berekenTotaal();
         }
 
         public void vulGrid()
         {
             Console.WriteLine(order.TafelName);
+            Console.WriteLine(order.Id);
             lblTafelnaam.Content = order.TafelName;
             orderlines = orderlineService.GetAllOrderlinesFromOrder(order.Id);
 
-            List<OrderlineViewModel> nieuweViews = vanOrderlineNaarView(orderlines);
-
-            foreach (var item in nieuweViews)
+            foreach (var item in orderlines)
             {
                 dataGrid.Items.Add(item);
             }
-        }
-
-        private List<OrderlineViewModel> vanOrderlineNaarView(IEnumerable<OrderLine> orderlines)
-        {
-            List<OrderlineViewModel> nieuweViews = new List<OrderlineViewModel>();
-
-            foreach (var item in orderlines)
-            {
-                OrderlineViewModel nieuweView = new OrderlineViewModel();
-                nieuweView.OrderId = item.OrderId;
-                nieuweView.ArticleId = item.ArticleId;
-                nieuweView.ArticleName = item.ArticleName;
-                nieuweView.Amount = item.Amount;
-                nieuweView.Price = item.Price;
-                nieuweView.CreatedDate = item.CreatedDate;
-                nieuweView.Total = item.Amount * item.Price;
-                nieuweViews.Add(nieuweView);
-            }
-            return nieuweViews;
         }
 
         private void btnAfronden_Click(object sender, RoutedEventArgs e)
@@ -74,6 +55,11 @@ namespace KassaSysteem
             Startscherm startscherm = new Startscherm();
             startscherm.Show();
             this.Close();
+        }
+
+        private void berekenTotaal()
+        {
+            lblTotaalBedrag.Content = "Totaalbedrag: €" + order.Total;
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Kassa.Model
         public float Price { get; set; }
         public int Amount { get; set; }
         public System.DateTime CreatedDate { get; set; }
+        public Nullable<float> Total { get; set; }
     
         public virtual Order Order { get; set; }
     }

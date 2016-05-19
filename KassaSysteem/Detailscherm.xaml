@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Detailscherm" Height="700" Width="900">
     <Grid>
-        <Label Name="lblTafelnaam" Margin="50">tafelnaam</Label>
+        <Label Name="lblTafelnaam" Margin="50,40,0,0" FontSize="20">tafelnaam</Label>
+        <Label Name="lblTotaalBedrag" Margin="50,70,0,0" FontSize="20">totaal</Label>
 
         <DataGrid x:Name="dataGrid" Grid.Row="0" Grid.Column="1" CanUserReorderColumns="True" CanUserResizeColumns="True" 
           CanUserResizeRows="False" CanUserSortColumns="True" Height="500" Margin="0,50,550,0" BorderThickness="1" BorderBrush="Black">
@@ -15,7 +16,7 @@
                 <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding ArticleName}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Aantal" Width="75" Binding="{Binding Amount}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Prijs" Width="75" Binding="{Binding Price}"></DataGridTextColumn>
-                <DataGridTextColumn  Header="Totaal" Width="*" Binding="{Binding Price * Binding Amount}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Totaal" Width="*" Binding="{Binding Total}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 

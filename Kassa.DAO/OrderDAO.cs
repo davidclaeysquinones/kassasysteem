@@ -72,5 +72,12 @@ namespace Kassa.DAO
                 db.SaveChanges();
             }
         }
+        public IEnumerable<Order> GetAllOrders()
+        {
+            using (var db = new kassaEntities())
+            {
+                return db.Order.ToList();
+            }
+        }
     }
 }
