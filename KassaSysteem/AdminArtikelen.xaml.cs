@@ -30,6 +30,9 @@ namespace KassaSysteem
         {
             InitializeComponent();
             loadData();
+            delete = new List<Article>();
+            add = new List<Article>();
+            update = new List<Article>();
         }
 
         private void loadData()
@@ -83,7 +86,7 @@ namespace KassaSysteem
             {
                 int selectedIndex = Artikelen.SelectedIndex;
                 Article article = (Article) Artikelen.Items.GetItemAt(selectedIndex);
-                article.Price = Convert.ToSingle(Price.Text);
+                //article.Price = Convert.ToSingle(Price.Text);
                 article.Name = Name.ToString();
                 if (!add.Contains(article))
                 {
