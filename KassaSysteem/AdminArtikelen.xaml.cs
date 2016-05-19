@@ -44,6 +44,7 @@ namespace KassaSysteem
         {
             articleService = new ArticleService();
             List<Article> articles = articleService.All().ToList();
+            articles.Sort();
 
             foreach (var item in articles)
             {
@@ -109,15 +110,16 @@ namespace KassaSysteem
                     ArtikelViewModel artikelViewModel= (ArtikelViewModel) Artikelen.Items.GetItemAt(selectedIndex);
                     if (artikelViewModel != null)
                     {
-                        artikelViewModel.Name = input;
                         if (!add.Contains(artikelViewModel))
                         {
                             update.Remove(artikelViewModel);
+                            artikelViewModel.Name = input;
                             update.Add(artikelViewModel);
                         }
                         else
                         {
                             add.Remove(artikelViewModel);
+                            artikelViewModel.Name = input;
                             add.Add(artikelViewModel);
                         }
                         Artikelen.Items.Refresh();
@@ -149,15 +151,17 @@ namespace KassaSysteem
                         ArtikelViewModel artikelViewModel =(ArtikelViewModel)Artikelen.Items.GetItemAt(selectedIndex);
                         if (artikelViewModel != null)
                         {
-                            artikelViewModel.Price = Convert.ToSingle(input);
+                          
                             if (!add.Contains(artikelViewModel))
                             {
                                 update.Remove(artikelViewModel);
+                                artikelViewModel.Price = Convert.ToSingle(input);
                                 update.Add(artikelViewModel);
                             }
                             else
                             {
                                 add.Remove(artikelViewModel);
+                                artikelViewModel.Price = Convert.ToSingle(input);
                                 add.Add(artikelViewModel);
                             }
                             Artikelen.Items.Refresh();

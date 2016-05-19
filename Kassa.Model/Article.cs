@@ -12,12 +12,40 @@ namespace Kassa.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Article
+    public partial class Article : IComparable<Article>,IComparer<Article>
     {
+        private int maxColumns;
+        public Article()
+        {
+            maxColumns = 4;
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public float Price { get; set; }
         public Nullable<int> MenuIndexX { get; set; }
         public Nullable<int> MenuIndexY { get; set; }
+        public int CompareTo(Article other)
+        {
+            return CalcPosition(this.MenuIndexX.Value,this.MenuIndexY.Value)-CalcPosition(other.MenuIndexX,other.MenuIndexY);
+        }
+
+        private int CalcPosition(int? x, int? y)
+        {
+            if (x != null && y != null)
+            {
+                int position = (int)((y * maxColumns) + x);
+                return position;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public int Compare(Article x, Article y)
+        {
+            return CalcPosition(x.MenuIndexX, x.MenuIndexY) - CalcPosition(y.MenuIndexX, y.MenuIndexY);
+        }
     }
 }
