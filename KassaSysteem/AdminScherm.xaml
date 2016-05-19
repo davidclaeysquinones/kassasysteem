@@ -31,6 +31,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            <Button Name="btnVorige" Width="75" Height="35" Margin="0,0,300,150" Click="Click_Back">Vorige</Button>
             <Button Grid.Column="0" Height="100" Width="100" Click="Click_Tafels">Tafels
                 <Button.Background>
                     <LinearGradientBrush>
@@ -72,5 +73,5 @@
         <StackPanel Height="520" Width="1200">
             <Image Height="480" Source="Images/Foto1.jpeg"></Image>
         </StackPanel>
-        </StackPanel>
+    </StackPanel>
 </Window>

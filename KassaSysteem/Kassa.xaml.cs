@@ -100,7 +100,7 @@ namespace KassaSysteem
             if (dataGrid.Items.Count == 0)
             {
                 orderTijdelijk = new Order();
-                Console.WriteLine("MAAKT BIJ EERSTE ARTIKEL");
+                Console.WriteLine("Order wordt gemaakt");
                 orderTijdelijk.Status = 0;
                 orderTijdelijk.CreatedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                 orderTijdelijk.TafelId = tafel.Id;
@@ -262,7 +262,7 @@ namespace KassaSysteem
 
             if (orderService.OrderExists(tafel.Id) == -1)
             {
-                Console.WriteLine("NIEEEEEEEETTTTTTTTTTTTT");
+                Console.WriteLine("BESTAAT NIEEEEEEEETTTTTTTTTTTTT");
                 orderTijdelijk.TafelId = orderTijdelijk.TafelId;
                 orderTijdelijk.TafelName = orderTijdelijk.TafelName;
                 orderTijdelijk.CreatedDate = orderTijdelijk.CreatedDate;
@@ -326,25 +326,28 @@ namespace KassaSysteem
         {
             int orderId = 0;
 
-            if (orderService.OrderExists(tafel.Id) == -1)
+            if (dataGrid.Items.Count != 0)
             {
-                Console.WriteLine("HHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-                orderTijdelijk.TafelId = tafel.Id;
-                Console.WriteLine(orderTijdelijk.TafelId);
-                orderTijdelijk.TafelName = tafel.Name;
-                Console.WriteLine(orderTijdelijk.TafelName);
-                orderTijdelijk.CreatedDate = orderTijdelijk.CreatedDate;
-                Console.WriteLine(orderTijdelijk.CreatedDate);
-                orderTijdelijk.Status = orderTijdelijk.Status;
-                Console.WriteLine(orderTijdelijk.Status);
+                if (orderService.OrderExists(tafel.Id) == -1)
+                {
+                    Console.WriteLine("HHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+                    Console.WriteLine(orderTijdelijk.TafelId);
+                    orderTijdelijk.TafelId = tafel.Id;
+                    Console.WriteLine(orderTijdelijk.TafelId);
+                    orderTijdelijk.TafelName = tafel.Name;
+                    Console.WriteLine(orderTijdelijk.TafelName);
+                    orderTijdelijk.CreatedDate = orderTijdelijk.CreatedDate;
+                    Console.WriteLine(orderTijdelijk.CreatedDate);
+                    orderTijdelijk.Status = orderTijdelijk.Status;
+                    Console.WriteLine(orderTijdelijk.Status);
 
-                orderId = orderService.Add(orderTijdelijk);
+                    orderId = orderService.Add(orderTijdelijk);
+                }
+                else
+                {
+                    orderId = orderService.OrderExists(tafel.Id);
+                }
             }
-            else
-            {
-                orderId = orderService.OrderExists(tafel.Id);
-            }
-            
 
             if(toevoegenOrderlines.Count != 0)
             {
@@ -377,7 +380,7 @@ namespace KassaSysteem
                 }
             }
 
-            if(dataGrid.Items.Count == 0)
+            if(dataGrid.Items.Count == 0 && orderTijdelijk != null)
             {
                 Order order = orderService.getOrderObject(orderId);
                 orderService.Remove(order);
@@ -553,8 +556,12 @@ namespace KassaSysteem
                     OrderLine line = (OrderLine)dataGrid.Items.GetItemAt(i);
                     prijs += (float)line.Total;
                 }
-                orderTijdelijk.Total = prijs;
+                if(orderTijdelijk != null)
+                {
+                    orderTijdelijk.Total = prijs;
+                }
                 lblTotaal.Content = "Totaalprijs: €" + prijs;
+                Console.WriteLine(prijs);
             }
         }
 
