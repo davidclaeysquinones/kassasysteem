@@ -31,82 +31,123 @@ namespace KassaSysteem
             orderService = new OrderService();
             orderlineService = new OrderLineService();
             alleOrders = orderService.GetAllOrders();
-            vulScherm(alleOrders);
-            dataGridLines.Visibility = Visibility.Collapsed;
+            vulScherm();
         }
 
-        private void vulScherm(IEnumerable<Order> alleOrders)
+        private void vulScherm()
         {
             foreach (var item in alleOrders)
             {
                 dataGrid.Items.Add(item);
             }
+            btnTerug.Visibility = Visibility.Collapsed;
+            dataGridLines.Visibility = Visibility.Collapsed;
+            dataGridMaand.Visibility = Visibility.Collapsed;
         }
 
         private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             dataGridLines.Items.Clear();
 
-            Order order = (Order)dataGrid.SelectedItem;
-            int id = order.Id;
-            Console.WriteLine(id);
-            IEnumerable<OrderLine> orderlines = orderlineService.GetAllOrderlinesFromOrder(id);
-            List<OrderlineViewModel> nieuweViews = vanOrderlineNaarView(orderlines);
-
-            foreach (var item in nieuweViews)
+            if(dataGrid.SelectedIndex != -1)
             {
-                dataGridLines.Items.Add(item);
-                Console.WriteLine(item.ArticleName);
+                Order order = (Order)dataGrid.SelectedItem;
+                int id = order.Id;
+                Console.WriteLine(id);
+                IEnumerable<OrderLine> orderlines = orderlineService.GetAllOrderlinesFromOrder(id);
+
+                foreach (var item in orderlines)
+                {
+                    dataGridLines.Items.Add(item);
+                    Console.WriteLine(item.ArticleName);
+                }
+                lblTotaalBedrag.Content = "Totaalprijs: €" + order.Total;
             }
 
-            berekenTotaalBedrag();
+            
 
             dataGridLines.Visibility = Visibility.Visible;
         }
 
-        private List<OrderlineViewModel> vanOrderlineNaarView(IEnumerable<OrderLine> orderlines)
-        {
-            List<OrderlineViewModel> nieuweViews = new List<OrderlineViewModel>();
+        //private List<OrderlineViewModel> vanOrderlineNaarView(IEnumerable<OrderLine> orderlines)
+        //{
+        //    List<OrderlineViewModel> nieuweViews = new List<OrderlineViewModel>();
 
-            foreach (var item in orderlines)
-            {
-                OrderlineViewModel nieuweView = new OrderlineViewModel();
-                nieuweView.OrderId = item.OrderId;
-                nieuweView.ArticleId = item.ArticleId;
-                nieuweView.ArticleName = item.ArticleName;
-                nieuweView.Amount = item.Amount;
-                nieuweView.Price = item.Price;
-                nieuweView.CreatedDate = item.CreatedDate;
-                nieuweView.Total = item.Amount * item.Price;
-                nieuweViews.Add(nieuweView);
-            }
-            return nieuweViews;
-        }
+        //    foreach (var item in orderlines)
+        //    {
+        //        OrderlineViewModel nieuweView = new OrderlineViewModel();
+        //        nieuweView.OrderId = item.OrderId;
+        //        nieuweView.ArticleId = item.ArticleId;
+        //        nieuweView.ArticleName = item.ArticleName;
+        //        nieuweView.Amount = item.Amount;
+        //        nieuweView.Price = item.Price;
+        //        nieuweView.CreatedDate = item.CreatedDate;
+        //        nieuweView.Total = item.Amount * item.Price;
+        //        nieuweViews.Add(nieuweView);
+        //    }
+        //    return nieuweViews;
+        //}
 
         private void dataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
             e.Cancel = true;
         }
 
-        private void btnVerwijderOrder_Click(object sender, RoutedEventArgs e)
+        private void btnToonMaand_Click(object sender, RoutedEventArgs e)
         {
-            if(dataGrid.SelectedIndex != -1)
+            float totaalPrijs = 0;
+
+            dataGrid.Visibility = Visibility.Collapsed;
+            dataGridLines.Visibility = Visibility.Collapsed;
+            lblTitel.Visibility = Visibility.Collapsed;
+            btnToonMaand.Visibility = Visibility.Collapsed;
+            lblBeginMaand.Visibility = Visibility.Collapsed;
+            lblEindeMaand.Visibility = Visibility.Collapsed;
+            string dateBegin = txtBoxBegin.Text;
+            DateTime begin = Convert.ToDateTime(dateBegin);
+            string dateEind = txtBoxEind.Text;
+            DateTime eind = Convert.ToDateTime(dateEind);
+            txtBoxBegin.Visibility = Visibility.Collapsed;
+            txtBoxEind.Visibility = Visibility.Collapsed;
+            dataGridMaand.Visibility = Visibility.Visible;
+            btnTerug.Visibility = Visibility.Visible;
+            btnVorigeAdmin.Visibility = Visibility.Collapsed;
+
+            IEnumerable<Order> orders = orderService.getOrderMonth(begin, eind);
+
+            foreach (var item in orders)
             {
-                Order order = (Order)dataGrid.SelectedItem;
-                orderService.Remove(order);
-                dataGrid.Items.RemoveAt(dataGridLines.SelectedIndex);
+                dataGridMaand.Items.Add(item);
+                if(item.Total != null)
+                {
+                    totaalPrijs += (float)item.Total;
+                }
             }
+            lblTotaalBedrag.Content = "Totaalbedrag voor deze maand: €" + totaalPrijs;
         }
 
-        private void berekenTotaalBedrag()
+        private void btnTerug_Click(object sender, RoutedEventArgs e)
         {
-            float prijs = 0;
-            for (int i = 0; i < dataGridLines.Items.Count; i++)
-            {
-                OrderlineViewModel line = (OrderlineViewModel)dataGridLines.Items.GetItemAt(i);
-                prijs += line.Total;
-            }
-            lblTotaalBedrag.Content = "Totaalprijs: €" + prijs;
+            dataGrid.Visibility = Visibility.Visible;
+            dataGridLines.Visibility = Visibility.Visible;
+            lblTitel.Visibility = Visibility.Visible;
+            btnToonMaand.Visibility = Visibility.Visible;
+            lblBeginMaand.Visibility = Visibility.Visible;
+            lblEindeMaand.Visibility = Visibility.Visible;
+            txtBoxBegin.Visibility = Visibility.Visible;
+            txtBoxEind.Visibility = Visibility.Visible;
+            dataGridMaand.Visibility = Visibility.Visible;
+            btnVorigeAdmin.Visibility = Visibility.Visible;
+            lblTotaalBedrag.Content = "";
+
+            vulScherm();
+        }
+
+        private void btnVorigeAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            AdminScherm adminscherm = new AdminScherm();
+            adminscherm.Show();
+            this.Close();
         }
     }
 }

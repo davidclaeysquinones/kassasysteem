@@ -79,5 +79,12 @@ namespace Kassa.DAO
                 return db.Order.ToList();
             }
         }
+        public IEnumerable<Order> getOrderMonth(DateTime begin, DateTime eind)
+        {
+            using (var db = new kassaEntities())
+            {
+                return db.Order.Where(o => o.CreatedDate >= begin && o.CreatedDate <= eind).ToList();
+            }
+        }
     }
 }

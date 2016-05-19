@@ -39,5 +39,9 @@ namespace Kassa.Service
         {
             return orderDAO.GetAllOrders();
         }
+        public IEnumerable<Order> getOrderMonth(DateTime begin, DateTime eind)
+        {
+            return orderDAO.getOrderMonth(begin, eind);
+        }
     }
 }
