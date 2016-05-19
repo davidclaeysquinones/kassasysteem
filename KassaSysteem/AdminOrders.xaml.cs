@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -99,35 +100,56 @@ namespace KassaSysteem
 
         private void btnToonMaand_Click(object sender, RoutedEventArgs e)
         {
-            float totaalPrijs = 0;
+            string boxBegin = txtBoxBegin.Text;
+            string boxEind = txtBoxEind.Text;
+            Console.WriteLine("BBBBBBBBBBB");
+            Console.WriteLine(boxBegin);
+            Console.WriteLine(boxEind);
 
-            dataGrid.Visibility = Visibility.Collapsed;
-            dataGridLines.Visibility = Visibility.Collapsed;
-            lblTitel.Visibility = Visibility.Collapsed;
-            btnToonMaand.Visibility = Visibility.Collapsed;
-            lblBeginMaand.Visibility = Visibility.Collapsed;
-            lblEindeMaand.Visibility = Visibility.Collapsed;
-            string dateBegin = txtBoxBegin.Text;
-            DateTime begin = Convert.ToDateTime(dateBegin);
-            string dateEind = txtBoxEind.Text;
-            DateTime eind = Convert.ToDateTime(dateEind);
-            txtBoxBegin.Visibility = Visibility.Collapsed;
-            txtBoxEind.Visibility = Visibility.Collapsed;
-            dataGridMaand.Visibility = Visibility.Visible;
-            btnTerug.Visibility = Visibility.Visible;
-            btnVorigeAdmin.Visibility = Visibility.Collapsed;
-
-            IEnumerable<Order> orders = orderService.getOrderMonth(begin, eind);
-
-            foreach (var item in orders)
+            if (!boxBegin.Equals("") && boxEind.Equals(""))
             {
-                dataGridMaand.Items.Add(item);
-                if(item.Total != null)
+                if((Regex.IsMatch(boxBegin, @"^\d{4}[-/.]\d{1,2}[-/.]\d{1,2}$")) && (Regex.IsMatch(boxEind, @"^\d{4}[-/.]\d{1,2}[-/.]\d{1,2}$")))
                 {
-                    totaalPrijs += (float)item.Total;
+                    float totaalPrijs = 0;
+
+                    dataGrid.Visibility = Visibility.Collapsed;
+                    dataGridLines.Visibility = Visibility.Collapsed;
+                    lblTitel.Visibility = Visibility.Collapsed;
+                    btnToonMaand.Visibility = Visibility.Collapsed;
+                    lblBeginMaand.Visibility = Visibility.Collapsed;
+                    lblEindeMaand.Visibility = Visibility.Collapsed;
+                    string dateBegin = txtBoxBegin.Text;
+                    DateTime begin = Convert.ToDateTime(dateBegin);
+                    string dateEind = txtBoxEind.Text;
+                    DateTime eind = Convert.ToDateTime(dateEind);
+                    txtBoxBegin.Visibility = Visibility.Collapsed;
+                    txtBoxEind.Visibility = Visibility.Collapsed;
+                    dataGridMaand.Visibility = Visibility.Visible;
+                    btnTerug.Visibility = Visibility.Visible;
+                    btnVorigeAdmin.Visibility = Visibility.Collapsed;
+
+                    IEnumerable<Order> orders = orderService.getOrderMonth(begin, eind);
+
+                    foreach (var item in orders)
+                    {
+                        dataGridMaand.Items.Add(item);
+                        if (item.Total != null)
+                        {
+                            totaalPrijs += (float)item.Total;
+                        }
+                    }
+                    lblTotaalBedrag.Content = "Totaalbedrag voor deze maand: €" + totaalPrijs;
+                }
+                else
+                {
+                    lblError.Content = "Datum moet van formaat yyyy/mm/dd zijn.";
                 }
             }
-            lblTotaalBedrag.Content = "Totaalbedrag voor deze maand: €" + totaalPrijs;
+            else
+            {
+                lblError.Content = "Inputvelden moeten ingevuld worden.";
+            }
+            
         }
 
         private void btnTerug_Click(object sender, RoutedEventArgs e)
