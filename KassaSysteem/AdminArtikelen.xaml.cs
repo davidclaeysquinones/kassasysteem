@@ -253,7 +253,7 @@ namespace KassaSysteem
                 Point coor = CalcCoordinates(item.Position);
                 article.MenuIndexX = (int?)coor.X;
                 article.MenuIndexY = (int?)coor.Y;
-                articleService.Add(article);
+                articleService.Update(article);
             }
 
             foreach (var item in add)
@@ -329,14 +329,11 @@ namespace KassaSysteem
                
                     ArtikelViewModel vorig = (ArtikelViewModel) Artikelen.Items.GetItemAt(selectedIndex - 1);
                     
-                    Artikelen.Items.Remove(artikelViewModel);
-                    Artikelen.Items.Remove(vorig);
                  
-
-
-
                     if (!add.Contains(artikelViewModel))
                     {
+                        Artikelen.Items.Remove(artikelViewModel);
+                        Console.WriteLine("update");
                         update.Remove(artikelViewModel);
                         artikelViewModel.Position -= 1;
                         update.Add(artikelViewModel);
@@ -344,6 +341,8 @@ namespace KassaSysteem
                     }
                     else
                     {
+                        Artikelen.Items.Remove(artikelViewModel);
+                        Console.WriteLine("add");
                         add.Remove(artikelViewModel);
                         artikelViewModel.Position -= 1;
                         add.Add(artikelViewModel);
@@ -352,6 +351,8 @@ namespace KassaSysteem
 
                     if (!add.Contains(vorig))
                     {
+                        Artikelen.Items.Remove(vorig);
+                        Console.WriteLine("update");
                         update.Remove(vorig);
                         vorig.Position += 1;
                         update.Add(vorig);
@@ -359,6 +360,8 @@ namespace KassaSysteem
                     }
                     else
                     {
+                        Artikelen.Items.Remove(vorig);
+                        Console.WriteLine("add");
                         add.Remove(vorig);
                         vorig.Position += 1;
                         add.Add(vorig);
@@ -382,14 +385,10 @@ namespace KassaSysteem
 
                     ArtikelViewModel volgend = (ArtikelViewModel)Artikelen.Items.GetItemAt(selectedIndex + 1);
                   
-                    Artikelen.Items.Remove(artikelViewModel);
-            
-                    Artikelen.Items.Remove(volgend);
-                   
-
-
+                 
                     if (!add.Contains(artikelViewModel))
                     {
+                        Artikelen.Items.Remove(artikelViewModel);
                         Console.WriteLine("update");
                         update.Remove(artikelViewModel);
                         artikelViewModel.Position += 1;
@@ -398,6 +397,7 @@ namespace KassaSysteem
                     }
                     else
                     {
+                        Artikelen.Items.Remove(artikelViewModel);
                         Console.WriteLine("add");
                         add.Remove(artikelViewModel);
                         artikelViewModel.Position += 1;
@@ -407,6 +407,8 @@ namespace KassaSysteem
 
                     if (!add.Contains(volgend))
                     {
+                        Artikelen.Items.Remove(volgend);
+                        Console.WriteLine("update");
                         update.Remove(volgend);
                         volgend.Position -= 1;
                         update.Add(volgend);
@@ -414,6 +416,8 @@ namespace KassaSysteem
                     }
                     else
                     {
+                        Artikelen.Items.Remove(volgend);
+                        Console.WriteLine("add");
                         add.Remove(volgend);
                         volgend.Position -= 1;
                         add.Add(volgend);
