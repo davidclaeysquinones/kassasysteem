@@ -79,6 +79,7 @@
     <Compile Include="Startscherm.xaml.cs">
       <DependentUpon>Startscherm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ArtikelViewModel.cs" />
     <Compile Include="ViewModel\OrderlineViewModel.cs" />
     <Page Include="AdminOrders.xaml">
       <SubType>Designer</SubType>

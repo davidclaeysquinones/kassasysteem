@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Kassa.Model;
 using Kassa.Service;
+using KassaSysteem.ViewModel;
 
 namespace KassaSysteem
 {
@@ -21,18 +23,21 @@ namespace KassaSysteem
     /// </summary>
     public partial class AdminArtikelen : Window
     {
+        private int maxColumns;
         private ArticleService articleService;
-        private List<Article> delete;
-        private List<Article> add;
-        private List<Article> update;
+        private List<ArtikelViewModel> delete;
+        private List<ArtikelViewModel> add;
+        private List<ArtikelViewModel> update;
 
         public AdminArtikelen()
         {
             InitializeComponent();
+            maxColumns = 4;
             loadData();
-            delete = new List<Article>();
-            add = new List<Article>();
-            update = new List<Article>();
+            delete = new List<ArtikelViewModel>();
+            add = new List<ArtikelViewModel>();
+            update = new List<ArtikelViewModel>();
+
         }
 
         private void loadData()
@@ -42,7 +47,20 @@ namespace KassaSysteem
 
             foreach (var item in articles)
             {
-                Artikelen.Items.Add(item);
+                ArtikelViewModel artikelViewModel = new ArtikelViewModel();
+                artikelViewModel.Name = item.Name;
+                artikelViewModel.ArtikelId = item.Id;
+                artikelViewModel.Price = item.Price;
+                if (item.MenuIndexX != null && item.MenuIndexY != null)
+                {
+                    artikelViewModel.Position = CalcPosition((int) item.MenuIndexX, (int) item.MenuIndexY);
+                }
+                else
+                {
+                    artikelViewModel.Position = Artikelen.Items.Count;
+                }
+                
+                Artikelen.Items.Insert(artikelViewModel.Position,artikelViewModel);
             }
         }
 
@@ -60,9 +78,9 @@ namespace KassaSysteem
                 int selectedIndex = Artikelen.SelectedIndex;
                 if (selectedIndex != -1)
                 {
-                    Article article = (Article)articles.GetItemAt(selectedIndex);
-                    Name.Text = article.Name;
-                    Price.Text = article.Price.ToString();
+                    ArtikelViewModel artikelViewModel = (ArtikelViewModel) articles.GetItemAt(selectedIndex);
+                    Name.Text = artikelViewModel.Name;
+                    Price.Text = artikelViewModel.Price.ToString();
                 }
 
             }
@@ -75,7 +93,6 @@ namespace KassaSysteem
             AdminScherm adminScherm = new AdminScherm();
             adminScherm.Show();
             this.Close();
-
         }
 
         private void Name_Changed(object sender, TextChangedEventArgs e)
@@ -84,47 +101,295 @@ namespace KassaSysteem
 
             if (input!=null)
             {
+
                 int selectedIndex = Artikelen.SelectedIndex;
-                Article article = (Article) Artikelen.Items.GetItemAt(selectedIndex);
-                //article.Price = Convert.ToSingle(Price.Text);
-                article.Name = Name.ToString();
-                if (!add.Contains(article))
+                Console.WriteLine(selectedIndex + " " + Artikelen.Items.Count);
+                if (selectedIndex != -1)
                 {
-                    update.Remove(article);
-                    update.Add(article);
+                    ArtikelViewModel artikelViewModel= (ArtikelViewModel) Artikelen.Items.GetItemAt(selectedIndex);
+                    if (artikelViewModel != null)
+                    {
+                        artikelViewModel.Name = input;
+                        if (!add.Contains(artikelViewModel))
+                        {
+                            update.Remove(artikelViewModel);
+                            update.Add(artikelViewModel);
+                        }
+                        else
+                        {
+                            add.Remove(artikelViewModel);
+                            add.Add(artikelViewModel);
+                        }
+                        Artikelen.Items.Refresh();
+                    }
                 }
+                else
+                {
+                    Name.Text = "";
+                }
+               
+               
+                
             }
         }
 
         private void Price_Changed(object sender, TextChangedEventArgs e)
         {
             Console.WriteLine(Artikelen.SelectedIndex);
+            String input = Price.Text;
+
+            if (input != null)
+            {
+                if (!(Regex.IsMatch(input, @"\D+?")) && !input.Equals(""))
+                {
+                    int selectedIndex = Artikelen.SelectedIndex;
+                    Console.WriteLine(selectedIndex + " " + Artikelen.Items.Count);
+                    if (selectedIndex != -1)
+                    {
+                        ArtikelViewModel artikelViewModel =(ArtikelViewModel)Artikelen.Items.GetItemAt(selectedIndex);
+                        if (artikelViewModel != null)
+                        {
+                            artikelViewModel.Price = Convert.ToSingle(input);
+                            if (!add.Contains(artikelViewModel))
+                            {
+                                update.Remove(artikelViewModel);
+                                update.Add(artikelViewModel);
+                            }
+                            else
+                            {
+                                add.Remove(artikelViewModel);
+                                add.Add(artikelViewModel);
+                            }
+                            Artikelen.Items.Refresh();
+                        }
+                    }
+                   
+                }
+                else
+                {
+                    if (!input.Equals(""))
+                    {
+                        Price.Text = "";
+                    }
+   
+                }
+            
+            }
         }
 
         private void Delete_Article(object sender, RoutedEventArgs e)
         {
             int selectedIndex = Artikelen.SelectedIndex;
-            Artikelen.SelectedIndex = -1;
-            Artikelen.Items.RemoveAt(selectedIndex);
+            if (selectedIndex != -1)
+            {
+                ArtikelViewModel artikelViewModel = (ArtikelViewModel)Artikelen.Items.GetItemAt(selectedIndex);
+                if (!add.Contains(artikelViewModel))
+                {
+                    delete.Add(artikelViewModel);
+                }
+                else
+                {
+                    add.Remove(artikelViewModel);
+                }
+
+                if (update.Contains(artikelViewModel))
+                {
+                    update.Remove(artikelViewModel);
+                }
+                Artikelen.Items.RemoveAt(selectedIndex);
+                if (selectedIndex + 1 != Artikelen.Items.Count)
+                {
+                    for(int i =0;i< Artikelen.Items.Count;i++)
+                    {
+                        artikelViewModel = (ArtikelViewModel) Artikelen.Items.GetItemAt(i);
+                        if (artikelViewModel.Position > selectedIndex)
+                        {
+                            Artikelen.Items.Remove(artikelViewModel);
+                            artikelViewModel.Position -= 1;
+                            Artikelen.Items.Insert(artikelViewModel.Position, artikelViewModel);
+                        }
+
+                    }
+
+                }
+
+                if (selectedIndex  != Artikelen.Items.Count)
+                {
+                    Artikelen.SelectedIndex = selectedIndex;
+                }
+                else
+                {
+                    Artikelen.SelectedIndex = -1;
+                }
+
+            }
+          
+
         }
 
         private void Save_Changes(object sender, RoutedEventArgs e)
         {
             articleService = new ArticleService();
-            foreach (var item in delete)
-            {
-                articleService.Delete(item);
-            }
+           
 
             foreach (var item in update)
             {
-                articleService.Update(item);
+                Article article = new Article();
+                article.Name = item.Name;
+                article.Id = item.ArtikelId;
+                article.Price = item.Price;
+                Point coor = CalcCoordinates(item.Position);
+                article.MenuIndexX = (int?)coor.X;
+                article.MenuIndexY = (int?)coor.Y;
+                articleService.Add(article);
             }
 
             foreach (var item in add)
             {
-                articleService.Add(item);
+                Article article = new Article();
+                article.Name = item.Name;
+                article.Price = item.Price;
+                Point coor = CalcCoordinates(item.Position);
+                article.MenuIndexX = (int?) coor.X;
+                article.MenuIndexY = (int?) coor. Y;
+                articleService.Add(article);
+            }
+
+            foreach (var item in delete)
+            {
+                Article article = new Article();
+                article.Name = item.Name;
+                article.Id = item.ArtikelId;
+                article.Price = item.Price;
+                Point point = CalcCoordinates(item.Position);
+                article.MenuIndexX = (int?)point.X;
+                article.MenuIndexY = (int?)point.Y;
+                articleService.Delete(article);
+            }
+
+            AdminScherm adminScherm = new AdminScherm();
+            adminScherm.Show();
+            this.Close();
+        }
+
+        private void New_Article(object sender, RoutedEventArgs e)
+        {
+            ArtikelViewModel artikelViewModel = new ArtikelViewModel();
+            artikelViewModel.Name = "New Article";
+            artikelViewModel.Price = 1;
+            artikelViewModel.Position = Artikelen.Items.Count;
+            add.Add(artikelViewModel);
+            Artikelen.Items.Add(artikelViewModel);
+            Artikelen.SelectedIndex = Artikelen.Items.IndexOf(artikelViewModel);
+            
+        }
+
+        private int CalcPosition(int x, int y)
+        {
+            int position = (y*maxColumns) + x;
+            Console.WriteLine(position+" position");
+            return position;
+        }
+
+        private Point CalcCoordinates(int position)
+        {
+            Point point = new Point();
+            int row = (position / maxColumns);
+            point.Y = row;
+            Console.WriteLine(row+" test y");
+            int column = position - (row*maxColumns);
+            Console.WriteLine(column+" test x");
+            point.X = column;
+            return point;
+        }
+
+
+        private void Button_Up(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = Artikelen.SelectedIndex;
+            if (selectedIndex != -1)
+            {
+                if (selectedIndex > 0)
+                {
+                    ArtikelViewModel artikelViewModel = (ArtikelViewModel) Artikelen.Items.GetItemAt(selectedIndex);
+                    artikelViewModel.Position -=1;
+               
+                    ArtikelViewModel vorig = (ArtikelViewModel) Artikelen.Items.GetItemAt(selectedIndex - 1);
+                    vorig.Position += 1;
+                    Artikelen.Items.Remove(artikelViewModel);
+                    Artikelen.Items.Remove(vorig);
+                    Artikelen.Items.Insert(selectedIndex-1,artikelViewModel);
+                    Artikelen.Items.Insert(selectedIndex,vorig);
+                    Artikelen.SelectedIndex = selectedIndex - 1;
+
+                    if (!add.Contains(artikelViewModel))
+                    {
+                        update.Remove(artikelViewModel);
+                        update.Add(artikelViewModel);
+                    }
+                    else
+                    {
+                        add.Remove(artikelViewModel);
+                        add.Add(artikelViewModel);
+                    }
+
+                    if (!add.Contains(vorig))
+                    {
+                        update.Remove(vorig);
+                        update.Add(vorig);
+                    }
+                    else
+                    {
+                        add.Remove(vorig);
+                        add.Add(vorig);
+                    }
+                }
             }
         }
+
+        private void Button_Down(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = Artikelen.SelectedIndex;
+            if (selectedIndex != -1)
+            {
+                if (selectedIndex+1 != Artikelen.Items.Count)
+                {
+                    ArtikelViewModel artikelViewModel = (ArtikelViewModel)Artikelen.Items.GetItemAt(selectedIndex);
+                    artikelViewModel.Position += 1;
+
+                    ArtikelViewModel volgend = (ArtikelViewModel)Artikelen.Items.GetItemAt(selectedIndex + 1);
+                    volgend.Position -= 1;
+                    Artikelen.Items.Remove(artikelViewModel);
+                    Artikelen.Items.Insert(selectedIndex + 1, artikelViewModel);
+                    Artikelen.Items.Remove(volgend);
+                    Artikelen.Items.Insert(selectedIndex, volgend);
+                    Artikelen.SelectedIndex = selectedIndex + 1;
+
+                    if (!add.Contains(artikelViewModel))
+                    {
+                        update.Remove(artikelViewModel);
+                        update.Add(artikelViewModel);
+                    }
+                    else
+                    {
+                        add.Remove(artikelViewModel);
+                        add.Add(artikelViewModel);
+                    }
+
+                    if (!add.Contains(volgend))
+                    {
+                        update.Remove(volgend);
+                        update.Add(volgend);
+                    }
+                    else
+                    {
+                        add.Remove(volgend);
+                        add.Add(volgend);
+                    }
+                }
+            }
+        }
+
+  
     }
 }

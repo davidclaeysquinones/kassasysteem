@@ -32,7 +32,7 @@ namespace KassaSysteem
         private List<Tafel> update;
         private List<Tafel> add;
         private static int maxWidth = 1000;
-        private static int maxHeight = 430;
+        private static int maxHeight = 420;
 
 
 
@@ -140,42 +140,42 @@ namespace KassaSysteem
                     double xmove = input.X;
                     double ymove = input.Y;
 
-
+                    
                     Tables.Children.Remove(b);
-                    if (xmove >= 0 && xmove <= maxWidth)
+                    if (xmove >= 0)
                     {
-                        tafel.PositionX = (int)xmove;
-                        Canvas.SetLeft(b, tafel.PositionX);
-                    }
-                    else
-                    {
-                        if (xmove >= 0)
+                        if (xmove <= maxWidth)
+                        {
+                            tafel.PositionX = (int)xmove;
+                            Canvas.SetLeft(b, tafel.PositionX);
+                        }
+                        else
                         {
                             tafel.PositionX = maxWidth;
                             Canvas.SetLeft(b, tafel.PositionX);
                         }
-
                     }
 
-                    if (ymove >= 0 && ymove <= maxHeight)
+                    if (ymove >= 0)
                     {
-                        tafel.PositionY = (int)ymove;
-                        Canvas.SetTop(b, tafel.PositionY);
-                    }
-                    else
-                    {
-                        if (ymove >= 0)
+                        if (ymove <= maxHeight)
+                        {
+                            tafel.PositionY = (int)ymove;
+                            Canvas.SetTop(b, tafel.PositionY);
+                        }
+                        else
                         {
                             tafel.PositionY = maxHeight;
                             Canvas.SetTop(b, tafel.PositionY);
                         }
-                       
                     }
 
+                    
                     Tables.Children.Add(b);
 
                     xposition.Text = tafel.PositionX.ToString();
                     yposition.Text = tafel.PositionY.ToString();
+                    huidig = b;
                 }
 
             }
@@ -454,6 +454,7 @@ namespace KassaSysteem
                     Tafel tafel = (Tafel)huidig.Tag;
                     int width = Convert.ToInt32(Width.Text);
                     double x =Canvas.GetLeft(huidig);
+                    Console.WriteLine("current position"+x);
                     if ((width+x) <= maxWidth)
                     {
                         Console.WriteLine(MaxWidth);

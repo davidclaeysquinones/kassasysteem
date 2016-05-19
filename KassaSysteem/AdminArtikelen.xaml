@@ -11,24 +11,30 @@
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" MinHeight="50">
+      
             <DataGrid Name="Artikelen" SelectionMode="Single"  BeginningEdit="Artikelen_OnBeginningEdit" SelectedCellsChanged="selection_changed">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Naam" Width="*" Binding="{Binding Name}"></DataGridTextColumn>
                     <DataGridTextColumn  Header="Prijs" Width="*" Binding="{Binding Price}"></DataGridTextColumn>
+                    <DataGridTextColumn  Header="Positie" Width="*" Binding="{Binding Position}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        </ScrollViewer>
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Vertical" Grid.Column="1" >
-                <Button>New</Button>
+            <StackPanel Orientation="Vertical" Grid.Column="2" >
+                <Button Click="New_Article">New</Button>
                 <Button Click="Delete_Article">Delete</Button>
                 <Button Click="Save_Changes">Save</Button>
                 <Button Click="back">Back</Button>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <Button Click="Button_Up">↑</Button>
+                <Button Click="Button_Down">↓</Button>
             </StackPanel>
             <StackPanel Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
