@@ -130,6 +130,7 @@ namespace KassaSysteem
 
                     IEnumerable<Order> orders = orderService.getOrderMonth(begin, eind);
 
+
                     foreach (var item in orders)
                     {
                         dataGridMaand.Items.Add(item);
