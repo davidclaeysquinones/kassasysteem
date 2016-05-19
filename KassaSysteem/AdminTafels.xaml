@@ -8,16 +8,6 @@
         Title="AdminTafels" Height="720" Width="1200" MaxHeight="720" MaxWidth="1200" MinHeight="720" MinWidth="1200">
 
     <Grid>
-        <Grid.Background>
-            <LinearGradientBrush>
-                <GradientStop Offset="-0" Color="Gray"/>
-                <GradientStop Offset="-0.05" Color="LightGray"/>
-                <GradientStop Offset="-0.1" Color="Gray"/>
-                <GradientStop Offset="-0.15" Color="LightGray"/>
-                <GradientStop Offset="-0.20" Color="Gray"/>
-                <GradientStop Offset="0.25" Color="LightGray"/>
-            </LinearGradientBrush>
-        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
