@@ -8,7 +8,8 @@
         Title="AdminScherm" Height="720" Width="1200">
     <Window.Resources>
         <Style TargetType="Button">
-            <Setter Property="Margin" Value="15"></Setter>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="100"/>
         </Style>
     </Window.Resources>
     <StackPanel>
@@ -32,7 +33,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Name="btnVorige" Width="75" Height="35" Margin="0,0,300,150" Click="Click_Back">Vorige</Button>
-            <Button Grid.Column="0" Height="100" Width="100" Click="Click_Tafels">Tafels
+            <Button Grid.Column="0" Click="Click_Tafels">Tafels
                 <Button.Background>
                     <LinearGradientBrush>
                         <GradientStop Offset="-0" Color="Gray"/>
@@ -44,7 +45,7 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Button Grid.Column="1" Height="100" Width="100" Click="Click_Artikelen">Artikelen
+            <Button Grid.Column="1" Click="Click_Artikelen">Artikelen
                 <Button.Background>
                     <LinearGradientBrush>
                         <GradientStop Offset="-0" Color="Gray"/>
@@ -56,7 +57,7 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Button Grid.Column="2" Height="100" Width="100" Click="Click_Orders">Orders
+            <Button Grid.Column="2" Click="Click_Orders">Orders
                 <Button.Background>
                     <LinearGradientBrush>
                         <GradientStop Offset="-0" Color="Gray"/>
