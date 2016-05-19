@@ -12,7 +12,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
       
-            <DataGrid Name="Artikelen" SelectionMode="Single"  BeginningEdit="Artikelen_OnBeginningEdit" SelectedCellsChanged="selection_changed">
+            <DataGrid Name="Artikelen" SelectionMode="Single"  BeginningEdit="Artikelen_OnBeginningEdit" SelectedCellsChanged="selection_changed" PreviewKeyDown="Artikelen_OnKeyDown">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Naam" Width="*" Binding="{Binding Name}"></DataGridTextColumn>
                     <DataGridTextColumn  Header="Prijs" Width="*" Binding="{Binding Price}"></DataGridTextColumn>
