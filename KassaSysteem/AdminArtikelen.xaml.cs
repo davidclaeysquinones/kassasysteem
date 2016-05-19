@@ -37,6 +37,10 @@ namespace KassaSysteem
             delete = new List<ArtikelViewModel>();
             add = new List<ArtikelViewModel>();
             update = new List<ArtikelViewModel>();
+            if (Artikelen.Items.Count != 0)
+            {
+                Artikelen.SelectedIndex = 0;
+            }
 
         }
 

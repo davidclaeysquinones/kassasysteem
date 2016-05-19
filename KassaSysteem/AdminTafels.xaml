@@ -27,7 +27,7 @@
             <ColumnDefinition Width="30"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Canvas AllowDrop="True" Grid.Row="0" Name="Tables" Grid.Column="0" Margin="-2,-5,2,5">
+        <Canvas AllowDrop="True" Grid.Row="0" Name="Tables" Grid.Column="0" Margin="-2,-5,2,5" Background="White">
 
         </Canvas>
 
