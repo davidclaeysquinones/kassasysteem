@@ -7,6 +7,16 @@
         mc:Ignorable="d"
         Title="AdminOrders" Height="720" Width="1250">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush>
+                <GradientStop Offset="-0" Color="Gray"/>
+                <GradientStop Offset="-0.05" Color="LightGray"/>
+                <GradientStop Offset="-0.1" Color="Gray"/>
+                <GradientStop Offset="-0.15" Color="LightGray"/>
+                <GradientStop Offset="-0.20" Color="Gray"/>
+                <GradientStop Offset="0.25" Color="LightGray"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -34,9 +44,9 @@
             Overzicht van alle orders:
         </Label>
 
-        <DataGrid Name="dataGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="5" CanUserResizeColumns="True" 
+        <DataGrid Name="dataGrid" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" CanUserResizeColumns="True" 
                   CanUserResizeRows="False" CanUserSortColumns="True" BeginningEdit="dataGrid_BeginningEdit"
-                  MouseDoubleClick="dataGrid_MouseDoubleClick">
+                  MouseDoubleClick="dataGrid_MouseDoubleClick" Margin="20,0,0,20">
             <DataGrid.Columns>
                 <DataGridTextColumn Visibility="Collapsed" Binding="{Binding Id}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Tafel" Width="125" Binding="{Binding TafelName}"></DataGridTextColumn>
@@ -46,7 +56,8 @@
         </DataGrid>
 
         <DataGrid Name="dataGridLines" Grid.Row="2" Grid.Column="4" Grid.RowSpan="4" Grid.ColumnSpan="2"
-                  CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True">
+                  CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True"
+                  Margin="0,0,20,20">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding ArticleName}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Aantal" Width="75" Binding="{Binding Amount}"></DataGridTextColumn>
