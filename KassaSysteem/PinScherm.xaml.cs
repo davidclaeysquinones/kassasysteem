@@ -24,6 +24,7 @@ namespace KassaSysteem
         public PinScherm()
         {
             InitializeComponent();
+            Keyboard.Focus(Input);
 
         }
 
