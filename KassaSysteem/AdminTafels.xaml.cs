@@ -607,77 +607,81 @@ namespace KassaSysteem
         private void AdminTafels_OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             Console.WriteLine("key down");
-            Key key = e.Key;
-            Console.WriteLine(key.ToString());
-            if (key == Key.Up)
+            if (!pressed)
             {
-                Console.WriteLine("key up");
-                if (huidig != null)
+                Key key = e.Key;
+                Console.WriteLine(key.ToString());
+                if (key == Key.Up)
                 {
-                    Console.WriteLine("not null");
-                    Tafel tafel = (Tafel) huidig.Tag;
-                    int y = tafel.PositionY;
-                    y -= 10;
-                    if (y < 0)
+                    Console.WriteLine("key up");
+                    if (huidig != null)
                     {
-                        y = y-y;
+                        Console.WriteLine("not null");
+                        Tafel tafel = (Tafel)huidig.Tag;
+                        int y = tafel.PositionY;
+                        y -= 10;
+                        if (y < 0)
+                        {
+                            y = y - y;
+                        }
+                        yposition.Text = y.ToString();
                     }
-                    yposition.Text = y.ToString();
-                }
-                
-            }
 
-            if (key == Key.Down)
-            {
-                Console.WriteLine("key down");
-                if (huidig != null)
+                }
+
+                if (key == Key.Down)
                 {
-                    Console.WriteLine("not null");
-                    Tafel tafel = (Tafel)huidig.Tag;
-                    int y = tafel.PositionY;
-                    y += 10;
-                    if (y > maxHeight)
+                    Console.WriteLine("key down");
+                    if (huidig != null)
                     {
-                        y = y - (y -maxHeight);
+                        Console.WriteLine("not null");
+                        Tafel tafel = (Tafel)huidig.Tag;
+                        int y = tafel.PositionY;
+                        y += 10;
+                        if (y > maxHeight)
+                        {
+                            y = y - (y - maxHeight);
+                        }
+                        yposition.Text = y.ToString();
                     }
-                    yposition.Text = y.ToString();
                 }
-            }
 
-            if (key == Key.Left)
-            {
-
-                Console.WriteLine("key left");
-                if (huidig != null)
+                if (key == Key.Left)
                 {
-                    Console.WriteLine("not null");
-                    Tafel tafel = (Tafel)huidig.Tag;
-                    int x = tafel.PositionX;
-                    x -= 10;
-                    if (x < 0)
-                    {
-                        x = x - x;
-                    }
-                    xposition.Text = x.ToString();
-                }
-            }
 
-            if (key == Key.Right)
-            {
-                Console.WriteLine("key right");
-                if (huidig != null)
-                {
-                    Console.WriteLine("not null");
-                    Tafel tafel = (Tafel)huidig.Tag;
-                    int x = tafel.PositionX;
-                    x += 10;
-                    if (x > maxWidth)
+                    Console.WriteLine("key left");
+                    if (huidig != null)
                     {
-                        x = x - (x - maxWidth);
+                        Console.WriteLine("not null");
+                        Tafel tafel = (Tafel)huidig.Tag;
+                        int x = tafel.PositionX;
+                        x -= 10;
+                        if (x < 0)
+                        {
+                            x = x - x;
+                        }
+                        xposition.Text = x.ToString();
                     }
-                    xposition.Text = x.ToString();
+                }
+
+                if (key == Key.Right)
+                {
+                    Console.WriteLine("key right");
+                    if (huidig != null)
+                    {
+                        Console.WriteLine("not null");
+                        Tafel tafel = (Tafel)huidig.Tag;
+                        int x = tafel.PositionX;
+                        x += 10;
+                        if (x > maxWidth)
+                        {
+                            x = x - (x - maxWidth);
+                        }
+                        xposition.Text = x.ToString();
+                    }
                 }
             }
+            pressed = false;
         }
     }
 }
