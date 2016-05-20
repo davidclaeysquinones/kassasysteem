@@ -30,21 +30,21 @@ namespace KassaSysteem
         private OrderLineService orderlineService;
         private Tafel tafel;
         private Order orderTijdelijk;
-        private IEnumerable<OrderLine> oudeOrderlines;
-        private List<OrderLine> toevoegenOrderlines;
-        private List<OrderLine> verwijderenOrderlines;
-        private List<OrderLine> updatenOrderlines;
+        private IEnumerable<OrderLine> oudeOrderlines; //lijst met orderlines van een openstaand order van een tafel
+        private List<OrderLine> toevoegenOrderlines; //lijst met toe te voegen orderlines aan de database
+        private List<OrderLine> verwijderenOrderlines; //lijst met te verwijderen orderlines uit de database
+        private List<OrderLine> updatenOrderlines; //lijst met up te daten orderlines uit de database
         public Kassa(Tafel tafel)
         {
             this.tafel = tafel;
+            InitializeComponent();
+            vulGrid();
             toevoegenOrderlines = new List<OrderLine>();
             verwijderenOrderlines = new List<OrderLine>();
             updatenOrderlines = new List<OrderLine>();
             articleService = new ArticleService();
             orderService = new OrderService();
             orderlineService = new OrderLineService();
-            InitializeComponent();
-            vulGrid();
             btnMin.IsEnabled = false;
             btnPlus.IsEnabled = false;
             oudeOrderlines = orderlineService.GetOpenLinesTable(tafel.Id);
@@ -52,6 +52,7 @@ namespace KassaSysteem
             
         }
 
+        //Vult alle artikelen in de grid aan, op row 0 en column 0
         public void vulGrid()
         {
             
@@ -66,17 +67,10 @@ namespace KassaSysteem
             }
 
             IEnumerable<Article> articles = articleService.All();
-            //int row = 0;
-            //int column = -1;
+
             foreach (var item in articles)
             {
-                
-                //if (column == 3)
-                //{
-                //    row++;
-                //    column = -1;
-                //}
-                //column++;
+               
                 Button b = new Button();
                 b.Background = Brushes.Gray;
                 b.Margin = new Thickness(10);
@@ -109,6 +103,10 @@ namespace KassaSysteem
             }
         }
 
+        //Als men op een artikel drukt wordt er een orderline gemaakt.
+        //Indien de datagrid nog leeg is wordt er een order gemaakt.
+        //Er wordt gekeken als deze orderline reeds bestaat in de datagrid, indien deze bestaat wordt het aantal met 1 verhoogt
+        //Indien deze niet wordt bestaat wordt er een nieuwe orderline gemaakt en in de datagrid gestoken.
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
@@ -118,12 +116,10 @@ namespace KassaSysteem
             if (dataGrid.Items.Count == 0)
             {
                 orderTijdelijk = new Order();
-                Console.WriteLine("Order wordt gemaakt");
                 orderTijdelijk.Status = 0;
                 orderTijdelijk.CreatedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                 orderTijdelijk.TafelId = tafel.Id;
                 orderTijdelijk.TafelName = tafel.Name;
-                Console.WriteLine(orderTijdelijk.TafelName);
             }
             if (!dataGrid.Items.Contains(b))
             {
@@ -133,8 +129,6 @@ namespace KassaSysteem
                 nieuweOrderline.Price = article.Price;
                 nieuweOrderline.CreatedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                 nieuweOrderline.Total = nieuweOrderline.Amount * nieuweOrderline.Price;
-
-
             }
 
 
@@ -193,6 +187,8 @@ namespace KassaSysteem
             veranderTotaalBedrag();
         }
 
+        //Indien er een item uit de datagrid is geselecteerd wordt deze verwijderd uit de datagrid.
+        //Deze wordt ook in een lijst gestoken met items die moeten verwijderd worden uit de database indien deze er in zouden zitten.
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (dataGrid.SelectedIndex >= 0)
@@ -204,6 +200,8 @@ namespace KassaSysteem
             veranderTotaalBedrag();
         }
 
+        //Indien er een item uit de datagrid is geselecteerd wordt de orderline uit de gatagrid gehaald en wordt het aantal met 1 verhoogd.
+        //Dit item wordt ook in de lijst gestoken met items die een update moeten ondergaan in de database.
         private void btnPlus_Click(object sender, RoutedEventArgs e)
         {
             if(dataGrid.SelectedIndex != -1)
@@ -228,6 +226,8 @@ namespace KassaSysteem
             veranderTotaalBedrag();
         }
 
+        //Indien er een item uit de datagrid is geselecteerd wordt de orderline uit de gatagrid gehaald en wordt het aantal met 1 verlaagd.
+        //Dit item wordt ook in de lijst gestoken met items die een update moeten ondergaan in de database.
         private void btnMin_Click(object sender, RoutedEventArgs e)
         {
             if (dataGrid.SelectedIndex != -1)
@@ -258,6 +258,10 @@ namespace KassaSysteem
             veranderTotaalBedrag();
         }
 
+        //Eerst wordt er gekeken als er wel items in de datagrid zitten, als er niets in zit gebeurt er niets.
+        //Vervolgens wordt er gekeken als er een openstaand order bestaat in de database bij deze tafel. 
+        //Aan de hand van het antwoord wordt ofwel het id opgevraagd van dit order, ofwel wordt dit order toegevoegd aan de database
+        //Vervolgens worden de 3 lijsten overlopen, die ofwel items verwijderen, updaten of toevoegen aan de database.
         private void btnBetalen_Click(object sender, RoutedEventArgs e)
         {
             if(dataGrid.Items.Count != 0)
@@ -266,25 +270,19 @@ namespace KassaSysteem
 
                 if (orderService.OrderExists(tafel.Id) == -1)
                 {
-                    Console.WriteLine("BESTAAT NIEEEEEEEETTTTTTTTTTTTT");
                     orderTijdelijk.TafelId = orderTijdelijk.TafelId;
                     orderTijdelijk.TafelName = orderTijdelijk.TafelName;
                     orderTijdelijk.CreatedDate = orderTijdelijk.CreatedDate;
                     orderTijdelijk.Status = 1;
                     veranderTotaalBedrag();
-                    Console.WriteLine("correcte prijs??");
-                    Console.WriteLine(orderTijdelijk.Total);
                     orderId = orderService.Add(orderTijdelijk);
                 }
                 else
                 {
-                    Console.WriteLine("BESTAAAAAAAAAT");
                     orderId = orderService.OrderExists(tafel.Id);
                     orderTijdelijk = orderService.getOrderObject(orderId);
                     orderTijdelijk.Status = 1;
                     veranderTotaalBedrag();
-                    Console.WriteLine("correcte prijs??");
-                    Console.WriteLine(orderTijdelijk.Total);
                     orderService.Update(orderTijdelijk);
                 }
 
@@ -302,8 +300,6 @@ namespace KassaSysteem
                     {
                         item.OrderId = orderId;
                         item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
-                        Console.WriteLine("UPDATE");
-                        Console.WriteLine(item.Id);
                         orderlineService.Update(item);
                     }
                 }
@@ -313,8 +309,6 @@ namespace KassaSysteem
                     {
                         item.OrderId = orderId;
                         item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
-                        Console.WriteLine("REMOVE");
-                        Console.WriteLine(item.Id);
                         orderlineService.Remove(item);
                     }
                 }
@@ -331,33 +325,29 @@ namespace KassaSysteem
             }
         }
 
-
+        //Tijdens het teruggaan moet alle data die reeds is ingegeven opgeslagen worden. 
+        //Anders gaat deze verloren als men later terug komt naar dit openstaand order.
+        //Ook hier wordt er gekeken als het order reeds bestaat in de database, 
+        //aan de hand van dit antwoord wordt ofwel het id opgevraagd van dit order, ofwel wordt dit order in de database opgeslagen.
+        //Ook hier moeten alle 3 de lijsten overlopen worden, die ofwel items verwijderen, updaten of toevoegen aan de database.
+        //Tot slot wordt ook het order verwijderd indien er een order is gemaakt en er geen items meer in de datagrid zitten.
         private void ButtonBack_OnClick(object sender, RoutedEventArgs e)
         {
             int orderId = 0;
 
-            //if (dataGrid.Items.Count != 0)
-            //{
-                if (dataGrid.Items.Count != 0 && orderService.OrderExists(tafel.Id) == -1)
-                {
-                    Console.WriteLine("HHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-                    Console.WriteLine(orderTijdelijk.TafelId);
-                    orderTijdelijk.TafelId = tafel.Id;
-                    Console.WriteLine(orderTijdelijk.TafelId);
-                    orderTijdelijk.TafelName = tafel.Name;
-                    Console.WriteLine(orderTijdelijk.TafelName);
-                    orderTijdelijk.CreatedDate = orderTijdelijk.CreatedDate;
-                    Console.WriteLine(orderTijdelijk.CreatedDate);
-                    orderTijdelijk.Status = orderTijdelijk.Status;
-                    Console.WriteLine(orderTijdelijk.Status);
+            if (dataGrid.Items.Count != 0 && orderService.OrderExists(tafel.Id) == -1)
+            {
+                orderTijdelijk.TafelId = tafel.Id;
+                orderTijdelijk.TafelName = tafel.Name;
+                orderTijdelijk.CreatedDate = orderTijdelijk.CreatedDate;
+                orderTijdelijk.Status = orderTijdelijk.Status;
 
-                    orderId = orderService.Add(orderTijdelijk);
-                }
-                else
-                {
-                    orderId = orderService.OrderExists(tafel.Id);
-                }
-            //}
+                orderId = orderService.Add(orderTijdelijk);
+            }
+            else
+            {
+                orderId = orderService.OrderExists(tafel.Id);
+            }
 
             if (toevoegenOrderlines.Count != 0)
             {
@@ -373,8 +363,6 @@ namespace KassaSysteem
                 {
                     item.OrderId = orderId;
                     item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
-                    Console.WriteLine("UPDATE");
-                    Console.WriteLine(item.Id);
                     orderlineService.Update(item);
                 }
             }
@@ -384,8 +372,6 @@ namespace KassaSysteem
                 {
                     item.OrderId = orderId;
                     item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
-                    Console.WriteLine("REMOVE");
-                    Console.WriteLine(item.Id);
                     orderlineService.Remove(item);
                 }
             }
@@ -398,11 +384,13 @@ namespace KassaSysteem
 
      
 
-            Startscherm startscherm = new Startscherm(); //Create object of Page2
-            startscherm.Show(); //Show page2
-            this.Close(); //this will close Page1
+            Startscherm startscherm = new Startscherm();
+            startscherm.Show();
+            this.Close();
         }
 
+        //Als men reeds een order heeft gemaakt, en deze werd nog niet betaald, worden alle orderlines van dit openstaand order
+        //opgehaald en getoont in de datagrid.
         private void vulDataGridMetCorrecteOrderLines(IEnumerable<OrderLine> orderlines)
         {
  
@@ -417,8 +405,7 @@ namespace KassaSysteem
             veranderTotaalBedrag();
         }
 
-    
-
+        //Telkens er een wijziging gebeurd in de database moet de totaalprijs voor dit order berekend worden.
         private void veranderTotaalBedrag()
         {
             float prijs = 0;
@@ -438,8 +425,6 @@ namespace KassaSysteem
                     orderTijdelijk.Total = prijs;
                 }
                 lblTotaal.Content = "Totaalprijs: €" + prijs;
-                Console.WriteLine("de prijs");
-                Console.WriteLine(prijs);
             }
         }
 
@@ -450,12 +435,3 @@ namespace KassaSysteem
         }
     }
 }
-
-
-
-
-
-
-//TO DO:
-//order is op één of andere manier leeg als je een paar keer terug gaat tijdens het order
-

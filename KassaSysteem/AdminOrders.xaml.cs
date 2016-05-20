@@ -35,6 +35,7 @@ namespace KassaSysteem
             vulScherm();
         }
 
+        //Vult alle orders in de linkerdatagrid
         private void vulScherm()
         {
             foreach (var item in alleOrders)
@@ -50,6 +51,8 @@ namespace KassaSysteem
             dataGridMaand.Visibility = Visibility.Collapsed;
         }
 
+        //Bij een dubbelklik op een artikel zullen alle orderlines opgehaald worden 
+        //uit de database en ingevuld worden in de rechter datagrid.
         private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             dataGridLines.Items.Clear();
@@ -69,42 +72,22 @@ namespace KassaSysteem
                 lblTotaalBedrag.Content = "Totaalprijs: €" + order.Total;
             }
 
-            
-
             dataGridLines.Visibility = Visibility.Visible;
         }
 
-        //private List<OrderlineViewModel> vanOrderlineNaarView(IEnumerable<OrderLine> orderlines)
-        //{
-        //    List<OrderlineViewModel> nieuweViews = new List<OrderlineViewModel>();
-
-        //    foreach (var item in orderlines)
-        //    {
-        //        OrderlineViewModel nieuweView = new OrderlineViewModel();
-        //        nieuweView.OrderId = item.OrderId;
-        //        nieuweView.ArticleId = item.ArticleId;
-        //        nieuweView.ArticleName = item.ArticleName;
-        //        nieuweView.Amount = item.Amount;
-        //        nieuweView.Price = item.Price;
-        //        nieuweView.CreatedDate = item.CreatedDate;
-        //        nieuweView.Total = item.Amount * item.Price;
-        //        nieuweViews.Add(nieuweView);
-        //    }
-        //    return nieuweViews;
-        //}
-
+        //Methode om de beginedit uit te schakelen tijdens dubbelklik in de datagrid
         private void dataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
             e.Cancel = true;
         }
 
+        //Bij het klikken op de "Toon" button zullen de 2 textbox'en gevalideerd worden en zal de input 
+        //omgezet worden naar een Datetime om zo te kunnen vergelijke. met waarden uit de database.
+        //Vervolgens worden alle order opgehaald die tussen die 2 datums liggen.
         private void btnToonMaand_Click(object sender, RoutedEventArgs e)
         {
             string boxBegin = txtBoxBegin.Text;
             string boxEind = txtBoxEind.Text;
-            Console.WriteLine("BBBBBBBBBBB");
-            Console.WriteLine(boxBegin);
-            Console.WriteLine(boxEind);
 
             if (!(boxBegin.Equals("")) && !(boxEind.Equals("")))
             {

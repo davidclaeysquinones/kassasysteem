@@ -27,15 +27,15 @@ namespace KassaSysteem
         private void Click_Tafels(object sender, RoutedEventArgs e)
         {
             AdminTafels tafels=new AdminTafels();
-            tafels.Show(); //Show page2
-            this.Close(); //this will close Page1
+            tafels.Show();
+            this.Close();
         }
 
         private void Click_Back(object sender, RoutedEventArgs e)
         {
             Startscherm startscherm = new Startscherm();
             startscherm.Show();
-            this.Close(); //this will close Page1
+            this.Close();
         }
 
         private void Click_Artikelen(object sender, RoutedEventArgs e)
