@@ -106,7 +106,7 @@ namespace KassaSysteem
             Console.WriteLine(boxBegin);
             Console.WriteLine(boxEind);
 
-            if (!boxBegin.Equals("") && boxEind.Equals(""))
+            if (!(boxBegin.Equals("")) && !(boxEind.Equals("")))
             {
                 if((Regex.IsMatch(boxBegin, @"^\d{4}[-/.]\d{1,2}[-/.]\d{1,2}$")) && (Regex.IsMatch(boxEind, @"^\d{4}[-/.]\d{1,2}[-/.]\d{1,2}$")))
                 {
@@ -138,7 +138,7 @@ namespace KassaSysteem
                             totaalPrijs += (float)item.Total;
                         }
                     }
-                    lblTotaalBedrag.Content = "Totaalbedrag voor deze maand: €" + totaalPrijs;
+                    lblTotaalBedrag.Content = "Totaalbedrag voor deze periode: €" + totaalPrijs;
                 }
                 else
                 {

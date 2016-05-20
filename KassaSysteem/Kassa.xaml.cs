@@ -260,67 +260,75 @@ namespace KassaSysteem
 
         private void btnBetalen_Click(object sender, RoutedEventArgs e)
         {
-            int orderId = 0;
+            if(dataGrid.Items.Count != 0)
+            {
+                int orderId = 0;
 
-            if (orderService.OrderExists(tafel.Id) == -1)
-            {
-                Console.WriteLine("BESTAAT NIEEEEEEEETTTTTTTTTTTTT");
-                orderTijdelijk.TafelId = orderTijdelijk.TafelId;
-                orderTijdelijk.TafelName = orderTijdelijk.TafelName;
-                orderTijdelijk.CreatedDate = orderTijdelijk.CreatedDate;
-                orderTijdelijk.Status = 1;
-                Console.WriteLine(orderTijdelijk.TafelName);
-                orderId = orderService.Add(orderTijdelijk);
-            }
-            else
-            {
-                Console.WriteLine("BESTAAAAAAAAAT");
-                orderId = orderService.OrderExists(tafel.Id);
-                orderTijdelijk = orderService.getOrderObject(orderId);
-                orderTijdelijk.Status = 1;
-                orderService.Update(orderTijdelijk);
-            }
-
-            if (toevoegenOrderlines.Count != 0)
-            {
-                foreach (var item in toevoegenOrderlines)
+                if (orderService.OrderExists(tafel.Id) == -1)
                 {
-                    item.OrderId = orderId;
-                    orderlineService.Add(item);
+                    Console.WriteLine("BESTAAT NIEEEEEEEETTTTTTTTTTTTT");
+                    orderTijdelijk.TafelId = orderTijdelijk.TafelId;
+                    orderTijdelijk.TafelName = orderTijdelijk.TafelName;
+                    orderTijdelijk.CreatedDate = orderTijdelijk.CreatedDate;
+                    orderTijdelijk.Status = 1;
+                    veranderTotaalBedrag();
+                    Console.WriteLine("correcte prijs??");
+                    Console.WriteLine(orderTijdelijk.Total);
+                    orderId = orderService.Add(orderTijdelijk);
                 }
-            }
-            if (updatenOrderlines != null)
-            {
-                foreach (var item in updatenOrderlines)
+                else
                 {
-                    item.OrderId = orderId;
-                    item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
-                    Console.WriteLine("UPDATE");
-                    Console.WriteLine(item.Id);
-                    orderlineService.Update(item);
+                    Console.WriteLine("BESTAAAAAAAAAT");
+                    orderId = orderService.OrderExists(tafel.Id);
+                    orderTijdelijk = orderService.getOrderObject(orderId);
+                    orderTijdelijk.Status = 1;
+                    veranderTotaalBedrag();
+                    Console.WriteLine("correcte prijs??");
+                    Console.WriteLine(orderTijdelijk.Total);
+                    orderService.Update(orderTijdelijk);
                 }
-            }
-            if (verwijderenOrderlines != null)
-            {
-                foreach (var item in verwijderenOrderlines)
+
+                if (toevoegenOrderlines.Count != 0)
                 {
-                    item.OrderId = orderId;
-                    item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
-                    Console.WriteLine("REMOVE");
-                    Console.WriteLine(item.Id);
-                    orderlineService.Remove(item);
+                    foreach (var item in toevoegenOrderlines)
+                    {
+                        item.OrderId = orderId;
+                        orderlineService.Add(item);
+                    }
                 }
-            }
+                if (updatenOrderlines != null)
+                {
+                    foreach (var item in updatenOrderlines)
+                    {
+                        item.OrderId = orderId;
+                        item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
+                        Console.WriteLine("UPDATE");
+                        Console.WriteLine(item.Id);
+                        orderlineService.Update(item);
+                    }
+                }
+                if (verwijderenOrderlines != null)
+                {
+                    foreach (var item in verwijderenOrderlines)
+                    {
+                        item.OrderId = orderId;
+                        item.Id = orderlineService.GetId(item.OrderId, item.ArticleId);
+                        Console.WriteLine("REMOVE");
+                        Console.WriteLine(item.Id);
+                        orderlineService.Remove(item);
+                    }
+                }
 
-            
-            for(int i = 0; i < dataGrid.Items.Count; i++)
-            {
-                dataGrid.Items.RemoveAt(i);
-            }
 
-            Detailscherm detailscherm = new Detailscherm(orderTijdelijk); //Create object of Page2
-            detailscherm.Show(); //Show page2
-            this.Close(); //this will close Page1
+                for (int i = 0; i < dataGrid.Items.Count; i++)
+                {
+                    dataGrid.Items.RemoveAt(i);
+                }
+
+                Detailscherm detailscherm = new Detailscherm(orderTijdelijk);
+                detailscherm.Show();
+                this.Close();
+            }
         }
 
 
@@ -328,9 +336,9 @@ namespace KassaSysteem
         {
             int orderId = 0;
 
-            if (dataGrid.Items.Count != 0)
-            {
-                if (orderService.OrderExists(tafel.Id) == -1)
+            //if (dataGrid.Items.Count != 0)
+            //{
+                if (dataGrid.Items.Count != 0 && orderService.OrderExists(tafel.Id) == -1)
                 {
                     Console.WriteLine("HHHHHHHHHHHHHHHHHHHHHHHHHHHH");
                     Console.WriteLine(orderTijdelijk.TafelId);
@@ -349,9 +357,9 @@ namespace KassaSysteem
                 {
                     orderId = orderService.OrderExists(tafel.Id);
                 }
-            }
+            //}
 
-            if(toevoegenOrderlines.Count != 0)
+            if (toevoegenOrderlines.Count != 0)
             {
                 foreach (var item in toevoegenOrderlines)
                 {
@@ -430,6 +438,7 @@ namespace KassaSysteem
                     orderTijdelijk.Total = prijs;
                 }
                 lblTotaal.Content = "Totaalprijs: €" + prijs;
+                Console.WriteLine("de prijs");
                 Console.WriteLine(prijs);
             }
         }
