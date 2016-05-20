@@ -10,7 +10,7 @@
         <StackPanel>
             <Label Name="Output" Foreground="Red" HorizontalContentAlignment="Center" Height="25"></Label>
             <Label HorizontalContentAlignment="Center">Pincode</Label>
-            <PasswordBox MaxLength="20" HorizontalContentAlignment="Center"  Name="Input"></PasswordBox>
+            <PasswordBox MaxLength="20" HorizontalContentAlignment="Center"  Name="Input" ForceCursor="True"></PasswordBox>
             <Button Click="GoToAdmin">Submit</Button>
         </StackPanel>
     </Grid>
