@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
-        Title="AdminTafels" Height="700" Width="1200" MaxHeight="720" MaxWidth="1200" MinHeight="720" MinWidth="1200">
+        Title="AdminTafels" Height="700" Width="1200" MaxHeight="720" MaxWidth="1200" MinHeight="720" MinWidth="1200" PreviewKeyDown="AdminTafels_OnPreviewKeyDown">
 
     <Grid>
         <Grid.Background>
@@ -27,13 +27,13 @@
             <ColumnDefinition Width="30"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Canvas AllowDrop="True" Grid.Row="0" Name="Tables" Grid.Column="0" Margin="-2,-5,2,5" Background="White">
+        <Canvas AllowDrop="True" Grid.Row="0" Name="Tables" Grid.Column="0" Margin="-2,-5,2,5" Background="White" PreviewKeyDown="AdminTafels_OnPreviewKeyDown">
 
         </Canvas>
 
 
         <Button Click="SaveChanges" Grid.Column="1" Grid.Row="0">Save</Button>
-        <Grid Grid.Row="1" ColumnSpan="2">
+        <Grid Grid.Row="1" ColumnSpan="2" PreviewKeyDown="AdminTafels_OnPreviewKeyDown">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
@@ -47,11 +47,11 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
                 <Label >X - position :</Label>
-                <TextBox Name="xposition" TextChanged="X_position_OnTextChanged" MaxLength="5" Width="100" ></TextBox>
+                <TextBox Name="xposition" TextChanged="X_position_OnTextChanged" PreviewKeyDown="AdminTafels_OnPreviewKeyDown" MaxLength="5" Width="100" ></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
                 <Label Grid.Row="1" Grid.Column="0">Y - position :</Label>
-                <TextBox Name="yposition" TextChanged="Y_position_OnTextChanged"  MaxLength="5" Width="100"></TextBox>
+                <TextBox Name="yposition" TextChanged="Y_position_OnTextChanged" PreviewKeyDown="AdminTafels_OnPreviewKeyDown" MaxLength="5" Width="100"></TextBox>
             </StackPanel>
             <Button Grid.Row="0" Grid.Column="3" Click="addTable">New Table</Button>
             <Button Grid.Row="1" Grid.Column="3" Click="deleteTable">Delete</Button>
@@ -61,7 +61,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
                     <Label>Tafelnaam</Label>
-                    <TextBox Name="artikelNaam" Width="200" TextChanged="ArtikelNaam_OnTextChanged" MaxLength="30"></TextBox>
+                    <TextBox Name="artikelNaam" Width="200" TextChanged="ArtikelNaam_OnTextChanged" PreviewKeyDown="AdminTafels_OnPreviewKeyDown" MaxLength="30"></TextBox>
                 </StackPanel>
 
             </Grid>

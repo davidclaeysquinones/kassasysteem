@@ -115,14 +115,10 @@ namespace KassaSysteem
 
         private void mouseUp(Object sender, MouseEventArgs args)
         {
-            //if (huidig != null)
-            //{
+
                 Console.WriteLine("mouse up");
                 pressed = false;
-                huidig = null;
-            //huidig.Background = new SolidColorBrush(Colors.Red);
 
-            //}
 
         }
 
@@ -599,6 +595,82 @@ namespace KassaSysteem
             AdminScherm adminScherm = new AdminScherm();
             adminScherm.Show(); //Show page2
             this.Close(); //this will close Page1
+        }
+
+        private void AdminTafels_OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            Console.WriteLine("key down");
+            Key key = e.Key;
+            Console.WriteLine(key.ToString());
+            if (key == Key.Up)
+            {
+                Console.WriteLine("key up");
+                if (huidig != null)
+                {
+                    Console.WriteLine("not null");
+                    Tafel tafel = (Tafel) huidig.Tag;
+                    int y = tafel.PositionY;
+                    y -= 10;
+                    if (y < 0)
+                    {
+                        y = y-y;
+                    }
+                    yposition.Text = y.ToString();
+                }
+                
+            }
+
+            if (key == Key.Down)
+            {
+                Console.WriteLine("key down");
+                if (huidig != null)
+                {
+                    Console.WriteLine("not null");
+                    Tafel tafel = (Tafel)huidig.Tag;
+                    int y = tafel.PositionY;
+                    y += 10;
+                    if (y > maxHeight)
+                    {
+                        y = y - (y -maxHeight);
+                    }
+                    yposition.Text = y.ToString();
+                }
+            }
+
+            if (key == Key.Left)
+            {
+
+                Console.WriteLine("key left");
+                if (huidig != null)
+                {
+                    Console.WriteLine("not null");
+                    Tafel tafel = (Tafel)huidig.Tag;
+                    int x = tafel.PositionX;
+                    x -= 10;
+                    if (x < 0)
+                    {
+                        x = x - x;
+                    }
+                    xposition.Text = x.ToString();
+                }
+            }
+
+            if (key == Key.Right)
+            {
+                Console.WriteLine("key right");
+                if (huidig != null)
+                {
+                    Console.WriteLine("not null");
+                    Tafel tafel = (Tafel)huidig.Tag;
+                    int x = tafel.PositionX;
+                    x += 10;
+                    if (x > maxWidth)
+                    {
+                        x = x - (x - maxWidth);
+                    }
+                    xposition.Text = x.ToString();
+                }
+            }
         }
     }
 }
