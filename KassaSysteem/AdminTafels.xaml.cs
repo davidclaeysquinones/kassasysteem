@@ -28,8 +28,11 @@ namespace KassaSysteem
         private TafelService tafelService;
         private Button huidig;
         private Boolean pressed;
+        //list met te verwijderen tafels
         private List<Tafel> delete;
+        //list met up te daten tafels
         private List<Tafel> update;
+        //list met te toe te voegen tafels
         private List<Tafel> add;
         private static int maxWidth = 1000;
         private static int maxHeight = 420;
@@ -40,13 +43,12 @@ namespace KassaSysteem
         {
             tafelService=new TafelService();
             InitializeComponent();
+            //canvas vullen
             VullTafels();
-            //Tables.MinHeight = minHeight;
-            //Tables.MinWidth = minWidth;
-            //Tables.Width = minWidth;
-            //Tables.Height = minWidth;
            
+            //muis wordt niet ingedrukt bij de opstart
             pressed = false;
+            //initialiseren van lists
             delete = new List<Tafel>();
             update = new List<Tafel>();
             add = new List<Tafel>();
@@ -64,16 +66,8 @@ namespace KassaSysteem
             foreach (var item in tafels)
             {
                 Button b = new Button();
-                //if (b.Width > minWidth)
-                //{
-                //    minWidth = b.Width;
-                ////}
                 b.Width = item.Width;
                 b.Height = item.Height;
-                //if (b.Height > minHeight)
-                //{
-                //    minHeight = b.Height;
-                //}
                 b.Background = new SolidColorBrush(Colors.Red);
                 b.AllowDrop = true;
                 b.PreviewMouseLeftButtonDown+= new MouseButtonEventHandler(this.mouseEnter);
@@ -83,70 +77,82 @@ namespace KassaSysteem
                 b.Content = item.Name;
                 b.Tag = item;
                 
-
+                //item in canvas op juiste positie zetten
                 Canvas.SetLeft(b, item.PositionX);
                 Canvas.SetTop(b, item.PositionY);
                 Tables.Children.Add(b);
             }
         }
 
+        //wordt opgeroepen wanneer de muis gedurende lange tijd wordt ingedrukt op een tafel
         private void mouseEnter(Object sender,MouseEventArgs args)
         {
             Console.WriteLine("mouse enter");
+            //boolean pressen op true zetten
             pressed = true;
 
+            //ingedrukte button
             Button b = (Button)sender;
             Tafel item = (Tafel)b.Tag;
             huidig = b;
+            //huidig item van kleur veranderen
             huidig.Background = new SolidColorBrush(Colors.Blue);
             xposition.Text = item.PositionX.ToString();
             yposition.Text = item.PositionY.ToString();
             Height.Text = item.Height.ToString();
             Width.Text = item.Width.ToString();
             artikelNaam.Text = item.Name;
+            //andere items in hun originele kleur zetten
             foreach (Button itemB in Tables.Children)
             {
+                //nagaan of het huidig item niet het geselecteerde item is
                 if (itemB != huidig)
                 {
                     itemB.Background = new SolidColorBrush(Colors.Red);
                 }
             }
         }
-
+        //wordt opgeroepen wanneer de muis niet meer wordt ingedrukt op een tafel
         private void mouseUp(Object sender, MouseEventArgs args)
         {
 
                 Console.WriteLine("mouse up");
+                //boolean op false zetten
                 pressed = false;
 
 
         }
-
+        //wordt opgeroepen wanneer de muis beweegt over een tafel
         private void mouseMove(object sender, MouseEventArgs args)
         {
+            //controleren of de muis wordt ingedrukt over de tafel
             if (pressed)
             {
                 if (huidig != null)
                 {
                     Console.WriteLine("item is pressed");
                     Button b = huidig;
+                    //geselecteerde tafel ophalen
                     Tafel tafel = (Tafel)b.Tag;
 
+                    //positie van item achterhalen
                     Point input = args.GetPosition(Tables);
                     double xmove = input.X;
                     double ymove = input.Y;
 
-                    
+                    //huidig item van canvas werwijderen
                     Tables.Children.Remove(b);
                     if (xmove >= 0)
                     {
                         if (xmove <= maxWidth)
                         {
+                            //positie van huidig item updaten
                             tafel.PositionX = (int)xmove;
                             Canvas.SetLeft(b, tafel.PositionX);
                         }
                         else
                         {
+                            //positie van huidig item updaten
                             tafel.PositionX = maxWidth;
                             Canvas.SetLeft(b, tafel.PositionX);
                         }
@@ -166,17 +172,18 @@ namespace KassaSysteem
                         }
                     }
 
-                    
+                    //huidig item terug toevoegen aan canvas
                     Tables.Children.Add(b);
 
                     xposition.Text = tafel.PositionX.ToString();
                     yposition.Text = tafel.PositionY.ToString();
+                    //huidig item updaten
                     huidig = b;
                 }
 
             }
         }
-
+        //wordt opgeroepen tijdens een click event
         private void setTable(Object sender, RoutedEventArgs e)
         {
           
@@ -200,7 +207,7 @@ namespace KassaSysteem
            
                 
     }
-
+        //wordt opgeroepen wanneer de textbox x-position wijzigt
         private void X_position_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
@@ -274,7 +281,7 @@ namespace KassaSysteem
             }
            
         }
-
+        //wordt opgeroepen wanneer de textbox y-position wijzigt
         private void Y_position_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
@@ -345,7 +352,7 @@ namespace KassaSysteem
                   
             }
         }
-
+        //slaat veranderingen op
         private void SaveChanges(object sender, RoutedEventArgs e)
         {
 
@@ -368,7 +375,7 @@ namespace KassaSysteem
             admin.Show();
             this.Close();
         }
-      
+        //verwijdert een tafel uit de lijst
         private void deleteTable(object sender, RoutedEventArgs e)
         {
             if (huidig != null)
@@ -387,7 +394,7 @@ namespace KassaSysteem
                 huidig = null;
             }
         }
-
+        //voegt een tafel aan de lisjt toe
         private void addTable(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("add table");
@@ -412,7 +419,7 @@ namespace KassaSysteem
             Canvas.SetLeft(huidig, tafel.PositionX);
             Canvas.SetTop(huidig, tafel.PositionY);
         }
-
+        //wordt opgeroepen wanneer de textbox naam wijzigt
         private void ArtikelNaam_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
@@ -439,7 +446,7 @@ namespace KassaSysteem
             
        
         }
-
+        //wordt opgeroepen wanneer de textbox width wijzigt
         private void Width_OnTextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -515,7 +522,7 @@ namespace KassaSysteem
                 }
             }
         }
-
+        //wordt opgeroepen wanneer de textbox height wijzigt
         private void Height_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox t = (TextBox)sender;
@@ -589,14 +596,14 @@ namespace KassaSysteem
                 }
             }
         }
-
+        //terug naar vorig scherm
         private void back_onclick(object sender, RoutedEventArgs e)
         {
             AdminScherm adminScherm = new AdminScherm();
             adminScherm.Show(); //Show page2
             this.Close(); //this will close Page1
         }
-
+        //wordt opgeroepen wanneer een toets wordt ingedrukt
         private void AdminTafels_OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             Console.WriteLine("key down");
