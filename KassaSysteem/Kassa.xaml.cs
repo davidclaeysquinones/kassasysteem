@@ -213,15 +213,16 @@ namespace KassaSysteem
                 dataGrid.Items.Remove(oude);
                 dataGrid.Items.Add(oude);
                 int index = dataGrid.SelectedIndex;
-                if (!toevoegenOrderlines.Contains(oude))
-                {
-                    updatenOrderlines.Add(oude);
-                }
-                else
-                {
-                    toevoegenOrderlines.Remove(oude);
-                    updatenOrderlines.Add(oude);
-                }
+                updatenOrderlines.Add(oude);
+                //if (!toevoegenOrderlines.Contains(oude))
+                //{
+                //    updatenOrderlines.Add(oude);
+                //}
+                //else
+                //{
+                //    toevoegenOrderlines.Remove(oude);
+                //    updatenOrderlines.Add(oude);
+                //}
             }
             veranderTotaalBedrag();
         }
@@ -244,16 +245,16 @@ namespace KassaSysteem
                 oude.Total = oude.Amount * oude.Price;
                 dataGrid.Items.Remove(oude);
                 dataGrid.Items.Add(oude);
-                if(!toevoegenOrderlines.Contains(oude))
-                {
-                    updatenOrderlines.Add(oude);
-                }
-                else
-                {
-                    toevoegenOrderlines.Remove(oude);
-                    updatenOrderlines.Add(oude);
-                }
-              
+                updatenOrderlines.Add(oude);
+                //if(!toevoegenOrderlines.Contains(oude))
+                //{
+                //    updatenOrderlines.Add(oude);
+                //}
+                //else
+                //{
+                //    toevoegenOrderlines.Remove(oude);
+                //    updatenOrderlines.Add(oude);
+                //}
             }
             veranderTotaalBedrag();
         }
