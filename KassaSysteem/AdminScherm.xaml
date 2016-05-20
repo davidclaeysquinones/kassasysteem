@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
-        Title="AdminScherm" Height="720" Width="1200">
+        Title="AdminScherm" Height="700" Width="1200">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Width" Value="100"/>
