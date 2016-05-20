@@ -214,6 +214,7 @@ namespace KassaSysteem
                 dataGrid.Items.Add(oude);
                 int index = dataGrid.SelectedIndex;
                 updatenOrderlines.Add(oude);
+
                 //if (!toevoegenOrderlines.Contains(oude))
                 //{
                 //    updatenOrderlines.Add(oude);
