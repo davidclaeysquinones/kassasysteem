@@ -5,18 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
-        Title="Detailscherm" Height="700" Width="900">
+        Title="Detailscherm" Height="700" Width="1200">
     <Grid>
-        <Label Name="lblTafelnaam" Margin="50,40,0,0" FontSize="20">tafelnaam</Label>
-        <Label Name="lblTotaalBedrag" Margin="50,70,0,0" FontSize="20">totaal</Label>
+        <Label Width="250" Height="50" Name="lblTafelnaam" Margin="0,0,850,570" FontSize="20">tafelnaam</Label>
+        <Label Width="250" Height="50" Name="lblTotaalBedrag" Margin="0,0,850,500" FontSize="20">totaal</Label>
 
-        <DataGrid x:Name="dataGrid" Grid.Row="0" Grid.Column="1" CanUserReorderColumns="True" CanUserResizeColumns="True" 
-          CanUserResizeRows="False" CanUserSortColumns="True" Height="500" Margin="0,50,550,0" BorderThickness="1" BorderBrush="Black">
+        <DataGrid x:Name="dataGrid" CanUserReorderColumns="True" CanUserResizeColumns="True" 
+          CanUserResizeRows="False" CanUserSortColumns="True" Height="500" Margin="10,50,550,0" BorderThickness="1" BorderBrush="Black"
+                  Width="600">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding ArticleName}"></DataGridTextColumn>
-                <DataGridTextColumn  Header="Aantal" Width="75" Binding="{Binding Amount}"></DataGridTextColumn>
-                <DataGridTextColumn  Header="Prijs" Width="75" Binding="{Binding Price}"></DataGridTextColumn>
-                <DataGridTextColumn  Header="Totaal" Width="*" Binding="{Binding Total}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Naam" Width="200" Binding="{Binding ArticleName}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Aantal" Width="150" Binding="{Binding Amount}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Prijs" Width="150" Binding="{Binding Price}"></DataGridTextColumn>
+                <DataGridTextColumn  Header="Totaal" Width="100" Binding="{Binding Total}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 

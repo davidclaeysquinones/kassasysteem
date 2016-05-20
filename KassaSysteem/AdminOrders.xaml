@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
-        Title="AdminOrders" Height="720" Width="1250">
+        Title="AdminOrders" Height="700" Width="1200">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush>
@@ -66,18 +66,18 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Name="lblError" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" FontSize="15" Foreground="Red" Margin="100,5,0,0"></Label>
-        <Label Name="lblBeginMaand" Grid.Row="0" Grid.Column="4" Width="125" Height="50" FontSize="15" Margin="36,48,38,0">Begin maand:</Label>
-        <Label Name="lblEindeMaand" Grid.Row="1" Grid.Column="4" Width="125" Height="50" FontSize="15" Margin="36,0,38,48">Einde maand:</Label>
-        <TextBox Name="txtBoxBegin" Grid.Row="0" Grid.Column="4" BorderBrush="Black" Width="150" Height="40" Margin="166,48,81,10" Grid.ColumnSpan="2"></TextBox>
-        <TextBox Name="txtBoxEind" Grid.Row="1" Grid.Column="4" BorderBrush="Black" Width="150" Height="40" Margin="166,0,81,58" Grid.ColumnSpan="2"></TextBox>
+        <Label Name="lblError" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" FontSize="15" Foreground="Red" Margin="73,4,0.5,0"></Label>
+        <Label Name="lblBeginMaand" Grid.Row="0" Grid.Column="4" Width="125" Height="50" FontSize="15" Margin="70,45,0,0">Begin maand:</Label>
+        <Label Name="lblEindeMaand" Grid.Row="1" Grid.Column="4" Width="125" Height="50" FontSize="15" Margin="72,5,0,42">Einde maand:</Label>
+        <TextBox Name="txtBoxBegin" Grid.Row="0" Grid.Column="5" BorderBrush="Black" Width="150" Height="40" Margin="8,25,0,0" RenderTransformOrigin="0.5,-0.175"/>
+        <TextBox Name="txtBoxEind" Grid.Row="1" Grid.Column="5" BorderBrush="Black" Width="150" Height="40" Margin="10,0,0,50"/>
 
         <Button Name="btnToonMaand" Grid.Row="1" Grid.Column="5" FontSize="15" Width="75" Height="35"
-                Click="btnToonMaand_Click" Margin="42,53,81,10">
+                Click="btnToonMaand_Click" Margin="42,53,0,0">
             Toon
         </Button>
         <Button Name="btnTerug" Grid.Row="1" Grid.Column="5" FontSize="15" Width="75" Height="35"
-                Click="btnTerug_Click" Margin="42,53,81,10">
+                Click="btnTerug_Click" Margin="82,51,40.5,0">
             Terug
         </Button>
 
