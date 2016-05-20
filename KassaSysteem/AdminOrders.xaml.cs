@@ -110,7 +110,7 @@ namespace KassaSysteem
                     dataGridMaand.Visibility = Visibility.Visible;
                     btnTerug.Visibility = Visibility.Visible;
                     btnVorigeAdmin.Visibility = Visibility.Collapsed;
-                    lblError.Visibility = Visibility.Collapsed;
+                    lblError.Visibility = Visibility.Collapsed; 
 
                     IEnumerable<Order> orders = orderService.getOrderMonth(begin, eind);
 
