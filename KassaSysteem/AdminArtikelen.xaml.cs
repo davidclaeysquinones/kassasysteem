@@ -91,6 +91,7 @@ namespace KassaSysteem
                     }
                     Name.Text = artikelViewModel.Name;
                     Price.Text = artikelViewModel.Price.ToString();
+                    Artikelen.ScrollIntoView(Artikelen.SelectedItem);
                 }
 
             }
