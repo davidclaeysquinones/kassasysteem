@@ -14,9 +14,9 @@
       
             <DataGrid Name="Artikelen" SelectionMode="Single"  BeginningEdit="Artikelen_OnBeginningEdit" SelectedCellsChanged="selection_changed" PreviewKeyDown="Artikelen_OnKeyDown">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Naam" Width="*" Binding="{Binding Name}"></DataGridTextColumn>
-                    <DataGridTextColumn  Header="Prijs" Width="*" Binding="{Binding Price}"></DataGridTextColumn>
-                    <DataGridTextColumn  Header="Positie" Width="*" Binding="{Binding Position}"></DataGridTextColumn>
+                    <DataGridTextColumn CanUserSort="False" Header="Naam" Width="*" Binding="{Binding Name}"></DataGridTextColumn>
+                    <DataGridTextColumn  CanUserSort="False" Header="Prijs" Width="*" Binding="{Binding Price}"></DataGridTextColumn>
+                    <DataGridTextColumn  CanUserSort="False" Header="Positie" Width="*" Binding="{Binding Position}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
 

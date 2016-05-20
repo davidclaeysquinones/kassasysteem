@@ -57,7 +57,7 @@
 
         <DataGrid Name="dataGridLines" Grid.Row="2" Grid.Column="4" Grid.RowSpan="4" Grid.ColumnSpan="2"
                   CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True"
-                  Margin="0,0,20,20">
+                  Margin="0,0,20,20" BeginningEdit="dataGrid_BeginningEdit">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Naam" Width="125" Binding="{Binding ArticleName}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Aantal" Width="75" Binding="{Binding Amount}"></DataGridTextColumn>
@@ -84,7 +84,7 @@
         <Label Name="lblTotaalBedrag" Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="2" Margin="50,25,0,0" FontSize="15" ></Label>
 
         <DataGrid Name="dataGridMaand" Grid.Row="1" Grid.Column="1" Grid.RowSpan="5" Grid.ColumnSpan="4"
-                  CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True">
+                  CanUserResizeColumns="True" CanUserResizeRows="False" CanUserSortColumns="True" BeginningEdit="dataGrid_BeginningEdit">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tafelnaam" Width="350" Binding="{Binding TafelName}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Datum" Width="350" Binding="{Binding CreatedDate}"></DataGridTextColumn>

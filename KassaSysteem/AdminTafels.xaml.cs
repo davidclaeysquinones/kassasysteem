@@ -258,6 +258,7 @@ namespace KassaSysteem
             }
             else
             {
+                Console.WriteLine("aaa");
                 if (huidig != null)
                 {
 
