@@ -57,7 +57,7 @@ namespace KassaSysteem
         {
             articleService = new ArticleService();
             int atlArtikelen = articleService.getAantal();
-            int maxWidth = 4;
+            int maxWidth = (int)Properties.Settings.Default["Columns"];
             int aantalRijen = atlArtikelen / maxWidth;
             for (int i = 0; i<=aantalRijen+1; i++)
             {

@@ -64,8 +64,8 @@ namespace KassaSysteem
 
         private void GoToAdmin(object sender, RoutedEventArgs e)
         {
-            AdminScherm admin = new AdminScherm();
-            admin.Show();
+            PinScherm pinScherm = new PinScherm();
+            pinScherm.Show();
             this.Close();
         }
 
