@@ -55,7 +55,7 @@ namespace KassaSysteem
         //Vult alle artikelen in de grid aan, op row 0 en column 0
         public void vulGrid()
         {
-            
+            articleService = new ArticleService();
             int atlArtikelen = articleService.getAantal();
             int maxWidth = 4;
             int aantalRijen = atlArtikelen / maxWidth;
