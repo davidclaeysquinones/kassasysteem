@@ -32,7 +32,7 @@ namespace KassaSysteem
         public AdminArtikelen()
         {
             InitializeComponent();
-            maxColumns = 4;
+            maxColumns = (int) Properties.Settings.Default["Columns"];
             loadData();
             delete = new List<ArtikelViewModel>();
             add = new List<ArtikelViewModel>();
@@ -152,16 +152,18 @@ namespace KassaSysteem
 
             if (input != null)
             {
-                if (!(Regex.IsMatch(input, @"\D+?")) && !input.Equals(""))
+                int selectedIndex = Artikelen.SelectedIndex;
+                if (selectedIndex != -1)
                 {
-                    int selectedIndex = Artikelen.SelectedIndex;
-                    Console.WriteLine(selectedIndex + " " + Artikelen.Items.Count);
-                    if (selectedIndex != -1)
+                    ArtikelViewModel artikelViewModel = (ArtikelViewModel)Artikelen.Items.GetItemAt(selectedIndex);
+                    if (!(Regex.IsMatch(input, @"\D+?")) && !input.Equals(""))
                     {
-                        ArtikelViewModel artikelViewModel =(ArtikelViewModel)Artikelen.Items.GetItemAt(selectedIndex);
+                        Console.WriteLine(selectedIndex + " " + Artikelen.Items.Count);
+
+                       
                         if (artikelViewModel != null)
                         {
-                          
+
                             if (!add.Contains(artikelViewModel))
                             {
                                 update.Remove(artikelViewModel);
@@ -179,15 +181,32 @@ namespace KassaSysteem
                             Artikelen.SelectedIndex = selectedIndex;
                         }
                     }
+                    else
+                    {
+                        if (artikelViewModel != null)
+                        {
+                            if (!input.Equals(""))
+                            {
+                                Price.Text = artikelViewModel.Price.ToString();
+                            }
+
+                        }
+                        else
+                        {
+                            if (!input.Equals(""))
+                            {
+                                Price.Text = "";
+                            }
+
+                        }
+                    }
                    
                 }
+               
                 else
                 {
-                    if (!input.Equals(""))
-                    {
-                        Price.Text = "";
-                    }
-   
+                    Price.Text = "";
+
                 }
             
             }

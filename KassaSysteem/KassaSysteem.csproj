@@ -76,6 +76,9 @@
     <Compile Include="AdminTafels.xaml.cs">
       <DependentUpon>AdminTafels.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PinScherm.xaml.cs">
+      <DependentUpon>PinScherm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Startscherm.xaml.cs">
       <DependentUpon>Startscherm.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,10 @@
     <Compile Include="Kassa.xaml.cs">
       <DependentUpon>Kassa.xaml</DependentUpon>
     </Compile>
+    <Page Include="PinScherm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Startscherm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

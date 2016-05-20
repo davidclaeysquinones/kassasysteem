@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KassaSysteem"
         mc:Ignorable="d"
-        Title="AdminArtikelen" Height="700" Width="1200" PreviewKeyDown="Artikelen_OnKeyDown">
+        Title="AdminArtikelen" Height="700" Width="1200" MinHeight="280" MinWidth="350" PreviewKeyDown="Artikelen_OnKeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"></RowDefinition>
