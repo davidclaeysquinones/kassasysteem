@@ -12,7 +12,7 @@
 
         <DataGrid x:Name="dataGrid" CanUserReorderColumns="True" CanUserResizeColumns="True" 
           CanUserResizeRows="False" CanUserSortColumns="True" Height="500" Margin="10,50,550,0" BorderThickness="1" BorderBrush="Black"
-                  Width="600">
+                  Width="600" BeginningEdit="DataGrid_OnBeginningEdit">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Naam" Width="200" Binding="{Binding ArticleName}"></DataGridTextColumn>
                 <DataGridTextColumn  Header="Aantal" Width="150" Binding="{Binding Amount}"></DataGridTextColumn>

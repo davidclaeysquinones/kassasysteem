@@ -61,5 +61,10 @@ namespace KassaSysteem
         {
             lblTotaalBedrag.Content = "Totaalbedrag: €" + order.Total;
         }
+
+        private void DataGrid_OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            e.Cancel = true;
+        }
     }
 }
