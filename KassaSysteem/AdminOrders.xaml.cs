@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -91,47 +92,57 @@ namespace KassaSysteem
 
             if (!(boxBegin.Equals("")) && !(boxEind.Equals("")))
             {
-                if((Regex.IsMatch(boxBegin, @"^\d{4}[-/.]\d{1,2}[-/.]\d{1,2}$")) && (Regex.IsMatch(boxEind, @"^\d{4}[-/.]\d{1,2}[-/.]\d{1,2}$")))
+                //if((Regex.IsMatch(boxBegin, @"^\d{4}[-/.]\d{1,2}[-/.]\d{1,2}$")) && (Regex.IsMatch(boxEind, @"^\d{4}[-/.]\d{1,2}[-/.]\d{1,2}$")))
+                string dateBegin = txtBoxBegin.Text;
+                string dateEind = txtBoxEind.Text;
+                try
                 {
-                    float totaalPrijs = 0;
+                    DateTime begin = DateTime.ParseExact(dateBegin, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    DateTime eind = DateTime.ParseExact(dateEind, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
-                    dataGrid.Visibility = Visibility.Collapsed;
-                    dataGridLines.Visibility = Visibility.Collapsed;
-                    lblTitel.Visibility = Visibility.Collapsed;
-                    btnToonMaand.Visibility = Visibility.Collapsed;
-                    lblBeginMaand.Visibility = Visibility.Collapsed;
-                    lblEindeMaand.Visibility = Visibility.Collapsed;
-                    string dateBegin = txtBoxBegin.Text;
-                    DateTime begin = Convert.ToDateTime(dateBegin);
-                    string dateEind = txtBoxEind.Text;
-                    DateTime eind = Convert.ToDateTime(dateEind);
-                    txtBoxBegin.Visibility = Visibility.Collapsed;
-                    txtBoxEind.Visibility = Visibility.Collapsed;
-                    dataGridMaand.Visibility = Visibility.Visible;
-                    btnTerug.Visibility = Visibility.Visible;
-                    btnVorigeAdmin.Visibility = Visibility.Collapsed;
-                    lblError.Visibility = Visibility.Collapsed; 
-
-                    IEnumerable<Order> orders = orderService.getOrderMonth(begin, eind);
-
-                    foreach (var item in orders)
+                    if (begin <= eind)
                     {
-                        dataGridMaand.Items.Add(item);
-                        if (item.Total != null)
+                        dataGrid.Visibility = Visibility.Collapsed;
+                        dataGridLines.Visibility = Visibility.Collapsed;
+                        lblTitel.Visibility = Visibility.Collapsed;
+                        btnToonMaand.Visibility = Visibility.Collapsed;
+                        lblBeginMaand.Visibility = Visibility.Collapsed;
+                        lblEindeMaand.Visibility = Visibility.Collapsed;
+
+                        txtBoxBegin.Visibility = Visibility.Collapsed;
+                        txtBoxEind.Visibility = Visibility.Collapsed;
+                        dataGridMaand.Visibility = Visibility.Visible;
+                        btnTerug.Visibility = Visibility.Visible;
+                        btnVorigeAdmin.Visibility = Visibility.Collapsed;
+                        lblError.Visibility = Visibility.Collapsed;
+
+                        IEnumerable<Order> orders = orderService.getOrderMonth(begin, eind);
+                        float totaalPrijs = 0;
+                        foreach (var item in orders)
                         {
-                            totaalPrijs += (float)item.Total;
+                            dataGridMaand.Items.Add(item);
+                            if (item.Total != null)
+                            {
+                                totaalPrijs += (float)item.Total;
+                            }
                         }
+                        lblTotaalBedrag.Content = "Totaalbedrag voor deze periode: €" + totaalPrijs;
                     }
-                    lblTotaalBedrag.Content = "Totaalbedrag voor deze periode: €" + totaalPrijs;
+                    else
+                    {
+                        lblError.Content = "Het einde van de maand moet na \nhet begin komen";
+                    }
+              
                 }
-                else
+                catch (FormatException)
                 {
-                    lblError.Content = "Datum moet van formaat yyyy/mm/dd zijn.";
+
+                    lblError.Content = "Datum moet van formaat dd/mm/yyyy zijn.";
                 }
             }
             else
             {
-                lblError.Content = "Inputvelden moeten ingevuld worden.";
+                lblError.Content = "Beide inputvelden moeten ingevuld worden.";
             }
             
         }

@@ -25,20 +25,28 @@ namespace KassaSysteem
     {
         private int maxColumns;
         private ArticleService articleService;
+        //lijst met te verwijderen artikelen
         private List<ArtikelViewModel> delete;
+        //lijst met toe te voegen artikelen
         private List<ArtikelViewModel> add;
+        //lijst met artikelen doe upgedated moeten worden
         private List<ArtikelViewModel> update;
 
         public AdminArtikelen()
         {
             InitializeComponent();
+            //ophalen van instellingen
             maxColumns = (int) Properties.Settings.Default["Columns"];
+            //data laden in Datagrid
             loadData();
+            // initialiseren van lists
             delete = new List<ArtikelViewModel>();
             add = new List<ArtikelViewModel>();
             update = new List<ArtikelViewModel>();
+            //nagaan of de datagrid items bevat
             if (Artikelen.Items.Count != 0)
             {
+                //eerste item in de lijst selecteren
                 Artikelen.SelectedIndex = 0;
             }
 
@@ -48,6 +56,7 @@ namespace KassaSysteem
         {
             articleService = new ArticleService();
             List<Article> articles = articleService.All().ToList();
+            //artikelen sorteren volgens positie in de lijst 
             articles.Sort();
 
             foreach (var item in articles)
@@ -56,8 +65,10 @@ namespace KassaSysteem
                 artikelViewModel.Name = item.Name;
                 artikelViewModel.ArtikelId = item.Id;
                 artikelViewModel.Price = item.Price;
+                //controleren of de X en Y cordinaten niet null zijn
                 if (item.MenuIndexX != null && item.MenuIndexY != null)
                 {
+                    //positie in de lijst afhankelijk van x en y coordinaten berekenen
                     artikelViewModel.Position = CalcPosition((int) item.MenuIndexX, (int) item.MenuIndexY);
                 }
                 else
@@ -74,6 +85,7 @@ namespace KassaSysteem
             e.Cancel = true;
         }
 
+        //deze methode wordt uitgevoerd wanneer het geselecteerde item in de lijst wijzigt
         private void selection_changed(object sender, SelectedCellsChangedEventArgs e)
         {
             DataGrid d = (DataGrid) sender;
@@ -99,6 +111,7 @@ namespace KassaSysteem
 
         }
 
+        //terug zonder instellingen op te slaan
         private void back(object sender, RoutedEventArgs e)
         {
             AdminScherm adminScherm = new AdminScherm();
@@ -157,22 +170,25 @@ namespace KassaSysteem
                 if (selectedIndex != -1)
                 {
                     ArtikelViewModel artikelViewModel = (ArtikelViewModel)Artikelen.Items.GetItemAt(selectedIndex);
+                    //controleren of de input cijfers bevat en niet leeg is
                     if (!(Regex.IsMatch(input, @"\D+?")) && !input.Equals(""))
                     {
                         Console.WriteLine(selectedIndex + " " + Artikelen.Items.Count);
 
-                       
+                       //controleren dat het verkregen item niet null is
                         if (artikelViewModel != null)
                         {
-
+                            //controleren of het artikel niet tijdens de laatse sessie werdt aangemaakt
                             if (!add.Contains(artikelViewModel))
                             {
+                                //artikel in list met up te daten artikelen vervangen
                                 update.Remove(artikelViewModel);
                                 artikelViewModel.Price = Convert.ToSingle(input);
                                 update.Add(artikelViewModel);
                             }
                             else
                             {
+                                //artikel in list met toe te voegen artikelen vervangen
                                 add.Remove(artikelViewModel);
                                 artikelViewModel.Price = Convert.ToSingle(input);
                                 add.Add(artikelViewModel);
@@ -186,6 +202,7 @@ namespace KassaSysteem
                     {
                         if (artikelViewModel != null)
                         {
+                            //controleren of de input string niet leeg is
                             if (!input.Equals(""))
                             {
                                 Price.Text = artikelViewModel.Price.ToString();
@@ -267,42 +284,49 @@ namespace KassaSysteem
         {
             articleService = new ArticleService();
            
-
+            //list met up te daten artikelen overlopen
             foreach (var item in update)
             {
+                //ArtikelViewModel naar Article converteren
                 Article article = new Article();
                 article.Name = item.Name;
                 article.Id = item.ArtikelId;
                 article.Price = item.Price;
+                //aan de hand van de positie in de lijst x en y coordinaten berekenen
                 Point coor = CalcCoordinates(item.Position);
                 article.MenuIndexX = (int?)coor.X;
                 article.MenuIndexY = (int?)coor.Y;
                 articleService.Update(article);
             }
 
+            //list met toe te voegen artikelen overlopen
             foreach (var item in add)
             {
                 Article article = new Article();
                 article.Name = item.Name;
                 article.Price = item.Price;
+                //aan de hand van de positie in de lijst x en y coordinaten berekenen
                 Point coor = CalcCoordinates(item.Position);
                 article.MenuIndexX = (int?) coor.X;
                 article.MenuIndexY = (int?) coor. Y;
                 articleService.Add(article);
             }
 
+            //list met te verwijderen items overlopen
             foreach (var item in delete)
             {
                 Article article = new Article();
                 article.Name = item.Name;
                 article.Id = item.ArtikelId;
                 article.Price = item.Price;
+                //aan de hand van de positie in de lijst x en y coordinaten berekenen
                 Point point = CalcCoordinates(item.Position);
                 article.MenuIndexX = (int?)point.X;
                 article.MenuIndexY = (int?)point.Y;
                 articleService.Delete(article);
             }
 
+            //terug gaan naar admin scherm
             AdminScherm adminScherm = new AdminScherm();
             adminScherm.Show();
             this.Close();
@@ -321,26 +345,24 @@ namespace KassaSysteem
 
         }
 
+        //methode om aan de hand van x en y coordinaten de positie in de lijst te bepalen
         private int CalcPosition(int x, int y)
         {
             int position = (y*maxColumns) + x;
-            Console.WriteLine(position+" position");
             return position;
         }
-
+        //methode om aan de hand van een positie in de lijst x en y coordinaten te berkenen
         private Point CalcCoordinates(int position)
         {
             Point point = new Point();
             int row = (position / maxColumns);
             point.Y = row;
-            Console.WriteLine(row+" test y");
             int column = position - (row*maxColumns);
-            Console.WriteLine(column+" test x");
             point.X = column;
             return point;
         }
 
-
+        //artikel één positie hoger in de lijst zetten
         private void Button_Up(object sender, RoutedEventArgs e)
         {
             int selectedIndex = Artikelen.SelectedIndex;
@@ -396,7 +418,7 @@ namespace KassaSysteem
                 }
             }
         }
-
+        //artikel één positie lager in de lijst zetten
         private void Button_Down(object sender, RoutedEventArgs e)
         {
             int selectedIndex = Artikelen.SelectedIndex;
@@ -453,7 +475,7 @@ namespace KassaSysteem
             }
         }
 
-
+        //deze methode wordt opgeroepen wanneer de gebruiker een toets indrukt
         private void Artikelen_OnKeyDown(object sender, KeyEventArgs e)
         {
             
